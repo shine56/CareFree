@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/photo_list"
+        android:layout_width="92dp"
+        android:layout_height="92dp"
+        android:layout_gravity="center_vertical"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/delete_photo"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="4dp"
+        android:src="@mipmap/delete_photo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</android.support.constraint.ConstraintLayout>

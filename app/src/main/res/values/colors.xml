@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="excmpleEmotionColor">#39D2D6</color>
+    <color name="gray">#7F7F7F</color>
+    <color name="mainBg">#fff7f9ff</color>
+    <color name="Black">#000000</color>
+    <color name="colorPrimary">#008577</color>
+    <color name="White">#FFFFFF</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="shadowGray">#0F000000</color>
+</resources>

@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/diary_list_view_bg">
+
+    <TextView
+        android:id="@+id/add_day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="05"
+        android:textColor="@color/Black"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/add_week"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:text="周三"
+        android:textColor="@color/Black"
+        android:textSize="10sp"
+        app:layout_constraintStart_toEndOf="@+id/add_day"
+        app:layout_constraintTop_toTopOf="@+id/add_day" />
+
+    <TextView
+        android:id="@+id/add_year_month"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="4dp"
+        android:text="2019年10月"
+        android:textColor="@color/Black"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/add_day"
+        app:layout_constraintStart_toEndOf="@+id/add_day" />
+
+
+    <TextView
+        android:id="@+id/add_emotion_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="32dp"
+        android:text="情绪值"
+        android:textColor="@color/Black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/add_view"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="64dp"
+        android:background="@color/Black"
+        app:layout_constraintEnd_toEndOf="@+id/add_year_month"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/add_day"
+        app:layout_constraintTop_toBottomOf="@+id/add_day" />
+
+    <ImageView
+        android:id="@+id/add_ai"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:src="@mipmap/add_logo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_day" />
+
+    <ImageView
+        android:id="@+id/add_happy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/happy_circular_logo"
+        app:layout_constraintBottom_toBottomOf="@+id/add_ai"
+        app:layout_constraintEnd_toStartOf="@+id/add_calm"
+        app:layout_constraintStart_toEndOf="@+id/add_ai"
+        app:layout_constraintTop_toTopOf="@+id/add_ai" />
+
+    <ImageView
+        android:id="@+id/add_calm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/calm_circular_logo"
+        app:layout_constraintBottom_toBottomOf="@+id/add_happy"
+        app:layout_constraintEnd_toStartOf="@+id/add_repression"
+        app:layout_constraintStart_toEndOf="@+id/add_ai"
+        app:layout_constraintTop_toTopOf="@+id/add_happy"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/add_sad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/sad_circular_logo"
+        app:layout_constraintBottom_toBottomOf="@+id/add_calm"
+        app:layout_constraintEnd_toStartOf="@+id/add_repression"
+        app:layout_constraintStart_toEndOf="@+id/add_calm"
+        app:layout_constraintTop_toTopOf="@+id/add_calm" />
+
+    <ImageView
+        android:id="@+id/add_repression"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:src="@mipmap/repression_circular_logo"
+        app:layout_constraintBottom_toBottomOf="@+id/add_sad"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/add_sad" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="描述今日"
+        android:textColor="@color/Black"
+        android:textSize="9sp"
+        app:layout_constraintEnd_toEndOf="@+id/add_ai"
+        app:layout_constraintStart_toStartOf="@+id/add_ai"
+        app:layout_constraintTop_toBottomOf="@+id/add_ai" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="开心"
+        android:textColor="@color/Black"
+        android:textSize="9sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView2"
+        app:layout_constraintEnd_toEndOf="@+id/add_happy"
+        app:layout_constraintStart_toStartOf="@+id/add_happy"
+        app:layout_constraintTop_toTopOf="@+id/textView2" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="平静"
+        android:textColor="@color/Black"
+        android:textSize="9sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView3"
+        app:layout_constraintEnd_toEndOf="@+id/add_calm"
+        app:layout_constraintHorizontal_bias="0.75"
+        app:layout_constraintStart_toStartOf="@+id/add_calm"
+        app:layout_constraintTop_toTopOf="@+id/textView3"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="难过"
+        android:textColor="@color/Black"
+        android:textSize="9sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView4"
+        app:layout_constraintEnd_toEndOf="@+id/add_sad"
+        app:layout_constraintStart_toStartOf="@+id/add_sad"
+        app:layout_constraintTop_toTopOf="@+id/textView4"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="压抑"
+        android:textColor="@color/Black"
+        android:textSize="9sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView5"
+        app:layout_constraintEnd_toEndOf="@+id/add_repression"
+        app:layout_constraintStart_toStartOf="@+id/add_repression"
+        app:layout_constraintTop_toTopOf="@+id/textView5"
+        app:layout_constraintVertical_bias="0.0" />
+
+</android.support.constraint.ConstraintLayout>

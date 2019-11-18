@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<litepal>
+    <!--
+    	数据库名，例如：
+    	<dbname value="demo" />
+    -->
+    <dbname value="diary" />
+
+    <!--
+    	数据库版本号，例如：
+    	<version value="1" />
+    -->
+    <version value="3" />
+
+    <!--
+    	指定映射模型，下面会讲到，例如：
+    	<list>
+    		<mapping class="com.test.model.Reader" />
+    		<mapping class="com.test.model.Magazine" />
+    	</list>
+    -->
+    <list>
+        <mapping class="com.example.a73233.carefree.db.Diary_db"/>
+    </list>
+</litepal>

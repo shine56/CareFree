@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="148dp"
+    android:background="@drawable/diary_list_view_bg">
+
+    <TextView
+        android:id="@+id/day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="05"
+        android:textColor="@color/Black"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/week"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:text="周三"
+        android:textColor="@color/Black"
+        android:textSize="10sp"
+        app:layout_constraintStart_toEndOf="@+id/day"
+        app:layout_constraintTop_toTopOf="@+id/day" />
+
+    <TextView
+        android:id="@+id/year_month"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="4dp"
+        android:text="2019年10月"
+        android:textColor="@color/Black"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/day"
+        app:layout_constraintStart_toEndOf="@+id/day" />
+
+    <TextView
+        android:id="@+id/diary_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="8dp"
+        android:text="这是一个喜庆的日子"
+        android:textColor="@color/gray"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/emotion_value"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view" />
+
+    <TextView
+        android:id="@+id/emotion_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="32dp"
+        android:text="情绪值 32"
+        android:textColor="@color/excmpleEmotionColor"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="64dp"
+        android:background="@color/Black"
+        app:layout_constraintEnd_toEndOf="@+id/year_month"
+        app:layout_constraintStart_toStartOf="@+id/day"
+        app:layout_constraintTop_toBottomOf="@+id/day" />
+
+    <ImageView
+        android:id="@+id/list_photo"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_marginEnd="32dp"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/diary_content" />
+</android.support.constraint.ConstraintLayout>
