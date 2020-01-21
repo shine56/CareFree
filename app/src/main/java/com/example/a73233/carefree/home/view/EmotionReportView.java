@@ -1,6 +1,7 @@
-package com.example.a73233.carefree.Home;
+package com.example.a73233.carefree.home.view;
 
 import android.content.Context;
+import android.databinding.BindingAdapter;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -16,23 +17,35 @@ public class EmotionReportView extends View {
     private Paint TitlePaint;
     private Paint YtextPaint;
     private Paint XtextPaint;
-    private Paint Day1Paint;
-    private Paint Day2Paint;
-    private Paint Day3Paint;
-    private Paint Day4Paint;
-    private Paint Day5Paint;
-    private Paint Day6Paint;
-    private Paint Day7Paint;
+    private static Paint Day1Paint;
+    private static Paint Day2Paint;
+    private static Paint Day3Paint;
+    private static Paint Day4Paint;
+    private static Paint Day5Paint;
+    private static Paint Day6Paint;
+    private static Paint Day7Paint;
 
-    private String[] DayNum = {"01","02","03","04","05","06","07"};
-    private int[] DayColor = {0XFF38D5D6,0XFF64B0E8,0XFF9B85FF,0XFF38D5D6,0XFF2B5876,0XFF38D5D6,0XFF9B85FF};
-    private int[] DayValue = {0, 0, 0, 0, 0, 0, 0};
+    private static String[] DayNum = {"01","02","03","04","05","06","07"};
+    private static int[] DayColor = {0XFF38D5D6,0XFF64B0E8,0XFF9B85FF,0XFF38D5D6,0XFF2B5876,0XFF38D5D6,0XFF9B85FF};
+    private static int[] DayValue = {0, 0, 0, 0, 0, 0, 0};
 
-    public void setDayValue(int[] dayValue) {
-        DayValue = dayValue;
+    public EmotionReportView(Context context) {
+        super(context);
     }
 
-    public void setDayColor(int[] dayColor) {
+    public EmotionReportView(Context context, AttributeSet emotion_report_bg_attr) {
+        super(context, emotion_report_bg_attr);
+        init();
+    }
+
+    @BindingAdapter(value = {"app:dayValues","app:dayColors","app:dayNums"},requireAll = false)
+    public static void GetViewData(EmotionReportView view,int[] dayValues,int[] dayColors,String[] dayNums){
+        DayValue = dayValues;
+        DayNum = dayNums;
+        setDayColor(dayColors);
+    }
+
+    public static void setDayColor(int[] dayColor) {
         DayColor = dayColor;
         Day1Paint.setColor(DayColor[0]);
         Day2Paint.setColor(DayColor[1]);
@@ -41,20 +54,9 @@ public class EmotionReportView extends View {
         Day5Paint.setColor(DayColor[4]);
         Day6Paint.setColor(DayColor[5]);
         Day7Paint.setColor(DayColor[6]);
-
     }
 
-    public void setDayNum(String[] dayNum) {
-        DayNum = dayNum;
-    }
-
-    public EmotionReportView(Context context) {
-        super(context);
-    }
-
-    public EmotionReportView(Context context, AttributeSet emotion_report_bg_attr) {
-        super(context, emotion_report_bg_attr);
-
+    private void init(){
         //虚线
         LinePaint = new Paint();
         LinePaint.setStyle(Paint.Style.FILL);
@@ -123,12 +125,6 @@ public class EmotionReportView extends View {
         Day7Paint.setColor(DayColor[6]);
         Day7Paint.setStyle(Paint.Style.FILL);
     }
-
-    /*@Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-    }
-*/
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);

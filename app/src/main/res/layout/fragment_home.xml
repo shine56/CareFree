@@ -1,98 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".Home.HomeFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <include
-        android:id="@+id/include3"
-        layout="@layout/toolbar_layout"
+    <data>
+
+        <import type="com.example.a73233.carefree.home.viewModel.HomeViewModel"></import>
+        <variable
+            name="homeViewModel"
+            type="HomeViewModel" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        tools:context=".home.view.HomeFragment">
 
-
-    <android.support.v4.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        android:fillViewport="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include3"
-        tools:layout_editor_absoluteX="0dp">
-
-        <android.support.constraint.ConstraintLayout
+        <include
+            android:id="@+id/home_toolbar"
+            app:homeViewModel="@{homeViewModel}"
+            layout="@layout/toolbar_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <include
-                android:id="@+id/include"
-                layout="@layout/home_mood_view"
-                android:layout_width="match_parent"
-                android:layout_height="182dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="16dp"
-                app:layout_constraintEnd_toEndOf="@+id/include2"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/include2"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <include
-                android:id="@+id/include2"
-                layout="@layout/emotion_report_view"
-                android:layout_width="match_parent"
-                android:layout_height="280dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/include" />
-
-            <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="今日任务"
-            android:textColor="@color/Black"
-            android:textSize="22dp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/include2"
-            app:layout_constraintTop_toBottomOf="@+id/include2" />
-
-            <TextView
-                android:id="@+id/emotion_more"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:background="@color/mainBg"
-                android:text="更多"
-                app:layout_constraintEnd_toEndOf="@+id/include2"
-                app:layout_constraintTop_toTopOf="@+id/textView" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:text="日常推荐"
-                android:textColor="@color/Black"
-                android:textSize="22dp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/textView"
-                app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-        </android.support.constraint.ConstraintLayout>
-
-    </android.support.v4.widget.NestedScrollView>
+            android:layout_marginTop="48dp"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
-</android.support.constraint.ConstraintLayout>
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/home_toolbar"
+            tools:layout_editor_absoluteX="0dp">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <include
+                    android:id="@+id/home_mood_view"
+                    app:homeViewModel="@{homeViewModel}"
+                    layout="@layout/home_mood_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="182dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintEnd_toEndOf="@+id/home_emotion_report_view"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/home_emotion_report_view"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <include
+                    android:id="@+id/home_emotion_report_view"
+                    app:homeViewModel="@{homeViewModel}"
+                    layout="@layout/emotion_report_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="280dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/home_mood_view" />
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="热门推荐"
+                    android:textColor="@color/Black"
+                    android:textSize="22dp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/home_emotion_report_view"
+                    app:layout_constraintTop_toBottomOf="@+id/home_emotion_report_view" />
+
+                <TextView
+                    android:id="@+id/emotion_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:background="@color/mainBg"
+                    android:text="更多"
+                    app:layout_constraintEnd_toEndOf="@+id/home_emotion_report_view"
+                    app:layout_constraintTop_toTopOf="@+id/textView" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:text="日常推荐"
+                    android:textColor="@color/Black"
+                    android:textSize="22dp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/textView"
+                    app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+            </android.support.constraint.ConstraintLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+    </android.support.constraint.ConstraintLayout>
+</layout>

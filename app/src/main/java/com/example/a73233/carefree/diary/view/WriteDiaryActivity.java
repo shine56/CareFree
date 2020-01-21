@@ -1,7 +1,7 @@
-package com.example.a73233.carefree.Diary;
+package com.example.a73233.carefree.diary.view;
 
 import android.app.Dialog;
-import android.content.Intent;
+import android.content.Intent;;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.Nullable;
@@ -25,55 +25,51 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.a73233.carefree.R;
-import com.example.a73233.carefree.Util.BigPhotoViewer;
-import com.example.a73233.carefree.Util.EmotionUtil;
-import com.example.a73233.carefree.Util.PhotoManager;
-import com.example.a73233.carefree.Util.SpacesItemDecoration;
-import com.example.a73233.carefree.db.Diary_db;
+import com.example.a73233.carefree.util.BigPhotoViewer;
+import com.example.a73233.carefree.util.PhotoManager;
+import com.example.a73233.carefree.util.SpacesItemDecoration;
+import com.example.a73233.carefree.bean.Diary_db;
 
-import org.litepal.LitePal;
-
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
-public class ReviseDiaryActivity extends AppCompatActivity implements View.OnClickListener {
+public class WriteDiaryActivity extends AppCompatActivity implements View.OnClickListener {
     private ImageView toolbarLeft;
     private TextView toolbarMidle;
     private TextView toolbarRight;
     private ConstraintLayout parentLayout;
     private EditText writeDiary;
     private TextView addPhoto;
+    private ImageView addPhotoLogo;
+    private View writeSignLine;
     private Button takePhoto;
     private Button choosePhoto;
     private Button cancelAddPhoto;
     private Dialog dialog;
     private View inflate;
-    private View reviseSignLine;
+    private static final int AI = 1;
+    private static final int HAPPY = 2;
+    private static final int CALM = 3;
+    private static final int SAD = 4;
+    private static final int REPRESSION = 5;
+    private static final int TAKE_PHOTO = 1;
+    private static final int CHOOSE_PHOTO = 2;
+    private  String imagePath;
+    private List<String> photoList;
+    private int emotionValue;
     private RecyclerView recyclerView;
     private PhotoListAdapter adapter;
 
-    private Diary_db diary_db;
-    private int emotionValue;
-    private List<String> photoList;
-    private String imagePath;
-    private static final int TAKE_PHOTO = 1;
-    private static final int CHOOSE_PHOTO = 2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_revise_diary);
-        Intent intent = getIntent();
-        diary_db = LitePal.find(Diary_db.class,intent.getIntExtra("diaryId",0));
-        if(diary_db != null){
-            emotionValue= diary_db.getEmotionValue();
-            initView();
-        }else {
-            Toast.makeText(this,"修改日记失败",Toast.LENGTH_LONG).show();
-            finish();
-        }
+        setContentView(R.layout.activity_write_diary);
+        initView();
 
-        //监听输入框
+        //对输入框进行监听
         writeDiary.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -84,9 +80,9 @@ public class ReviseDiaryActivity extends AppCompatActivity implements View.OnCli
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String diaryText = writeDiary.getText().toString();
                 if(diaryText == null || diaryText.equals("")){
-                    reviseSignLine.setVisibility(View.VISIBLE);
+                    writeSignLine.setVisibility(View.VISIBLE);
                 }else {
-                    reviseSignLine.setVisibility(View.GONE);
+                    writeSignLine.setVisibility(View.GONE);
                 }
             }
 
@@ -105,22 +101,25 @@ public class ReviseDiaryActivity extends AppCompatActivity implements View.OnCli
             }
         });
     }
+
+    @Override
     public void onClick(View v) {
+        Intent intent = new Intent(this, BigPhotoViewer.class);
         switch (v.getId()){
-            case R.id.revise_add_photo :
+            case R.id.add_photo :
                 showDialogView();
                 break;
             case R.id.toolbar_left2:
-                deleteDiary();
+                finish();
                 break;
             case R.id.toolbar_right2:
                 saveDiary();
-                Toast.makeText(this,"日记修改成功",Toast.LENGTH_LONG).show();
+                Toast.makeText(this,"日记保存成功",Toast.LENGTH_LONG).show();
                 setResult(RESULT_OK);
                 finish();
                 break;
             case R.id.take_photo:
-                imagePath = PhotoManager.TakePhoto(ReviseDiaryActivity.this);
+                imagePath = PhotoManager.TakePhoto(WriteDiaryActivity.this);
                 dialog.hide();
                 break;
             case R.id.choose_photo:
@@ -133,21 +132,28 @@ public class ReviseDiaryActivity extends AppCompatActivity implements View.OnCli
                 dialog.hide();
                 break;
         }
-
     }
     private void saveDiary(){
+        Date date = new Date();
+        String day = new SimpleDateFormat("dd").format(date);
+        String yearAndMonth = new SimpleDateFormat("yyyy年MM月").format(date);
+        String week = new SimpleDateFormat("EEEE").format(date);
         String diaryContent = writeDiary.getText().toString();
+        Diary_db diaryDb = new Diary_db();
+        diaryDb.setDay(day);
+        diaryDb.setYearAndMonth(yearAndMonth);
+        diaryDb.setWeek(week);
+        if(diaryContent == null || diaryContent.equals("")){
+            diaryDb.setDiaryContent(diaryContent);
+        }else {
+            diaryDb.setDiaryContent(diaryContent+"\n\n\n\n\n");
+        }
 
-        diary_db.setDiaryContent(diaryContent);
-        diary_db.setPhotoList(photoList);
+        diaryDb.setPhotoList(photoList);
         //随机数
         Random random = new Random();
-        diary_db.setEmotionValue(random.nextInt(101)-50);
-        diary_db.save();
-    }
-    private void deleteDiary(){
-        LitePal.delete(Diary_db.class, diary_db.getId());
-        finish();
+        diaryDb.setEmotionValue(random.nextInt(101)-50);
+        diaryDb.save();
     }
     private void showDialogView(){
         //设置对话框
@@ -176,6 +182,7 @@ public class ReviseDiaryActivity extends AppCompatActivity implements View.OnCli
         dialogWindow.setAttributes(lp);
         dialog.show();
     }
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode){
@@ -187,38 +194,33 @@ public class ReviseDiaryActivity extends AppCompatActivity implements View.OnCli
                 break;
             case CHOOSE_PHOTO:
                 if(resultCode == RESULT_OK){
+
                     imagePath = PhotoManager.copyPhoto(this,
                             PhotoManager.GetPathFromUri(this,data.getData()));
-
                     photoList.add(imagePath);
                     showPhoto();
-
-                    /*photo1.setVisibility(View.VISIBLE);
-                    Glide.with(this).load(data.getData())
-                            .apply(RequestOptions.bitmapTransform(new RoundedCorners(40)))
-                            .skipMemoryCache(true) // 不使用内存缓存
-                            .diskCacheStrategy(DiskCacheStrategy.NONE) // 不使用磁盘缓存
-                            .into(photo1);*/
                 }
                 break;
         }
 
     }
+    private void showPhoto(){
+       adapter.setPhotoPathList(photoList);
+       adapter.notifyDataSetChanged();
+    }
     private void initView(){
-        addPhoto = findViewById(R.id.revise_add_photo);
+        addPhotoLogo = findViewById(R.id.add_photo_logo);
+        addPhoto = findViewById(R.id.add_photo);
         toolbarLeft = findViewById(R.id.toolbar_left2);
         toolbarMidle = findViewById(R.id.toolbar_center2);
         toolbarRight = findViewById(R.id.toolbar_right2);
-        parentLayout = findViewById(R.id.activity_revise_diary);
-        writeDiary = findViewById(R.id.revise_write_diary);
-        reviseSignLine = findViewById(R.id.revise_sign_line);
-        recyclerView = findViewById(R.id.revise_recycle_view);
+        parentLayout = findViewById(R.id.activity_single_diary);
+        writeDiary = findViewById(R.id.write_diary);
+        writeSignLine = findViewById(R.id.write_sign_line);
+        recyclerView = findViewById(R.id.write_recycle_view);
 
-        photoList = diary_db.getPhotoList();
-        if(photoList == null){
-            photoList = new ArrayList<>();
-        }
         adapter = new PhotoListAdapter(this,photoList,2);
+        photoList = new ArrayList<>();
 
         addPhoto.setOnClickListener(this);
         toolbarLeft.setOnClickListener(this);
@@ -231,40 +233,59 @@ public class ReviseDiaryActivity extends AppCompatActivity implements View.OnCli
         window.setStatusBarColor(Color.TRANSPARENT);
 
         //设置标题栏
-        toolbarLeft.setImageResource(R.mipmap.back_logo);
-        toolbarMidle.setTextSize(18);
-        toolbarMidle.setText(diary_db.getYearAndMonth()+diary_db.getDay()+"日");
+        toolbarMidle.setText("今日");
         toolbarRight.setText("完成");
 
-        //初始化背景
-        GradientDrawable addPhotoBg = new GradientDrawable();
-        addPhotoBg.setColor(Color.WHITE);
-        addPhotoBg.setCornerRadius(40);
-        addPhoto.setBackground(addPhotoBg);
-
-        GradientDrawable parentBackground =
-                new GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP
-                        , EmotionUtil.GetColors(emotionValue));
-        parentLayout.setBackground(parentBackground);
-
-        //初始化日记内容
-        writeDiary.setText(diary_db.getDiaryContent());
-        if(diary_db.getDiaryContent() == null || diary_db.getDiaryContent().equals("")){
-            reviseSignLine.setVisibility(View.VISIBLE);
-        }else {
-            reviseSignLine.setVisibility(View.GONE);
-        }
-        //初始化图片
+        //图片
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(new SpacesItemDecoration(1,30));
         recyclerView.setAdapter(adapter);
 
-    }
-    private void showPhoto(){
-        Log.d("图片测试",""+"显示图片" );
-        adapter.setPhotoPathList(photoList);
-        adapter.notifyDataSetChanged();
+        //设置背景
+        int addType = getIntent().getIntExtra("addType",1);
+        GradientDrawable parentBackground;
+        GradientDrawable addPhotoBg = new GradientDrawable();
+        addPhotoBg.setColor(Color.WHITE);
+        addPhotoBg.setCornerRadius(40);
+        addPhoto.setBackground(addPhotoBg);
+        switch (addType){
+            case AI :
+                window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+
+                toolbarLeft.setImageResource(R.mipmap.cancel_logo_black);
+                toolbarRight.setTextColor(Color.BLACK);
+                toolbarMidle.setTextColor(Color.BLACK);
+                writeDiary.setTextColor(0XFF7F7F7F);
+                writeSignLine.setBackgroundColor(Color.GRAY);
+
+                addPhotoBg.setColor(0XFF6072FF);
+                addPhoto.setBackground(addPhotoBg);
+                addPhotoLogo.setImageResource(R.mipmap.camera_logo_white);
+                break;
+            case HAPPY :
+                int[] colors1 = {0XFF3FABD5,0XFF38D5D6};
+                parentBackground = new GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP,colors1);
+                parentBackground.setGradientType(GradientDrawable.RECTANGLE);
+                parentLayout.setBackground(parentBackground);
+                Log.d("addtype测试","进入");
+                break;
+            case CALM :
+                int[] colors2 = {0XFF537AE1,0XFF64B0E8};
+                parentBackground = new GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP,colors2);
+                parentLayout.setBackground(parentBackground);
+                break;
+            case SAD :
+                int[] colors3 = {0XFFAC69DB,0XFF9B85FF};
+                parentBackground = new GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP,colors3);
+                parentLayout.setBackground(parentBackground);
+                break;
+            case REPRESSION :
+                int[] colors4 = {0XFF09203F,0XFF2B5876};
+                parentBackground = new GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP,colors4);
+                parentLayout.setBackground(parentBackground);
+                break;
+        }
     }
 }

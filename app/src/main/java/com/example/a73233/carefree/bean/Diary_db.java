@@ -1,4 +1,4 @@
-package com.example.a73233.carefree.db;
+package com.example.a73233.carefree.bean;
 
 import org.litepal.crud.LitePalSupport;
 

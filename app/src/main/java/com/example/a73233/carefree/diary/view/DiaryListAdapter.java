@@ -1,9 +1,6 @@
-package com.example.a73233.carefree.Diary;
+package com.example.a73233.carefree.diary.view;
 
-import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,8 +15,8 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.a73233.carefree.MainActivity;
 import com.example.a73233.carefree.R;
-import com.example.a73233.carefree.Util.EmotionUtil;
-import com.example.a73233.carefree.db.Diary_db;
+import com.example.a73233.carefree.util.EmotionUtil;
+import com.example.a73233.carefree.bean.Diary_db;
 
 import java.util.List;
 

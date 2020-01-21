@@ -1,4 +1,4 @@
-package com.example.a73233.carefree.Diary;
+package com.example.a73233.carefree.diary.view;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -15,7 +15,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.a73233.carefree.R;
-import com.example.a73233.carefree.Util.BigPhotoViewer;
+import com.example.a73233.carefree.util.BigPhotoViewer;
 
 import java.util.List;
 

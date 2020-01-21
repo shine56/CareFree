@@ -1,4 +1,4 @@
-package com.example.a73233.carefree.Util;
+package com.example.a73233.carefree.util;
 
 import android.app.Activity;
 import android.content.ContentUris;
@@ -19,7 +19,7 @@ import android.text.style.ImageSpan;
 import android.util.Log;
 import android.widget.EditText;
 
-import com.example.a73233.carefree.Diary.WriteDiaryActivity;
+import com.example.a73233.carefree.diary.view.WriteDiaryActivity;
 
 import java.io.File;
 import java.io.FileInputStream;

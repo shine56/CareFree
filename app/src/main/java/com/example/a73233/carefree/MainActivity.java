@@ -2,45 +2,32 @@ package com.example.a73233.carefree;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
+import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.example.a73233.carefree.Note.NoteFragment;
-import com.example.a73233.carefree.My.MeFragment;
-import com.example.a73233.carefree.Diary.DiaryFragment;
-import com.example.a73233.carefree.Home.HomeFragment;
-import com.example.a73233.carefree.db.Diary_db;
+import com.example.a73233.carefree.baseview.BaseActivity;
+import com.example.a73233.carefree.note.NoteFragment;
+import com.example.a73233.carefree.me.MeFragment;
+import com.example.a73233.carefree.diary.view.DiaryFragment;
+import com.example.a73233.carefree.home.view.HomeFragment;
+import com.example.a73233.carefree.databinding.ActivityMainBinding;
 
-import org.litepal.LitePal;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends BaseActivity {
+    private ActivityMainBinding binding;
+
     private HomeFragment homeFragment;
     private DiaryFragment diaryFragment;
     private NoteFragment noteFragment;
     private MeFragment meFragment;
-    private LinearLayout HomeButtom;
-    private LinearLayout DiaryButtom;
-    private LinearLayout NoteButtom;
-    private LinearLayout MeButtom;
-    private ImageView homeLogo;
-    private ImageView diaryLogo;
-    private ImageView noteLogo;
-    private ImageView meLogo;
 
     private int FragmentID = 1;
     private static final int HomePage = 1;
@@ -51,38 +38,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        initView();
-
-        //申请权限
-        if(ContextCompat.checkSelfPermission(MainActivity.this,Manifest.permission.WRITE_EXTERNAL_STORAGE)
-        != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(MainActivity.this,
-                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
-        }
-        if(ContextCompat.checkSelfPermission(MainActivity.this,Manifest.permission.CAMERA)
-                != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(MainActivity.this,
-                    new String[]{Manifest.permission.CAMERA},2);
-        }
-
-        //初始化碎片
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.add(R.id.fragment_container,diaryFragment,"diaryFragment");
-        transaction.add(R.id.fragment_container, homeFragment,"homeFragment");
-        transaction.add(R.id.fragment_container,noteFragment,"noteFragment");
-        transaction.add(R.id.fragment_container,meFragment,"meFragment");
-        transaction.addToBackStack("add allFragment");
-        transaction.hide(diaryFragment);
-        transaction.hide(noteFragment);
-        transaction.hide(meFragment);
-        transaction.commit();
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
+        binding.setMainActivity(this);
+        initApp();
     }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
+    public void onClick(View view) {
+        switch (view.getId()){
             case R.id.button_home:
                 if(FragmentID != HomePage){
                     ShowFragment(HomePage);
@@ -108,21 +69,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void ShowFragment(int ChickFragmentID){
         switch (FragmentID){
             case HomePage:
-                homeLogo.setImageResource(R.drawable.home_logo);
+                binding.homeLogo.setImageResource(R.drawable.home_logo);
                 break;
             case DiaryPage:
-                diaryLogo.setImageResource(R.drawable.diary_logo);
+                binding.diaryLogo.setImageResource(R.drawable.diary_logo);
                 break;
             case NotePage:
-                noteLogo.setImageResource(R.drawable.note_logo);
+                binding.noteLogo.setImageResource(R.drawable.note_logo);
                 break;
             case MePage:
-                meLogo.setImageResource(R.drawable.me_logo);
+                binding.meLogo.setImageResource(R.drawable.me_logo);
                 break;
         }
         switch (ChickFragmentID){
             case HomePage:
-                homeLogo.setImageResource(R.drawable.home_logo_chick);
+                binding.homeLogo.setImageResource(R.drawable.home_logo_chick);
                 FragmentID = HomePage;
                 FragmentManager fragmentManager1 = getSupportFragmentManager();
                 FragmentTransaction transaction1 = fragmentManager1.beginTransaction();
@@ -133,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 transaction1.commit();
                 break;
             case DiaryPage:
-                diaryLogo.setImageResource(R.drawable.diary_logo_chick);
+                binding.diaryLogo.setImageResource(R.drawable.diary_logo_chick);
                 FragmentID = DiaryPage;
 
                 FragmentManager fragmentManager2 = getSupportFragmentManager();
@@ -145,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 transaction2.commit();
                 break;
             case NotePage:
-                noteLogo.setImageResource(R.drawable.note_logo_chick);
+                binding.noteLogo.setImageResource(R.drawable.note_logo_chick);
                 FragmentID = NotePage;
 
                 FragmentManager fragmentManager3 = getSupportFragmentManager();
@@ -157,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 transaction3.commit();
                 break;
             case MePage:
-                meLogo.setImageResource(R.drawable.me_logo_chick);
+                binding.meLogo.setImageResource(R.drawable.me_logo_chick);
                 FragmentID = MePage;
 
                 FragmentManager fragmentManager4 = getSupportFragmentManager();
@@ -193,35 +154,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }*/
 
     }
-    /*
-       初始化界面
-     */
-    private void  initView(){
-        //修改状态栏
-        Window window = getWindow();
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        window.setStatusBarColor(Color.TRANSPARENT);
-        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
-                View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-
-        HomeButtom = findViewById(R.id.button_home);
-        DiaryButtom = findViewById(R.id.button_diary);
-        NoteButtom = findViewById(R.id.button_note);
-        MeButtom = findViewById(R.id.button_me);
-        homeLogo = findViewById(R.id.home_logo);
-        homeLogo.setImageResource(R.drawable.home_logo_chick);
-        diaryLogo = findViewById(R.id.diary_logo);
-        noteLogo = findViewById(R.id.note_logo);
-        meLogo = findViewById(R.id.me_logo);
-
-        HomeButtom.setOnClickListener(this);
-        DiaryButtom.setOnClickListener(this);
-        NoteButtom.setOnClickListener(this);
-        MeButtom.setOnClickListener(this);
-
+    private void  initApp(){
+        ReviseStatusBar(TRANSPARENT_BLACK);
+        //初始化底部导航栏
+        binding.homeLogo.setImageResource(R.drawable.home_logo_chick);
+        //申请权限
+        if(ContextCompat.checkSelfPermission(MainActivity.this,Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(MainActivity.this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
+        }
+        if(ContextCompat.checkSelfPermission(MainActivity.this,Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(MainActivity.this,
+                    new String[]{Manifest.permission.CAMERA},2);
+        }
+        //实例化碎片
         homeFragment = new HomeFragment();
         diaryFragment = new DiaryFragment();
         noteFragment = new NoteFragment();
         meFragment = new MeFragment();
+
+        //初始化碎片管理器
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.add(R.id.fragment_container,diaryFragment,"diaryFragment");
+        transaction.add(R.id.fragment_container, homeFragment,"homeFragment");
+        transaction.add(R.id.fragment_container,noteFragment,"noteFragment");
+        transaction.add(R.id.fragment_container,meFragment,"meFragment");
+        transaction.addToBackStack("add allFragment");
+        transaction.hide(diaryFragment);
+        transaction.hide(noteFragment);
+        transaction.hide(meFragment);
+        transaction.commit();
     }
 }

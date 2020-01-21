@@ -1,7 +1,6 @@
-package com.example.a73233.carefree.My;
+package com.example.a73233.carefree.me;
 
 import android.app.Activity;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,8 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,11 +17,11 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.a73233.carefree.Diary.DiaryListAdapter;
+import com.example.a73233.carefree.diary.view.DiaryListAdapter;
 import com.example.a73233.carefree.MainActivity;
 import com.example.a73233.carefree.R;
-import com.example.a73233.carefree.Util.SpacesItemDecoration;
-import com.example.a73233.carefree.db.Diary_db;
+import com.example.a73233.carefree.util.SpacesItemDecoration;
+import com.example.a73233.carefree.bean.Diary_db;
 
 import org.litepal.LitePal;
 

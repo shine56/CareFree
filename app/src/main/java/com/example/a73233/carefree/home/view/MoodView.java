@@ -1,39 +1,49 @@
-package com.example.a73233.carefree.Home;
+package com.example.a73233.carefree.home.view;
 
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.databinding.BindingAdapter;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Path;
-import android.graphics.PointF;
 import android.graphics.RectF;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
+
+import com.example.a73233.carefree.R;
 
 public class MoodView extends View {
     private Paint mHeartPaint; //心形画笔
-    private Paint mOuterPaint, mInnerPaint, mPoint;//外弧，内弧画笔
+    private Paint mOuterPaint, mInnerPaint;//外弧，内弧画笔
+    private static Paint mPoint;
     private Paint mTextPaint;
     private int MaxValue = 50;
-    private int CurrentValue = 36;
-    private int mPointColor = 0XFF3FABD5;
+    private static int CurrentValue = 36;
+    private static int mPointColor = 0XFF3FABD5;
     private int mBorderWidth = 45; //圆弧宽度
 
+
     public MoodView(Context context) {
-            super(context);
-        }
-
-    public void setmPointColor(int mPointColor) {
-        this.mPointColor = mPointColor;
-        this.mPoint.setColor(mPointColor);
-    }
-    public void setCurrentValue(int CurrentValue){
-        this.CurrentValue = CurrentValue;
+        super(context);
+        Log.d("mood颜色测试","一个参数");
+        init();
     }
 
-    public MoodView(Context context, AttributeSet home_mood_view_attr) {
-            super(context, home_mood_view_attr);
+    public MoodView(Context context, @Nullable AttributeSet attrs) {
+        super(context, attrs);
+        init();
+    }
 
+    @BindingAdapter(value = {"app:emotionValue","app:pointColor"},requireAll = false)
+    public static void GetViewData(MoodView moodView,int emotionValue, int pointColor){
+        CurrentValue = emotionValue;
+        mPointColor = pointColor;
+        mPoint.setColor(mPointColor);
+    }
+
+    private void init(){
         //内弧
         mInnerPaint = new Paint();
         mInnerPaint.setAntiAlias(true);

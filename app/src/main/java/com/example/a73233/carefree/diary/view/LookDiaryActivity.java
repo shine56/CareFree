@@ -1,15 +1,11 @@
-package com.example.a73233.carefree.Diary;
+package com.example.a73233.carefree.diary.view;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,17 +17,17 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
 import com.example.a73233.carefree.R;
-import com.example.a73233.carefree.Util.EmotionUtil;
-import com.example.a73233.carefree.Util.SpacesItemDecoration;
-import com.example.a73233.carefree.db.Diary_db;
+import com.example.a73233.carefree.baseview.BaseActivity;
+import com.example.a73233.carefree.util.EmotionUtil;
+import com.example.a73233.carefree.util.SpacesItemDecoration;
+import com.example.a73233.carefree.bean.Diary_db;
 
 import org.litepal.LitePal;
 
-public class LookDiaryActivity extends AppCompatActivity implements View.OnClickListener {
+public class LookDiaryActivity extends BaseActivity implements View.OnClickListener {
     private TextView bgView;
     private TextView emotionValue;
     private ImageView toolbarLeft;
@@ -122,11 +118,9 @@ public class LookDiaryActivity extends AppCompatActivity implements View.OnClick
             y2 = ev.getY();
             Log.d("滑动测试","y2 = "+y2);
             if( startActivityFlag == 0&& y2-startY >0){
-                Intent intent = new Intent(LookDiaryActivity.this,
-                        ReviseDiaryActivity.class);
-                intent.putExtra("diaryId",diary_db.getId());
-
-                startActivityForResult(intent, 1,
+                Bundle bundle = new Bundle();
+                bundle.putInt("diaryId",diary_db.getId());
+                startActivityForResultWithOptions(ReviseDiaryActivity.class,bundle,1,
                         ActivityOptions.makeSceneTransitionAnimation(LookDiaryActivity.this,bgView
                                 , "sharedView").toBundle());
                 startActivityFlag++;

@@ -1,4 +1,4 @@
-package com.example.a73233.carefree.Util;
+package com.example.a73233.carefree.util;
 
 import android.util.Log;
 

@@ -1,43 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.example.a73233.carefree.Home.MoodView
-        android:id="@+id/mood_view"
-        android:background="@drawable/mood_view_happy_bg"
+    <data>
+        <import type="com.example.a73233.carefree.home.viewModel.HomeViewModel"></import>
+        <variable
+            name="homeViewModel"
+            type="HomeViewModel" />
+    </data>
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
-    <TextView
-        android:id="@+id/mood_value_right"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:layout_marginRight="40dp"
-        android:layout_marginTop="85dp"
-        android:text="36"
-        android:textColor="@color/White"
-        android:textSize="32sp"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:layout_marginRight="40dp"
-        android:layout_marginTop="60dp"
-        android:text="当前情绪值"
-        android:textColor="@color/White"
-        android:textSize="14sp"/>
+        android:layout_height="wrap_content">
 
-    <ImageView
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_gravity="right"
-        android:layout_marginRight="40dp"
-        android:layout_marginTop="30dp"
-        android:src="@mipmap/heart_logo"/>
+        <com.example.a73233.carefree.home.view.MoodView
+            android:id="@+id/mood_view"
+            android:background="@drawable/mood_view_happy_bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:emotionValue="@{homeViewModel.emotionValue}"
+            app:pointColor="@{homeViewModel.moodViewPointColor}"/>
 
+        <TextView
+            android:id="@+id/mood_value_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="85dp"
+            android:text="@{String.valueOf(homeViewModel.emotionValue)}"
+            android:textColor="@color/White"
+            android:textSize="32sp" />
 
-</FrameLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="60dp"
+            android:text="当前能动值"
+            android:textColor="@color/White"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="right"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="30dp"
+            android:src="@mipmap/heart_logo" />
+    </FrameLayout>
+</layout>

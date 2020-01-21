@@ -13,10 +13,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Diary.ReviseDiaryActivity"></activity>
-        <activity android:name=".Diary.LookDiaryActivity" />
-        <activity android:name=".Util.BigPhotoViewer" />
-        <activity android:name=".Diary.WriteDiaryActivity" />
+        <activity android:name=".diary.view.ReviseDiaryActivity"></activity>
+        <activity android:name=".diary.view.LookDiaryActivity" />
+        <activity android:name=".util.BigPhotoViewer" />
+        <activity android:name=".diary.view.WriteDiaryActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,7 +27,7 @@
 
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.example.a73233.carefree.Util.fileprovider"
+            android:authorities="com.example.a73233.carefree.util.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

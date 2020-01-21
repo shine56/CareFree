@@ -20,6 +20,6 @@
     	</list>
     -->
     <list>
-        <mapping class="com.example.a73233.carefree.db.Diary_db"/>
+        <mapping class="com.example.a73233.carefree.bean.Diary_db"/>
     </list>
 </litepal>

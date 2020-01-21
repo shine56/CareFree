@@ -1,10 +1,9 @@
-package com.example.a73233.carefree.Util;
+package com.example.a73233.carefree.util;
 
 import android.icu.util.Calendar;
 
 public class TimeUtil {
     //处理大小月
-
     public static int GetDayByMonth(int day){
         //获取上个月月份
         Calendar calendar = Calendar.getInstance();
