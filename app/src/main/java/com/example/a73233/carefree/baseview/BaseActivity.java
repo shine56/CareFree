@@ -37,6 +37,12 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d(TAG,ACTIVITY_NAME+"-->onRestart()");
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         Log.d(TAG,ACTIVITY_NAME+"-->onDestroy()");
@@ -161,12 +167,20 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     /**
-     * 展示长时Toast
+     * 展示短时Toast
      * @param text
      */
     public void showToast(String text){
-        Toast.makeText(this,text,Toast.LENGTH_LONG).show();
+        Toast.makeText(this,text,Toast.LENGTH_SHORT).show();
 
+    }
+
+    /**
+     * 打印信息
+     * @param text
+     */
+    public void logD(String text){
+        Log.d(TAG,ACTIVITY_NAME+"-->"+text);
     }
 
 }

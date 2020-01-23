@@ -42,14 +42,14 @@ public class PhotoManager {
         File outPutImage;
         Uri imageUri;
 
-        //图片回随着APP删除而删除
+        //图片会随着APP删除而删除
        sdPath = activity.getExternalCacheDir().getPath();
        imageName = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".jpg";
        imagePath = sdPath +"/"+ imageName;
        outPutImage = new File(imagePath);
        if(Build.VERSION.SDK_INT > 24){
            imageUri = FileProvider.getUriForFile(activity,
-                   "com.example.a73233.carefree.Util.fileprovider",outPutImage);
+                   "com.example.a73233.carefree.util.fileprovider",outPutImage);
        }else {
            imageUri = Uri.fromFile(outPutImage);
        }

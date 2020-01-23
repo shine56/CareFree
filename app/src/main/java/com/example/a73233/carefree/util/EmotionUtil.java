@@ -21,6 +21,7 @@ public class EmotionUtil {
         int[] colors2 = {0XFF537AE1,0XFF64B0E8};
         return colors2;
     }
+    
     public static String GetSuggestion(int[] values){
         String suggestion = "尽情抒发你的一念一想！";
         int basicFluctuationValue = 175;

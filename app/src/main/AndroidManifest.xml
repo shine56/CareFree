@@ -13,10 +13,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".diary.view.ReviseDiaryActivity"></activity>
+        <activity android:name=".diary.view.WriteDiaryActivity"></activity>
         <activity android:name=".diary.view.LookDiaryActivity" />
         <activity android:name=".util.BigPhotoViewer" />
-        <activity android:name=".diary.view.WriteDiaryActivity" />
+        <activity android:name=".diary.view.WriteDiaryActivity_" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

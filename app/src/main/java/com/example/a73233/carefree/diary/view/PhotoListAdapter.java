@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,17 +16,24 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.a73233.carefree.R;
 import com.example.a73233.carefree.util.BigPhotoViewer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PhotoListAdapter extends RecyclerView.Adapter<PhotoListAdapter.ViewHolder> {
     private List<String> photoPathList;
     private Activity activity;
-    private int SMALL = 1;
-    private int BIG = 2;
+    public static final int SMALL = 1;
+    public static final int BIG = 2;
     private int type;
     private int radian = 40;
 
     private OnitemClick onitemClick;   //定义点击事件接口
+
+    public PhotoListAdapter(Activity activity, int type){
+        this.activity = activity;
+        this.type = type;
+        photoPathList = new ArrayList<>();
+    }
 
     //定义设置点击事件监听的方法
     public void setOnitemClickLintener (OnitemClick onitemClick) {
@@ -37,25 +43,9 @@ public class PhotoListAdapter extends RecyclerView.Adapter<PhotoListAdapter.View
     public interface OnitemClick {
         void onItemClick(int position);
     }
-
-    class ViewHolder extends RecyclerView.ViewHolder{
-        ImageView photo;
-        ImageView deletePhoto;
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            photo = itemView.findViewById(R.id.photo_list);
-            deletePhoto = itemView.findViewById(R.id.delete_photo);
-        }
-    }
-
-    public PhotoListAdapter (Activity activity, List<String> photoPathList , int type){
-        this.activity = activity;
-        this.photoPathList = photoPathList;
-        this.type = type;
-    }
-
-    public void setPhotoPathList(List<String> photoPathList) {
-        this.photoPathList = photoPathList;
+    public void setPhotoPathList(List<String> data) {
+        photoPathList = data;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -74,7 +64,7 @@ public class PhotoListAdapter extends RecyclerView.Adapter<PhotoListAdapter.View
             radian = 40;
             return holder;
         }
-       return null;
+        return null;
     }
 
     @Override
@@ -84,7 +74,7 @@ public class PhotoListAdapter extends RecyclerView.Adapter<PhotoListAdapter.View
             Glide.with(activity).load(imagePath)
                     .skipMemoryCache(true) // 不使用内存缓存
                     .diskCacheStrategy(DiskCacheStrategy.NONE) // 不使用磁盘缓存
-                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(30)))
+                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(40)))
                     .error(R.mipmap.find_photo_fail)
                     .into(holder.photo);
             holder.photo.setOnClickListener(new View.OnClickListener() {
@@ -107,14 +97,21 @@ public class PhotoListAdapter extends RecyclerView.Adapter<PhotoListAdapter.View
             }
         }
     }
-
     @Override
     public int getItemCount() {
         if(photoPathList != null){
-            Log.d("图片测试",""+photoPathList.size());
             return photoPathList.size();
         }else {
             return 0;
+        }
+    }
+    class ViewHolder extends RecyclerView.ViewHolder{
+        ImageView photo;
+        ImageView deletePhoto;
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            photo = itemView.findViewById(R.id.photo_list);
+            deletePhoto = itemView.findViewById(R.id.delete_photo);
         }
     }
 }

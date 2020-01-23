@@ -14,11 +14,15 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.a73233.carefree.baseview.BaseActivity;
+import com.example.a73233.carefree.bean.Diary_db;
 import com.example.a73233.carefree.note.NoteFragment;
 import com.example.a73233.carefree.me.MeFragment;
 import com.example.a73233.carefree.diary.view.DiaryFragment;
 import com.example.a73233.carefree.home.view.HomeFragment;
 import com.example.a73233.carefree.databinding.ActivityMainBinding;
+import com.example.a73233.carefree.util.LogUtil;
+
+import org.litepal.LitePal;
 
 
 public class MainActivity extends BaseActivity {
@@ -41,6 +45,19 @@ public class MainActivity extends BaseActivity {
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
         binding.setMainActivity(this);
         initApp();
+       // LitePal.deleteAll(Diary_db.class);
+        //initDb();
+    }
+    private void initDb(){
+        for(int i=15; i<21; i++){
+            Diary_db db = new Diary_db();
+            db.setDay(""+i);
+            db.setDiaryContent("第"+i);
+            db.setEmotionValue(i);
+            db.setWeek("周三");
+            db.setYearAndMonth("2020年01月");
+            db.save();
+        }
     }
     public void onClick(View view) {
         switch (view.getId()){

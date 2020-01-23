@@ -4,33 +4,25 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
 
+import com.example.a73233.carefree.bean.DiaryBean;
+
+import java.util.ArrayList;
 import java.util.List;
 
-public class BaseAdapter<T> extends RecyclerView.Adapter {
-    private List<T> mList;
-    private Context context;
+public abstract class BaseAdapter<T> extends RecyclerView.Adapter {
+    public List<T> mList;
+    public Context context;
 
-    public BaseAdapter(List<T> mList, Context context) {
-        this.mList = mList;
+    public BaseAdapter(Context context) {
         this.context = context;
+        mList = new ArrayList<>();
     }
 
-    @NonNull
-    @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        return null;
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-
-    }
-
-    @Override
-    public int getItemCount() {
-        return 0;
+    public void refreshData(List<T> data){
+        mList.clear();
+        mList.addAll(data);
+        notifyDataSetChanged();
     }
 
     public class MyHolder extends RecyclerView.ViewHolder{

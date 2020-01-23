@@ -1,34 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <Button
-        android:text="相机"
-        android:id="@+id/take_photo"
+    <data>
+        <import type="com.example.a73233.carefree.diary.view.WriteDiaryActivity"/>
+        <variable
+            name="writeActivity"
+            type="WriteDiaryActivity" />
+
+    </data>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/White" />
+        android:orientation="vertical">
 
-    <Button
-        android:text="打开图库"
-        android:id="@+id/choose_photo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/White" />
+        <Button
+            android:onClick="@{writeActivity.onClick}"
+            android:text="相机"
+            android:id="@+id/take_photo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/White" />
 
-    <Button
-        android:text="取消"
-        android:id="@+id/cancel_add_photo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/White" />
+        <Button
+            android:onClick="@{writeActivity.onClick}"
+            android:text="打开图库"
+            android:id="@+id/choose_photo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/White" />
 
-
-
-
-</LinearLayout>
+        <Button
+            android:onClick="@{writeActivity.onClick}"
+            android:text="取消"
+            android:id="@+id/cancel_add_photo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/White" />
+    </LinearLayout>
+</layout>

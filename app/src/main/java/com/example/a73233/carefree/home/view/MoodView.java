@@ -27,7 +27,6 @@ public class MoodView extends View {
 
     public MoodView(Context context) {
         super(context);
-        Log.d("mood颜色测试","一个参数");
         init();
     }
 
@@ -36,11 +35,12 @@ public class MoodView extends View {
         init();
     }
 
-    @BindingAdapter(value = {"app:emotionValue","app:pointColor"},requireAll = false)
+    @BindingAdapter(value = {"emotionValue","pointColor"},requireAll = false)
     public static void GetViewData(MoodView moodView,int emotionValue, int pointColor){
         CurrentValue = emotionValue;
         mPointColor = pointColor;
         mPoint.setColor(mPointColor);
+        Log.d("mood颜色测试","获取参数");
     }
 
     private void init(){

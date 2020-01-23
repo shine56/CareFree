@@ -1,5 +1,7 @@
 package com.example.a73233.carefree.baseview;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,15 +10,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 public class BaseFragment extends Fragment {
     public final static String TAG = "碎片测试";
     public String FRAGMENT_NAME = getClass().getSimpleName();
+    public Activity activity = getActivity();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG,FRAGMENT_NAME);
         Log.d(TAG,FRAGMENT_NAME+"-->onCreate()");
     }
 
@@ -34,6 +37,23 @@ public class BaseFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG,FRAGMENT_NAME+"-->onResume()");
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.d(TAG,FRAGMENT_NAME+"-->onPause()");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.d(TAG,FRAGMENT_NAME+"-->onStop()");
+    }
+
+    @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         Log.d(TAG,FRAGMENT_NAME+"-->onHiddenChanged()");
@@ -43,5 +63,35 @@ public class BaseFragment extends Fragment {
         super.onDestroy();
         Log.d(TAG,FRAGMENT_NAME+"-->onDestroy()");
         getActivity().finish();
+    }
+
+    /**
+     * 展示短时Toast
+     * @param text
+     */
+    public void showToast(String text){
+        Toast.makeText(activity,text,Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * 携带参数跳转
+     * @param clazz
+     * @param bundle
+     */
+    public void startActivity(Class<?> clazz,Bundle bundle){
+        Intent intent  = new Intent(activity,clazz);
+        if(bundle != null){
+            intent.putExtras(bundle);
+        }
+        startActivity(intent);
+    }
+
+
+    /**
+     * 打印信息
+     * @param text
+     */
+    public void logD(String text){
+        Log.d(TAG,FRAGMENT_NAME+"-->"+text);
     }
 }

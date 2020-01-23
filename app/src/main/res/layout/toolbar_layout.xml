@@ -5,9 +5,13 @@
     <data>
 
         <import type="com.example.a73233.carefree.home.viewModel.HomeViewModel"></import>
+        <import type="com.example.a73233.carefree.diary.view.DiaryFragment"/>
         <variable
             name="homeViewModel"
             type="HomeViewModel" />
+        <variable
+            name="diaryFragment"
+            type="DiaryFragment" />
     </data>
 
     <FrameLayout
@@ -34,6 +38,7 @@
             android:textColor="@color/Black" />
 
         <ImageView
+            android:onClick="@{diaryFragment.onClick}"
             android:id="@+id/toolbar_right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -38,7 +38,7 @@ public class EmotionReportView extends View {
         init();
     }
 
-    @BindingAdapter(value = {"app:dayValues","app:dayColors","app:dayNums"},requireAll = false)
+    @BindingAdapter(value = {"dayValues","dayColors","dayNums"},requireAll = false)
     public static void GetViewData(EmotionReportView view,int[] dayValues,int[] dayColors,String[] dayNums){
         DayValue = dayValues;
         DayNum = dayNums;
