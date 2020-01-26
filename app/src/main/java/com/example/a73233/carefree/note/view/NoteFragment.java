@@ -1,4 +1,4 @@
-package com.example.a73233.carefree.note;
+package com.example.a73233.carefree.note.view;
 
 import android.net.Uri;
 import android.os.Bundle;

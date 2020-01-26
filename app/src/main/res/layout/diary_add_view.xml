@@ -166,6 +166,7 @@
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="3dp"
             android:text="平静"
             android:textColor="@color/Black"
             android:textSize="9sp"

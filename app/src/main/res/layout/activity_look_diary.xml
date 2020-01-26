@@ -160,16 +160,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/showPhoto">
         </android.support.v7.widget.RecyclerView>
-        <ImageView
+        <com.example.a73233.carefree.diary.viewModel.Circular_view
             android:transitionName="sharedView_3"
             android:visibility="@{bean.isShowImgButton? View.VISIBLE : View.GONE}"
             android:id="@+id/showPhoto"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_marginStart="16dp"
             android:layout_marginBottom="32dp"
-            android:src="@mipmap/happy_circular_logo"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:circularColor="@{bean.diaryEmotionValue}"/>
     </android.support.constraint.ConstraintLayout>
 </layout>

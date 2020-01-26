@@ -1,20 +1,16 @@
 package com.example.a73233.carefree.diary.viewModel;
 
 import com.example.a73233.carefree.bean.DiaryBean;
-import com.example.a73233.carefree.bean.Diary_db;
-import com.example.a73233.carefree.diary.Model.DiaryModel;
 import com.example.a73233.carefree.diary.view.PhotoListAdapter;
 import com.example.a73233.carefree.diary.view.WriteDiaryActivity;
 import com.example.a73233.carefree.util.LogUtil;
 
-import org.litepal.LitePal;
-
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
 
-import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
 
 public class WriteVM extends LookVM{
@@ -65,6 +61,10 @@ public class WriteVM extends LookVM{
      * @param position
      */
     public void reMovePhoto(int position){
+        File file = new File(bean.photoList.get().get(position));
+        if(file.exists()){
+            file.delete();
+        }
         bean.photoList.get().remove(position);
         bean.photoList.set(bean.photoList.get());
         refreshPhoto();
@@ -110,7 +110,7 @@ public class WriteVM extends LookVM{
      * 删除日记
      */
     public void deleteDiary(int diaryId){
-        model.deleteData(diaryId,this);
+        model.abandonData(diaryId,this);
     }
 
     public void deleteDataSuccess(){

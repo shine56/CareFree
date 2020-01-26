@@ -1,9 +1,11 @@
 package com.example.a73233.carefree.diary.view;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,9 +82,10 @@ public class PhotoListAdapter extends RecyclerView.Adapter<PhotoListAdapter.View
             holder.photo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Pair p1 = new  Pair(holder.photo,"shareDiaryPhotoView");
                     Intent intent = new Intent(activity, BigPhotoViewer.class);
                     intent.putExtra("imagePath",imagePath);
-                    activity.startActivity(intent);
+                    activity.startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(activity,p1).toBundle());
                 }
             });
             if(type == SMALL){

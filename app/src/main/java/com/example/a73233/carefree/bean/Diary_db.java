@@ -12,6 +12,15 @@ public class Diary_db extends LitePalSupport {
     private String week;
     private int emotionValue = 0; //日记情绪值
     private List<String> photoList; //保存图片地址的集合
+    private int isAbandon;
+
+    public int getIsAbandon() {
+        return isAbandon;
+    }
+
+    public void setIsAbandon(int isAbandon) {
+        this.isAbandon = isAbandon;
+    }
 
     public void setPhotoList(List<String> photoList) {
         this.photoList = photoList;

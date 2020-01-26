@@ -53,7 +53,7 @@ public class LookDiaryActivity extends BaseActivity implements View.OnClickListe
         ReviseStatusBar(TRANSPARENT_WHITE);
         //标题栏
         toolbarLeft.setImageResource(R.mipmap.back_logo);
-        toolbarRight.setImageResource(R.mipmap.down_white);
+        toolbarRight.setImageResource(R.mipmap.pull_down_white);
         //recyclerView背景
         GradientDrawable recycleBg = new GradientDrawable();
         recycleBg.setColor(Color.WHITE);

@@ -15,14 +15,11 @@ import android.widget.Toast;
 
 import com.example.a73233.carefree.baseview.BaseActivity;
 import com.example.a73233.carefree.bean.Diary_db;
-import com.example.a73233.carefree.note.NoteFragment;
+import com.example.a73233.carefree.note.view.NoteFragment;
 import com.example.a73233.carefree.me.MeFragment;
 import com.example.a73233.carefree.diary.view.DiaryFragment;
 import com.example.a73233.carefree.home.view.HomeFragment;
 import com.example.a73233.carefree.databinding.ActivityMainBinding;
-import com.example.a73233.carefree.util.LogUtil;
-
-import org.litepal.LitePal;
 
 
 public class MainActivity extends BaseActivity {
