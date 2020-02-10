@@ -3,18 +3,64 @@ package com.example.a73233.carefree.bean;
 import org.litepal.crud.LitePalSupport;
 
 public class Note_db extends LitePalSupport {
-    private int type;  //贴纸类型：记录贴为0、任务贴为1
+    private int id;
     private String text; //墙贴文本
+    private String year;
+    private String monthAndDay;
+    private String week;
+    private String time;
     private int rank;//强帖等级 记录贴等级为0，任务贴三个等级：日常(1)、一般(2)、紧急(3)
-    private int isDone;//是否完成0和1表示
-    private int idAbandon;//是否丢进垃圾桶0和1表示
+    private int isAbandon;//是否丢进垃圾桶0和1表示
+    private int clockHour;
+    private int clockMinutes;
+    private String clockText;
 
-    public int getType() {
-        return type;
+    public String getClockText() {
+        return clockText;
     }
 
-    public void setType(int type) {
-        this.type = type;
+    public void setClockText(String clockText) {
+        this.clockText = clockText;
+    }
+
+    public int getClockHour() {
+        return clockHour;
+    }
+
+    public void setClockHour(int clockHour) {
+        this.clockHour = clockHour;
+    }
+
+    public int getClockMinutes() {
+        return clockMinutes;
+    }
+
+    public void setClockMinutes(int clockMinutes) {
+        this.clockMinutes = clockMinutes;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
+
+    public int getIsAbandon() {
+        return isAbandon;
+    }
+
+    public void setIsAbandon(int isAbandon) {
+        this.isAbandon = isAbandon;
     }
 
     public String getText() {
@@ -33,19 +79,27 @@ public class Note_db extends LitePalSupport {
         this.rank = rank;
     }
 
-    public int getIsDone() {
-        return isDone;
+    public String getMonthAndDay() {
+        return monthAndDay;
     }
 
-    public void setIsDone(int isDone) {
-        this.isDone = isDone;
+    public void setMonthAndDay(String monthAndDay) {
+        this.monthAndDay = monthAndDay;
     }
 
-    public int getIdAbandon() {
-        return idAbandon;
+    public String getWeek() {
+        return week;
     }
 
-    public void setIdAbandon(int idAbandon) {
-        this.idAbandon = idAbandon;
+    public void setWeek(String week) {
+        this.week = week;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 }

@@ -1,4 +1,4 @@
-package com.example.a73233.carefree.diary.viewModel;
+package com.example.a73233.carefree.diary.view;
 
 import android.content.Context;
 import android.databinding.BindingAdapter;
@@ -10,10 +10,12 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.example.a73233.carefree.util.EmotionUtil;
+import com.example.a73233.carefree.util.LogUtil;
+import com.example.a73233.carefree.util.NoteUtil;
 
 public class Circular_view extends View {
     private static Paint bigCirPaint;
-    private Paint smallCirPaint;
+    private static Paint smallCirPaint;
     public Circular_view(Context context) {
         super(context);
         init();
@@ -29,7 +31,7 @@ public class Circular_view extends View {
         bigCirPaint.setColor(EmotionUtil.GetColors(circularColor)[1]);
     }
 
-    private void init(){
+    private static void init(){
         bigCirPaint = new Paint();
         bigCirPaint.setStyle(Paint.Style.FILL);
         bigCirPaint.setAntiAlias(true);

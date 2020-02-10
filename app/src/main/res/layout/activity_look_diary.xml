@@ -160,7 +160,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/showPhoto">
         </android.support.v7.widget.RecyclerView>
-        <com.example.a73233.carefree.diary.viewModel.Circular_view
+        <com.example.a73233.carefree.diary.view.Circular_view
             android:transitionName="sharedView_3"
             android:visibility="@{bean.isShowImgButton? View.VISIBLE : View.GONE}"
             android:id="@+id/showPhoto"

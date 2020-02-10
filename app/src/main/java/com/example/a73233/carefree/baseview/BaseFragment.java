@@ -73,6 +73,15 @@ public class BaseFragment extends Fragment {
         Toast.makeText(activity,text,Toast.LENGTH_SHORT).show();
     }
 
+
+    /**
+     * 直接跳转
+     * @param clazz
+     */
+    public void startActivity(Class<?> clazz){
+        Intent intent  = new Intent(activity,clazz);
+        startActivity(intent);
+    }
     /**
      * 携带参数跳转
      * @param clazz

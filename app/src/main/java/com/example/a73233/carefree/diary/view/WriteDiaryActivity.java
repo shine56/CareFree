@@ -139,9 +139,15 @@ public class WriteDiaryActivity extends BaseActivity{
         addPhotoBg.setCornerRadius(40);
         binding.writeAddPhoto.setBackground(addPhotoBg);
         //根布局背景
-        GradientDrawable parentBackground =
-                new GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP
-                        ,EmotionUtil.GetColors(writeVM.getValue()));
+        GradientDrawable parentBackground;
+        if(addType == -1){
+             parentBackground= new GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP
+                            ,EmotionUtil.GetColors(writeVM.getValue()));
+        }else {
+            parentBackground = new GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP
+                            ,EmotionUtil.GetColorsByType(addType));
+        }
+
         binding.activityWriteDiary.setBackground(parentBackground);
         //写日记自由选择情绪时
         if(diaryId == -1){

@@ -15,11 +15,14 @@ import android.widget.Toast;
 
 import com.example.a73233.carefree.baseview.BaseActivity;
 import com.example.a73233.carefree.bean.Diary_db;
+import com.example.a73233.carefree.bean.Note_db;
 import com.example.a73233.carefree.note.view.NoteFragment;
 import com.example.a73233.carefree.me.MeFragment;
 import com.example.a73233.carefree.diary.view.DiaryFragment;
 import com.example.a73233.carefree.home.view.HomeFragment;
 import com.example.a73233.carefree.databinding.ActivityMainBinding;
+
+import org.litepal.LitePal;
 
 
 public class MainActivity extends BaseActivity {
@@ -43,9 +46,11 @@ public class MainActivity extends BaseActivity {
         binding.setMainActivity(this);
         initApp();
        // LitePal.deleteAll(Diary_db.class);
+       // LitePal.deleteAll(Note_db.class);
         //initDb();
+        //initNoteDb();
     }
-    private void initDb(){
+    private void initDiaryDb(){
         for(int i=15; i<21; i++){
             Diary_db db = new Diary_db();
             db.setDay(""+i);
@@ -53,6 +58,18 @@ public class MainActivity extends BaseActivity {
             db.setEmotionValue(i);
             db.setWeek("周三");
             db.setYearAndMonth("2020年01月");
+            db.save();
+        }
+    }
+    private void initNoteDb(){
+        for(int i=0; i<4; i++){
+            Note_db db = new Note_db();
+            db.setIsAbandon(0);
+            db.setMonthAndDay("1月27");
+            db.setRank(i);
+            db.setText("今天真开心");
+            db.setTime("18:11");
+            db.setWeek("星期三");
             db.save();
         }
     }

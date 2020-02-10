@@ -21,7 +21,27 @@ public class EmotionUtil {
         int[] colors2 = {0XFF537AE1,0XFF64B0E8};
         return colors2;
     }
-    
+
+    public static int[] GetColorsByType(int type){
+        switch (type){
+            case 2:
+                int[] colors1 = {0XFF3FABD5,0XFF38D5D6};
+                return colors1;
+            case 3:
+                int[] colors2 = {0XFF537AE1,0XFF64B0E8};
+                return colors2;
+            case 4:
+                int[] colors3 = {0XFFAC69DB,0XFF9B85FF};
+                return colors3;
+            case 5:
+                int[] colors4 = {0XFF09203F,0XFF2B5876};
+                return colors4;
+        }
+        int[] colors2 = {0XFF537AE1,0XFF64B0E8};
+        return colors2;
+    }
+
+
     public static String GetSuggestion(int[] values){
         String suggestion = "尽情抒发你的一念一想！";
         int basicFluctuationValue = 175;

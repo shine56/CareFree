@@ -3,16 +3,17 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowTranslucentStatus">true</item>
-
+        <item name="colorPrimary">@color/purple</item>
+        <item name="colorPrimaryDark">@color/purple</item>
+        <item name="colorAccent">@color/purple</item>
+        <item name="colorControlActivated">#AC69DB</item>
     </style>
     <style name="MyTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorControlActivated">#AC69DB</item>
+        <item name="colorControlNormal">#AC69DB</item>
         <item name="colorPrimary">@color/mainBg</item>
         <item name="colorPrimaryDark">@color/mainBg</item>
-        <item name="colorAccent">@color/mainBg</item>
+        <item name="colorAccent">#AC69DB</item>
         <item name="android:windowTranslucentStatus">true</item>
     </style>
     <style name="ActionSheetDialogStyle" parent="@android:style/Theme.Dialog">

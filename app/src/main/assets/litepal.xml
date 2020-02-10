@@ -10,7 +10,7 @@
     	数据库版本号，例如：
     	<version value="1" />
     -->
-    <version value="5" />
+    <version value="9" />
 
     <!--
     	指定映射模型，下面会讲到，例如：

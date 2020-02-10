@@ -1,14 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".note.view.NoteFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:text="便签"
-        android:layout_gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-</FrameLayout>
+   <data>
+      <import type="com.example.a73233.carefree.note.view.NoteFragment"/>
+      <variable
+          name="noteFragment"
+          type="NoteFragment" />
+   </data>
+
+   <android.support.constraint.ConstraintLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       tools:context=".note.view.NoteFragment"
+       android:background="@color/mainBg">
+
+      <FrameLayout
+          android:id="@+id/note_toolbar"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="48dp"
+          app:layout_constraintTop_toTopOf="parent">
+
+         <TextView
+             android:id="@+id/note_toolbar_left"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginLeft="20dp"
+             android:text="便帖"
+             android:textColor="@color/Black"
+             android:textSize="24dp"
+             android:textStyle="bold" />
+      </FrameLayout>
+
+      <TextView
+          android:id="@+id/note_type_choose"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="4dp"
+          android:layout_marginTop="20dp"
+          android:text="所有贴纸"
+          android:textStyle="bold"
+          android:textColor="@color/Black"
+          app:layout_constraintStart_toEndOf="@+id/note_type_choose_logo"
+          app:layout_constraintTop_toBottomOf="@+id/note_toolbar" />
+
+      <ImageView
+          android:id="@+id/note_type_choose_logo"
+          android:layout_width="20dp"
+          android:layout_height="25dp"
+          android:layout_marginStart="24dp"
+          android:layout_marginTop="3dp"
+          android:src="@mipmap/pull_down_purple"
+          app:layout_constraintBottom_toBottomOf="@+id/note_type_choose"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="@+id/note_type_choose" />
+
+
+      <android.support.v7.widget.RecyclerView
+          android:id="@+id/note_recy"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="16dp"
+          android:layout_marginTop="16dp"
+          android:layout_marginEnd="16dp"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintHorizontal_bias="1.0"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/note_type_choose">
+      </android.support.v7.widget.RecyclerView>
+
+      <android.support.design.widget.FloatingActionButton
+          android:onClick="@{noteFragment.onClick}"
+          android:id="@+id/add_note"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginEnd="64dp"
+          android:layout_marginBottom="64dp"
+          android:src="@mipmap/add_purple_no"
+          android:backgroundTint="@color/White"
+          app:borderWidth="0dp"
+          android:scaleType="fitXY"
+          app:fabSize="normal"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent" />
+   </android.support.constraint.ConstraintLayout>
+</layout>

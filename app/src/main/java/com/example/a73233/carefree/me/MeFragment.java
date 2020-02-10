@@ -1,5 +1,7 @@
 package com.example.a73233.carefree.me;
 
+import android.app.Activity;
+import android.app.NativeActivity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -12,7 +14,6 @@ public class MeFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override

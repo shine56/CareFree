@@ -5,6 +5,7 @@ import com.example.a73233.carefree.bean.DiaryBean;
 import java.util.List;
 
 public interface DiaryVMImpl {
+
     /**
      * 查找日记成功
      * @return

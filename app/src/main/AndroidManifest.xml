@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
 
     <application
         android:name="org.litepal.LitePalApplication"
@@ -13,10 +14,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".diary.view.WriteDiaryActivity"></activity>
+        <service
+            android:name=".note.view.ClockService"
+            android:enabled="true"
+            android:exported="true"></service>
+
+        <receiver
+            android:name=".note.view.ClockReceiver"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":remote" />
+
+        <activity android:name=".note.view.ClockActivity" />
+        <activity android:name=".note.view.NoteWriteActivity" />
+        <activity android:name=".diary.view.WriteDiaryActivity" />
         <activity android:name=".diary.view.LookDiaryActivity" />
         <activity android:name=".util.BigPhotoViewer" />
-        <activity android:name=".diary.view.WriteDiaryActivity_" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

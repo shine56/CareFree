@@ -13,10 +13,15 @@ import java.util.List;
 public abstract class BaseAdapter<T> extends RecyclerView.Adapter {
     public List<T> mList;
     public Context context;
+    public ItemClickImpl itemClick;
 
     public BaseAdapter(Context context) {
         this.context = context;
         mList = new ArrayList<>();
+    }
+
+    public void setItemClick(ItemClickImpl itemClick) {
+        this.itemClick = itemClick;
     }
 
     public void refreshData(List<T> data){
@@ -25,9 +30,18 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter {
         notifyDataSetChanged();
     }
 
+    public void removeItem(int position){
+        mList.remove(mList.size()-1-position);
+        notifyItemRemoved(position);
+        notifyDataSetChanged();
+    }
+
     public class MyHolder extends RecyclerView.ViewHolder{
         public MyHolder(@NonNull View itemView) {
             super(itemView);
         }
+    }
+    public interface ItemClickImpl{
+        void onClick(View view,int id);
     }
 }
