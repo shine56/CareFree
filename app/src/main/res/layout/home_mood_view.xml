@@ -29,7 +29,7 @@
             android:layout_marginRight="40dp"
             android:layout_marginTop="85dp"
             android:text="@{String.valueOf(homeViewModel.emotionValue)}"
-            android:textColor="@color/White"
+            android:textColor="@color/white"
             android:textSize="32sp" />
 
         <TextView
@@ -39,7 +39,7 @@
             android:layout_marginRight="40dp"
             android:layout_marginTop="60dp"
             android:text="当前能动值"
-            android:textColor="@color/White"
+            android:textColor="@color/white"
             android:textSize="14sp" />
 
         <ImageView

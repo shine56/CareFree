@@ -14,7 +14,7 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/White"
+        android:background="@color/white"
         tools:context=".diary.view.LookDiaryActivity">
 
         <android.support.design.widget.CoordinatorLayout
@@ -23,7 +23,7 @@
             android:layout_height="match_parent">
 
             <android.support.design.widget.AppBarLayout
-                android:background="@color/White"
+                android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -59,7 +59,7 @@
                             android:layout_marginTop="98dp"
                             android:layout_marginBottom="16dp"
                             android:text="@{bean.day}"
-                            android:textColor="@color/White"
+                            android:textColor="@color/white"
                             android:textSize="38dp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -73,7 +73,7 @@
                             android:layout_marginStart="16dp"
                             android:layout_marginTop="8dp"
                             android:text="@{bean.week}"
-                            android:textColor="@color/White"
+                            android:textColor="@color/white"
                             android:textSize="13sp"
                             app:layout_constraintStart_toEndOf="@+id/look_day"
                             app:layout_constraintTop_toTopOf="@+id/look_day" />
@@ -85,7 +85,7 @@
                             android:layout_marginStart="16dp"
                             android:layout_marginBottom="4dp"
                             android:text="@{bean.yearAndMonth}"
-                            android:textColor="@color/White"
+                            android:textColor="@color/white"
                             android:textSize="15sp"
                             app:layout_constraintBottom_toBottomOf="@+id/look_day"
                             app:layout_constraintStart_toEndOf="@+id/look_day" />
@@ -99,7 +99,7 @@
                             android:layout_marginBottom="8dp"
                             android:gravity="center"
                             android:text="@{@string/emotion_zh+bean.diaryEmotionValue}"
-                            android:textColor="@color/White"
+                            android:textColor="@color/white"
                             android:textSize="16sp"
                             app:layout_constraintBottom_toBottomOf="@+id/look_year_month"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -134,7 +134,7 @@
                     android:layout_marginRight="16dp"
                     android:lineSpacingMultiplier="1.3"
                     android:scrollbars="none"
-                    android:textColor="@color/Black"
+                    android:textColor="@color/black"
                     android:textSize="16sp" />
 
             </android.support.v4.widget.NestedScrollView>

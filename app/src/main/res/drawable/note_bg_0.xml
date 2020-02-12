@@ -13,14 +13,14 @@
         </shape>
     </item>
     <item
-        android:top="0.2mm"
-        android:bottom="3dp"
-        android:right="2dp">
+        android:top="0.1mm"
+        android:bottom="2dp"
+        android:right="1dp">
         <shape>
             <corners
                 android:radius="6dp">
             </corners>
-            <solid android:color="@color/White"/>
+            <solid android:color="@color/white"/>
         </shape>
     </item>
     <item android:width="25dp" android:height="24dp"

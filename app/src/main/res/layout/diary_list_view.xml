@@ -23,7 +23,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="@{diaryBean.day}"
-            android:textColor="@color/Black"
+            android:textColor="@color/black"
             android:textSize="30dp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -36,7 +36,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
             android:text="@{diaryBean.week}"
-            android:textColor="@color/Black"
+            android:textColor="@color/black"
             android:textSize="10sp"
             app:layout_constraintStart_toEndOf="@+id/day"
             app:layout_constraintTop_toTopOf="@+id/day" />
@@ -48,7 +48,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginBottom="4dp"
             android:text="@{diaryBean.yearAndMonth}"
-            android:textColor="@color/Black"
+            android:textColor="@color/black"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@+id/day"
             app:layout_constraintStart_toEndOf="@+id/day" />
@@ -75,9 +75,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="32dp"
-
             android:text='@{@string/emotion_zh+diaryBean.diaryEmotionValue}'
-            android:textColor="@color/excmpleEmotionColor"
+            android:textColor="@color/happy0"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -88,7 +87,7 @@
             android:layout_height="2dp"
             android:layout_marginTop="2dp"
             android:layout_marginEnd="64dp"
-            android:background="@color/Black"
+            android:background="@color/black"
             app:layout_constraintEnd_toEndOf="@+id/year_month"
             app:layout_constraintStart_toStartOf="@+id/day"
             app:layout_constraintTop_toBottomOf="@+id/day" />

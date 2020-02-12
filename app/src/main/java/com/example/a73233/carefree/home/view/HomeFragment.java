@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,16 +14,23 @@ import com.example.a73233.carefree.R;
 import com.example.a73233.carefree.baseview.BaseFragment;
 import com.example.a73233.carefree.databinding.FragmentHomeBinding;
 import com.example.a73233.carefree.home.viewModel.HomeViewModel;
+import com.example.a73233.carefree.note.view.NoteListAdapter;
+import com.example.a73233.carefree.note.view.NoteWriteActivity;
+import com.example.a73233.carefree.note.viewModel.NoteVM;
+import com.example.a73233.carefree.util.SpacesItemDecoration;
 
 public class HomeFragment extends BaseFragment {
     private FragmentHomeBinding binding;
     private HomeViewModel viewModel;
+    private NoteListAdapter noteAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_home,container,false);
-        viewModel = new HomeViewModel();
+        activity = getActivity();
+        noteAdapter = new NoteListAdapter(activity);
+        viewModel = new HomeViewModel(noteAdapter);
         binding.setHomeViewModel(viewModel);
         return binding.getRoot();
     }
@@ -30,8 +39,7 @@ public class HomeFragment extends BaseFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         binding.homeToolbar.toolbarLeft.setText("首页");
-        initMoodView();
-        initReportView();
+        initView();
     }
 
     @Override
@@ -40,9 +48,35 @@ public class HomeFragment extends BaseFragment {
         if(!hidden){
             initMoodView();
             initReportView();
+            viewModel.refreshNote();
         }
     }
 
+    private void initView(){
+        initMoodView();
+        initReportView();
+        initRecy();
+    }
+    private void initRecy(){
+        LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
+        binding.homeNoteRecy.setLayoutManager(layoutManager);
+        binding.homeNoteRecy.addItemDecoration(new SpacesItemDecoration(0,50));
+        binding.homeNoteRecy.setAdapter(noteAdapter);
+        viewModel.refreshNote();
+
+        noteAdapter.setItemClick(new NoteListAdapter.ItemClickImpl(){
+            @Override
+            public void onClick(View view, int id, int position, String text) {
+                switch (view.getId()){
+                    case R.id.note_body:
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("noteId",id);
+                        startActivity(NoteWriteActivity.class,bundle);
+                        break;
+                }
+            }
+        });
+    }
     //初始化能动值卡片
     private void initMoodView(){
         viewModel.initEmotionValue();

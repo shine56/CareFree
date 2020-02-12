@@ -88,8 +88,8 @@ public class NoteWriteActivity extends BaseActivity {
                         showToast("记录贴无法设置闹钟");
                     }else {
                         isSetClock = true;
-                        binding.noteClockLogo.setImageResource(R.mipmap.clock_purple);
-                        binding.noteClockTitleLogo.setImageResource(R.mipmap.clock_text_purple_2);
+                        binding.noteClockLogo.setImageResource(R.mipmap.clock_blue);
+                        binding.noteClockTitleLogo.setImageResource(R.mipmap.title_blue);
                     }
                 }
                 break;
@@ -115,8 +115,8 @@ public class NoteWriteActivity extends BaseActivity {
                 minutes = minute;
                 if(noteWriteVM.getRank() != 0){
                     isSetClock = true;
-                    binding.noteClockLogo.setImageResource(R.mipmap.clock_purple);
-                    binding.noteClockTitleLogo.setImageResource(R.mipmap.clock_text_purple_2);
+                    binding.noteClockLogo.setImageResource(R.mipmap.clock_blue);
+                    binding.noteClockTitleLogo.setImageResource(R.mipmap.title_blue);
                 }else {
                     showToast("记录贴提醒闹钟无效");
                 }
@@ -142,14 +142,14 @@ public class NoteWriteActivity extends BaseActivity {
     private void refreshTextBg(){
         if(noteId == -1){
             binding.noteClockLogo.setImageResource(R.mipmap.clock_logo_gray);
-            binding.noteClockTitleLogo.setImageResource(R.mipmap.clock_title_gray);
+            binding.noteClockTitleLogo.setImageResource(R.mipmap.title_gray);
         }
         switch (noteWriteVM.getRank()){
             case 0:
                 binding.noteTextBg.setBackgroundResource(R.drawable.note_bg_0);
                 binding.noteTextTitle.setText("临时记录贴");
                 binding.noteClockLogo.setImageResource(R.mipmap.clock_logo_gray);
-                binding.noteClockTitleLogo.setImageResource(R.mipmap.clock_title_gray);
+                binding.noteClockTitleLogo.setImageResource(R.mipmap.title_gray);
                 break;
             case 1:
                 binding.noteTextBg.setBackgroundResource(R.drawable.note_bg_1);

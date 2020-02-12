@@ -1,7 +1,6 @@
 package com.example.a73233.carefree.diary.viewModel;
 
-import android.util.Log;
-
+import com.example.a73233.carefree.baseview.MyVMImpl;
 import com.example.a73233.carefree.bean.DiaryBean;
 import com.example.a73233.carefree.diary.Model.DiaryModel;
 import com.example.a73233.carefree.diary.view.DiaryListAdapter_;
@@ -10,7 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-public class DiaryVM implements DiaryVMImpl{
+public class DiaryVM implements MyVMImpl {
     private DiaryModel diaryModel;
     private DiaryListAdapter_ adapter;
 
@@ -23,7 +22,7 @@ public class DiaryVM implements DiaryVMImpl{
      */
     public void refreshDiaryList(){
 
-        diaryModel.findAllData(this);
+        diaryModel.findAllData(this,0);
     }
 
     /**

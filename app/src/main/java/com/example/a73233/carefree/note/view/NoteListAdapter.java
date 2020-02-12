@@ -42,14 +42,14 @@ public class NoteListAdapter extends BaseAdapter {
         binding.noteBody.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                itemClick.onClick(view, bean.id.get());
+                itemClick.onClick(view, bean.id.get(), position,bean.text.get());
             }
         });
         binding.noteRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 removeItem(position);
-                itemClick.onClick(view, bean.id.get());
+                itemClick.onClick(view, bean.id.get(),position,null);
             }
         });
     }

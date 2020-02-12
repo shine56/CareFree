@@ -6,14 +6,19 @@ import android.icu.util.Calendar;
 import android.util.Log;
 
 import com.example.a73233.carefree.bean.Diary_db;
+import com.example.a73233.carefree.bean.NoteBean;
+import com.example.a73233.carefree.bean.Note_db;
+import com.example.a73233.carefree.note.view.NoteListAdapter;
+import com.example.a73233.carefree.note.viewModel.NoteVmImpl;
 import com.example.a73233.carefree.util.EmotionUtil;
 import com.example.a73233.carefree.util.TimeUtil;
 
 import org.litepal.LitePal;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class HomeViewModel {
+public class HomeViewModel{
     public final ObservableInt emotionValue = new ObservableInt();
     public final ObservableInt moodViewPointColor = new ObservableInt();
     public final ObservableField<String []> dayNums = new ObservableField<>();
@@ -22,9 +27,33 @@ public class HomeViewModel {
     public final ObservableField<String> reportSuggest = new ObservableField<>();
 
     private List<Diary_db> diaryDbList;
+    private NoteListAdapter noteListAdapter;
 
+    public HomeViewModel(NoteListAdapter noteListAdapter) {
+        this.noteListAdapter = noteListAdapter;
+    }
+
+    public void refreshNote(){
+        List<Note_db> dbs = LitePal.where("rank>? and isAbandon=?","0","0").find(Note_db.class);
+        List<NoteBean> beans = new ArrayList<>();
+        for (Note_db db : dbs){
+            NoteBean bean = new NoteBean();
+            bean.idAbandon.set(db.getIsAbandon());
+            bean.monthAndDay.set(db.getMonthAndDay());
+            bean.rank.set(db.getRank());
+            bean.text.set(db.getText());
+            bean.time.set(db.getTime());
+            bean.week.set(db.getWeek());
+            bean.id.set(db.getId());
+            bean.hour.set(db.getClockHour());
+            bean.minutes.set(db.getClockMinutes());
+            bean.clockText.set(db.getClockText());
+            beans.add(bean);
+        }
+        noteListAdapter.refreshData(beans);
+    }
     public void initEmotionValue(){
-        diaryDbList = LitePal.findAll(Diary_db.class);
+        diaryDbList = LitePal.where("isAbandon like ?","0").find(Diary_db.class);
         if(diaryDbList.size() != 0){
             emotionValue.set(diaryDbList.get(diaryDbList.size()-1).getEmotionValue());
         }else {
@@ -133,4 +162,5 @@ public class HomeViewModel {
         dayColors.set(DayColor);
         reportSuggest.set(EmotionUtil.GetSuggestion(dayValues.get()));
     }
+
 }

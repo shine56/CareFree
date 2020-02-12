@@ -9,7 +9,7 @@
                 android:bottomRightRadius="6dp"
                 >
             </corners>
-            <solid android:color="#5F64B0E8"/>
+            <solid android:color="@color/rank1_s"/>
         </shape>
     </item>
     <item
@@ -20,14 +20,14 @@
             <corners
                 android:radius="6dp">
             </corners>
-            <solid android:color="#FF64B0E8"/>
+            <solid android:color="@color/rank1"/>
         </shape>
     </item>
     <item android:width="25dp" android:height="24dp"
         android:top="10dp" android:left="10dp">
         <shape>
             <corners android:radius="30dp"></corners>
-            <solid android:color="#5F64B0E8"></solid>
+            <solid android:color="@color/rank1_s"></solid>
         </shape>
     </item>
     <item android:width="23dp" android:height="23dp"

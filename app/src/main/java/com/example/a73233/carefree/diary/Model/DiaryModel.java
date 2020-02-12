@@ -1,10 +1,8 @@
 package com.example.a73233.carefree.diary.Model;
 
-import android.util.Log;
-
 import com.example.a73233.carefree.bean.DiaryBean;
 import com.example.a73233.carefree.bean.Diary_db;
-import com.example.a73233.carefree.diary.viewModel.DiaryVMImpl;
+import com.example.a73233.carefree.baseview.MyVMImpl;
 import com.example.a73233.carefree.diary.viewModel.WriteVM;
 import com.example.a73233.carefree.util.LogUtil;
 
@@ -19,18 +17,18 @@ public class DiaryModel {
      * 查找日记
      * @param diaryVM
      */
-    public void findAllData(DiaryVMImpl diaryVM){
-        List<Diary_db> diaryDbList = LitePal.where("isAbandon like ?","0").find(Diary_db.class);
+    public void findAllData(MyVMImpl diaryVM, int type){
+        List<Diary_db> diaryDbList = LitePal.where("isAbandon like ?",""+type).find(Diary_db.class);
         LogUtil.LogD("找到数据"+diaryDbList.size()+"条");
         diaryVM.findListSuccess(changeDbToBean(diaryDbList));
     }
-    public void findDataByDate(String yearAndMonth, String day, DiaryVMImpl diaryVM){
+    public void findDataByDate(String yearAndMonth, String day, MyVMImpl diaryVM){
         List<Diary_db> diaryDbList = LitePal.where("yearAndMonth like ? and day like ? and isAbandon like ?"
                 , yearAndMonth, day,"0").find(Diary_db.class);
         LogUtil.LogD("日期：");
         diaryVM.findListSuccess(changeDbToBean(diaryDbList));
     }
-    public void findDataByText(String text,DiaryVMImpl diaryVM){
+    public void findDataByText(String text, MyVMImpl diaryVM){
         List<Diary_db> diaryDbList = LitePal.where("isAbandon like ? and diaryContent like ?","0","%"+text+"%")
                 .find(Diary_db.class);
         diaryVM.findListSuccess(changeDbToBean(diaryDbList));

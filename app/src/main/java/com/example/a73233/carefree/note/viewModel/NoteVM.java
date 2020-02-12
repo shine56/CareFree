@@ -6,7 +6,7 @@ import com.example.a73233.carefree.note.view.NoteListAdapter;
 
 import java.util.List;
 
-public class NoteVM {
+public class NoteVM implements NoteVmImpl{
     private NoteModel model;
     private NoteListAdapter adapter;
 
@@ -15,7 +15,7 @@ public class NoteVM {
         model = new NoteModel();
     }
     public void refreshAllData(){
-        model.findAllData(this);
+        model.findAllData(this,0);
     }
     public void deleteData(int id){
         model.deleteData(id);

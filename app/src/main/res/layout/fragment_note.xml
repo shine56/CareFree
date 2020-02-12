@@ -29,7 +29,7 @@
              android:layout_height="wrap_content"
              android:layout_marginLeft="20dp"
              android:text="便帖"
-             android:textColor="@color/Black"
+             android:textColor="@color/black"
              android:textSize="24dp"
              android:textStyle="bold" />
       </FrameLayout>
@@ -42,7 +42,7 @@
           android:layout_marginTop="20dp"
           android:text="所有贴纸"
           android:textStyle="bold"
-          android:textColor="@color/Black"
+          android:textColor="@color/black"
           app:layout_constraintStart_toEndOf="@+id/note_type_choose_logo"
           app:layout_constraintTop_toBottomOf="@+id/note_toolbar" />
 
@@ -52,7 +52,7 @@
           android:layout_height="25dp"
           android:layout_marginStart="24dp"
           android:layout_marginTop="3dp"
-          android:src="@mipmap/pull_down_purple"
+          android:src="@mipmap/pull_down_blue"
           app:layout_constraintBottom_toBottomOf="@+id/note_type_choose"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toTopOf="@+id/note_type_choose" />
@@ -78,8 +78,8 @@
           android:layout_height="wrap_content"
           android:layout_marginEnd="64dp"
           android:layout_marginBottom="64dp"
-          android:src="@mipmap/add_purple_no"
-          android:backgroundTint="@color/White"
+          android:src="@mipmap/add_blue"
+          android:backgroundTint="@color/white"
           app:borderWidth="0dp"
           android:scaleType="fitXY"
           app:fabSize="normal"

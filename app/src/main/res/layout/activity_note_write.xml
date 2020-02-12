@@ -32,9 +32,9 @@
                 android:onClick="@{noteWriteActivity.onClick}"
                 android:id="@+id/note_back"
                 android:layout_marginLeft="16dp"
-                android:src="@mipmap/complete_black"
-                android:layout_width="25dp"
-                android:layout_height="25dp">
+                android:src="@mipmap/back_black"
+                android:layout_width="23dp"
+                android:layout_height="23dp">
             </ImageView>
 
             <TextView
@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:text="@{bean.monthAndDay}"
-                android:textColor="@color/Black"
+                android:textColor="@color/black"
                 android:textSize="22dp"
                 android:textStyle="bold" />
             <ImageView
@@ -163,13 +163,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="4dp"
                     android:text="二级任务贴"
-                    android:textColor="@{bean.rank == 3 ? @color/White : @color/Black}"
+                    android:textColor="@{bean.rank == 3 ? @color/white : @color/black}"
                     android:textSize="18dp"
                     app:layout_constraintBottom_toTopOf="@+id/note_edit_text"
                     app:layout_constraintEnd_toEndOf="@+id/note_edit_text"
                     app:layout_constraintStart_toStartOf="@+id/note_edit_text"
                     app:layout_constraintTop_toTopOf="@+id/note_text_bg" />
-
                 <EditText
                     android:background="@null"
                     android:id="@+id/note_edit_text"
@@ -181,7 +180,7 @@
                     android:hint="写点什么吧。"
                     android:maxLines="16"
                     android:text="@={bean.text}"
-                    android:textColor="@{bean.rank == 3 ? @color/White : @color/Black}"
+                    android:textColor="@{bean.rank == 3 ? @color/white : @color/black}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/note_text_bg" />
@@ -193,7 +192,7 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="80dp"
                     android:onClick="@{noteWriteActivity.onClick}"
-                    android:src="@mipmap/clock_purple"
+                    android:src="@mipmap/clock_blue"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
@@ -201,19 +200,21 @@
                     android:id="@+id/note_clock_hour"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
                     android:timePickerMode="spinner"
                     app:layout_constraintBottom_toBottomOf="@+id/note_clock_logo"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/note_clock_logo"
                     app:layout_constraintTop_toTopOf="@+id/note_clock_logo" />
 
                 <ImageView
                     android:id="@+id/note_clock_title_logo"
-                    android:layout_width="30dp"
-                    android:layout_height="25dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
                     android:layout_marginTop="80dp"
                     android:layout_marginBottom="20dp"
                     android:onClick="@{noteWriteActivity.onClick}"
-                    android:src="@mipmap/clock_text_purple_2"
+                    android:src="@mipmap/title_blue"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/note_clock_logo"
                     app:layout_constraintHorizontal_bias="1.0"

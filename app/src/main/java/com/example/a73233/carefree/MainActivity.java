@@ -16,13 +16,12 @@ import android.widget.Toast;
 import com.example.a73233.carefree.baseview.BaseActivity;
 import com.example.a73233.carefree.bean.Diary_db;
 import com.example.a73233.carefree.bean.Note_db;
+import com.example.a73233.carefree.bean.User_db;
 import com.example.a73233.carefree.note.view.NoteFragment;
-import com.example.a73233.carefree.me.MeFragment;
+import com.example.a73233.carefree.me.view.MeFragment;
 import com.example.a73233.carefree.diary.view.DiaryFragment;
 import com.example.a73233.carefree.home.view.HomeFragment;
 import com.example.a73233.carefree.databinding.ActivityMainBinding;
-
-import org.litepal.LitePal;
 
 
 public class MainActivity extends BaseActivity {
@@ -49,6 +48,13 @@ public class MainActivity extends BaseActivity {
        // LitePal.deleteAll(Note_db.class);
         //initDb();
         //initNoteDb();
+        //initMeDb();
+    }
+    private void initMeDb(){
+        User_db db = new User_db();
+        db.setUserName("Shine56");
+        db.setUserWords("世界和平、无灾、无难。");
+        db.save();
     }
     private void initDiaryDb(){
         for(int i=15; i<21; i++){
@@ -100,21 +106,21 @@ public class MainActivity extends BaseActivity {
     private void ShowFragment(int ChickFragmentID){
         switch (FragmentID){
             case HomePage:
-                binding.homeLogo.setImageResource(R.drawable.home_logo);
+                binding.homeLogo.setImageResource(R.mipmap.home_gray);
                 break;
             case DiaryPage:
-                binding.diaryLogo.setImageResource(R.drawable.diary_logo);
+                binding.diaryLogo.setImageResource(R.mipmap.diary_gray);
                 break;
             case NotePage:
-                binding.noteLogo.setImageResource(R.drawable.note_logo);
+                binding.noteLogo.setImageResource(R.mipmap.note_gray);
                 break;
             case MePage:
-                binding.meLogo.setImageResource(R.drawable.me_logo);
+                binding.meLogo.setImageResource(R.mipmap.me_gray);
                 break;
         }
         switch (ChickFragmentID){
             case HomePage:
-                binding.homeLogo.setImageResource(R.drawable.home_logo_chick);
+                binding.homeLogo.setImageResource(R.mipmap.home_click);
                 FragmentID = HomePage;
                 FragmentManager fragmentManager1 = getSupportFragmentManager();
                 FragmentTransaction transaction1 = fragmentManager1.beginTransaction();
@@ -125,7 +131,7 @@ public class MainActivity extends BaseActivity {
                 transaction1.commit();
                 break;
             case DiaryPage:
-                binding.diaryLogo.setImageResource(R.drawable.diary_logo_chick);
+                binding.diaryLogo.setImageResource(R.mipmap.diary_click);
                 FragmentID = DiaryPage;
 
                 FragmentManager fragmentManager2 = getSupportFragmentManager();
@@ -137,7 +143,7 @@ public class MainActivity extends BaseActivity {
                 transaction2.commit();
                 break;
             case NotePage:
-                binding.noteLogo.setImageResource(R.drawable.note_logo_chick);
+                binding.noteLogo.setImageResource(R.mipmap.note_click);
                 FragmentID = NotePage;
 
                 FragmentManager fragmentManager3 = getSupportFragmentManager();
@@ -149,7 +155,7 @@ public class MainActivity extends BaseActivity {
                 transaction3.commit();
                 break;
             case MePage:
-                binding.meLogo.setImageResource(R.drawable.me_logo_chick);
+                binding.meLogo.setImageResource(R.mipmap.me_logo_click);
                 FragmentID = MePage;
 
                 FragmentManager fragmentManager4 = getSupportFragmentManager();
@@ -188,7 +194,7 @@ public class MainActivity extends BaseActivity {
     private void  initApp(){
         ReviseStatusBar(TRANSPARENT_BLACK);
         //初始化底部导航栏
-        binding.homeLogo.setImageResource(R.drawable.home_logo_chick);
+        binding.homeLogo.setImageResource(R.mipmap.home_click);
         //申请权限
         if(ContextCompat.checkSelfPermission(MainActivity.this,Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED){

@@ -26,7 +26,7 @@
             android:textStyle="bold"
             android:textSize="24dp"
             android:layout_marginLeft="20dp"
-            android:textColor="@color/Black"></TextView>
+            android:textColor="@color/black"></TextView>
 
         <TextView
             android:id="@+id/toolbar_center"
@@ -35,7 +35,7 @@
             android:layout_gravity="center"
             android:textStyle="bold"
             android:textSize="20dp"
-            android:textColor="@color/Black" />
+            android:textColor="@color/black" />
 
         <ImageView
             android:onClick="@{diaryFragment.onClick}"

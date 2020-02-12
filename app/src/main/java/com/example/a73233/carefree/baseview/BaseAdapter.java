@@ -42,6 +42,6 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter {
         }
     }
     public interface ItemClickImpl{
-        void onClick(View view,int id);
+        void onClick(View view,int id, int position, String text);
     }
 }

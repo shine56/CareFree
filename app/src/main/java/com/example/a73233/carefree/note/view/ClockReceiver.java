@@ -29,7 +29,7 @@ public class ClockReceiver extends BroadcastReceiver {
         Notification notification= new Notification.Builder(context)
                 .setChannelId(channelId)
                 .setContentTitle("careFree提醒您")
-                .setSmallIcon(R.mipmap.add_logo)
+                .setSmallIcon(R.mipmap.icon)
                 .setContentText(text)
                 .build();
 

@@ -10,7 +10,7 @@
     	数据库版本号，例如：
     	<version value="1" />
     -->
-    <version value="9" />
+    <version value="10" />
 
     <!--
     	指定映射模型，下面会讲到，例如：
@@ -22,5 +22,6 @@
     <list>
         <mapping class="com.example.a73233.carefree.bean.Diary_db"/>
         <mapping class="com.example.a73233.carefree.bean.Note_db"/>
+        <mapping class="com.example.a73233.carefree.bean.User_db"/>
     </list>
 </litepal>

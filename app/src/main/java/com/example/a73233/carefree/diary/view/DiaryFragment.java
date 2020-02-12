@@ -30,7 +30,7 @@ public class DiaryFragment extends BaseFragment{
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_diary,container,false);
         binding.setDiaryFragment(this);
         activity = getActivity();
-        adapter = new DiaryListAdapter_(activity,this);
+        adapter = new DiaryListAdapter_(activity);
         diaryVM = new DiaryVM(adapter);
         return binding.getRoot();
     }
@@ -39,19 +39,9 @@ public class DiaryFragment extends BaseFragment{
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         binding.diaryToolbar.toolbarLeft.setText("日记");
-        binding.diaryToolbar.toolbarRight.setImageResource(R.mipmap.calendar_logo);
-        binding.calendarView.setVisibility(View.GONE);
         initAddCard();
         initRecyclerView();
-        //监听日历选择
-        binding.calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-                diaryVM.refreshDiaryList(year,month,dayOfMonth);
-                showToast("找到以上结果");
-                binding.calendarView.setVisibility(View.GONE);
-            }
-        });
+
         //监听搜索框内容变化
         binding.searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -72,7 +62,6 @@ public class DiaryFragment extends BaseFragment{
         binding.diaryRecycleView.setAdapter(adapter);
         diaryVM.refreshDiaryList();
     }
-
     private void initAddCard(){
         binding.setBean(diaryVM.initAddCardData());
     }
@@ -81,11 +70,16 @@ public class DiaryFragment extends BaseFragment{
         binding.diaryRecycleView.setLayoutManager(layoutManager);
         int space = 50; //间距
         binding.diaryRecycleView.addItemDecoration(new SpacesItemDecoration(0,space));
-    }
-    public void recyclerItemClick(int id){
-        Bundle bundle = new Bundle();
-        bundle.putInt("diaryId",id);
-        startActivity(LookDiaryActivity.class,bundle);
+
+        adapter.setItemClick(new DiaryListAdapter_.ItemClickImpl(){
+
+            @Override
+            public void onClick(View view, int id, int position, String text) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("diaryId",id);
+                startActivity(LookDiaryActivity.class,bundle);
+            }
+        });
     }
     public void onClick(View v) {
         Bundle bundle = new Bundle();
@@ -110,13 +104,6 @@ public class DiaryFragment extends BaseFragment{
             case R.id.add_repression :
                 bundle.putInt("addType",5);
                 startActivity(WriteDiaryActivity.class,bundle);
-                break;
-            case R.id.toolbar_right:
-                if(binding.calendarView.getVisibility() == View.VISIBLE){
-                    binding.calendarView.setVisibility(View.GONE);
-                }else {
-                    binding.calendarView.setVisibility(View.VISIBLE);
-                }
                 break;
             case R.id.search_diary :
                 String searchText = binding.searchEditText.getText().toString();

@@ -3,6 +3,7 @@ package com.example.a73233.carefree.note.model;
 import com.example.a73233.carefree.bean.NoteBean;
 import com.example.a73233.carefree.bean.Note_db;
 import com.example.a73233.carefree.note.viewModel.NoteVM;
+import com.example.a73233.carefree.note.viewModel.NoteVmImpl;
 import com.example.a73233.carefree.util.LogUtil;
 
 import org.litepal.LitePal;
@@ -16,8 +17,8 @@ public class NoteModel {
      * 从数据去查找所有数据
      * @param noteVM
      */
-    public void findAllData(NoteVM noteVM){
-        List<Note_db> noteDbList = LitePal.where("isAbandon = ?","0").find(Note_db.class);
+    public void findAllData(NoteVmImpl noteVM, int type){
+        List<Note_db> noteDbList = LitePal.where("isAbandon = ?",""+type).find(Note_db.class);
         LogUtil.LogD("找到便贴数据"+noteDbList.size()+"条");
         noteVM.findSuccess(creatNoteBean(noteDbList));
     }
@@ -71,7 +72,9 @@ public class NoteModel {
     }
 
     public void deleteData(int id){
-        LitePal.delete(Note_db.class, id);
+        Note_db db = LitePal.find(Note_db.class,id);
+        db.setIsAbandon(1);
+        db.save();
     }
 
     private List<NoteBean> creatNoteBean(List<Note_db> noteDbList){

@@ -33,7 +33,7 @@ import java.util.Date;
 
 public class PhotoManager {
     private static final int TAKE_PHOTO = 1;
-    private static final int CHOOSE_PHOTO = 2;
+    public static final int CHOOSE_PHOTO = 2;
     //拍照
     public static String TakePhoto(Activity activity){
         String imagePath;
@@ -99,7 +99,6 @@ public class PhotoManager {
         }
         return imagePath;
     }
-
     //根据路径将图片另存于activity.getExternalCacheDir().getPath();
     public static String copyPhoto(Activity activity,String oldPAth){
         String sdPath = activity.getExternalCacheDir().getPath();

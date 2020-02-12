@@ -57,8 +57,9 @@ public class NoteFragment extends BaseFragment {
         noteVM.refreshAllData();
 
         adapter.setItemClick(new NoteListAdapter.ItemClickImpl(){
+
             @Override
-            public void onClick(View view,int id) {
+            public void onClick(View view, int id, int position, String text) {
                 switch (view.getId()){
                     case R.id.note_body:
                         Bundle bundle = new Bundle();

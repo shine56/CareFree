@@ -23,11 +23,8 @@ import com.example.a73233.carefree.util.EmotionUtil;
 import java.util.List;
 
 public class DiaryListAdapter_ extends BaseAdapter {
-    private DiaryFragment diaryFragment;
-
-    public DiaryListAdapter_(Context context, DiaryFragment diaryFragment) {
+    public DiaryListAdapter_(Context context) {
         super(context);
-        this.diaryFragment = diaryFragment;
     }
 
     @NonNull
@@ -48,7 +45,7 @@ public class DiaryListAdapter_ extends BaseAdapter {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                diaryFragment.recyclerItemClick(((DiaryBean) mList.get(mList.size()-1-position)).id.get());
+                itemClick.onClick(view,bean.id.get(),position,bean.diaryContent.get());
             }
         });
     }

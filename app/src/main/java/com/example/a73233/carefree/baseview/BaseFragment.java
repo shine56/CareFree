@@ -56,7 +56,12 @@ public class BaseFragment extends Fragment {
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        Log.d(TAG,FRAGMENT_NAME+"-->onHiddenChanged()");
+        if(hidden){
+            Log.d(TAG,FRAGMENT_NAME+"-->onHiddenChanged()-->隐藏");
+        }else {
+            Log.d(TAG,FRAGMENT_NAME+"-->onHiddenChanged()-->显示");
+        }
+
     }
     @Override
     public void onDestroy() {
