@@ -10,8 +10,6 @@
 
 ## Screenshot
 
-![](https://s2.ax1x.com/2020/02/21/3K8QUA.jpg)
-
 .|.|.|.
 ---:|:---:|:---:|:---
 ![](https://s2.ax1x.com/2020/02/21/3K8QUA.jpg)|![](https://s2.ax1x.com/2020/02/21/3K8l4I.jpg)|![](https://s2.ax1x.com/2020/02/21/3K8E36.jpg)|![](https://s2.ax1x.com/2020/02/21/3K8MEd.jpg)
