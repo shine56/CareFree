@@ -4,15 +4,16 @@ import com.example.a73233.carefree.bean.DiaryBean;
 import com.example.a73233.carefree.bean.NoteBean;
 import com.example.a73233.carefree.diary.Model.DiaryModel;
 import com.example.a73233.carefree.diary.view.DiaryListAdapter_;
-import com.example.a73233.carefree.baseview.MyVMImpl;
+import com.example.a73233.carefree.diary.viewModel.DiaryVMImpl;
 import com.example.a73233.carefree.me.model.MeModel;
 import com.example.a73233.carefree.note.model.NoteModel;
 import com.example.a73233.carefree.note.view.NoteListAdapter;
 import com.example.a73233.carefree.note.viewModel.NoteVmImpl;
+import com.example.a73233.carefree.util.ConstantPool;
 
 import java.util.List;
 
-public class AbandonVM implements MyVMImpl , NoteVmImpl {
+public class AbandonVM implements DiaryVMImpl, NoteVmImpl {
     private MeModel meModel;
     private NoteModel noteModel;
     private DiaryModel diaryModel;
@@ -27,8 +28,8 @@ public class AbandonVM implements MyVMImpl , NoteVmImpl {
         meModel = new MeModel();
     }
     public void refreshView(){
-        diaryModel.findAllData(this,1);
-        noteModel.findAllData(this,1);
+        diaryModel.findAllData(this, ConstantPool.ISABANDON);
+        noteModel.findAllData(this,ConstantPool.ISABANDON);
     }
 
     public void recoveryData(int type, int id, int position){
@@ -39,17 +40,21 @@ public class AbandonVM implements MyVMImpl , NoteVmImpl {
             noteAdapter.removeItem(position);
         }
     }
-    public void deleteData(int type, int id, int position){
-        meModel.deleteData(type, id);
+    public void deleteOneData(int type, int id, int position){
+        meModel.deleteOneData(type, id);
         if(type == 0){
             diaryAdapter.removeItem(position);
         }else {
             noteAdapter.removeItem(position);
         }
     }
+    public void deleteAllData(){
+        meModel.deleteAllData();
+        refreshView();
+    }
 
     @Override
-    public void findListSuccess(List<DiaryBean> diaryBeanList) {
+    public void findAllDataSuccess(List<DiaryBean> diaryBeanList) {
         diaryAdapter.refreshData(diaryBeanList);
     }
 

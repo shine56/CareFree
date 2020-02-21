@@ -12,13 +12,13 @@ import java.util.Date;
 import java.util.Random;
 
 import static android.app.Activity.RESULT_OK;
+import static com.example.a73233.carefree.util.ConstantPool.AI;
+import static com.example.a73233.carefree.util.ConstantPool.CALM;
+import static com.example.a73233.carefree.util.ConstantPool.HAPPY;
+import static com.example.a73233.carefree.util.ConstantPool.REPRESSION;
+import static com.example.a73233.carefree.util.ConstantPool.SAD;
 
 public class WriteVM extends LookVM{
-    private static final int AI = 1;
-    private static final int HAPPY = 2;
-    private static final int CALM = 3;
-    private static final int SAD = 4;
-    private static final int REPRESSION = 5;
     private WriteDiaryActivity activity;
     public WriteVM(PhotoListAdapter adapter,WriteDiaryActivity activity) {
         super(adapter);
@@ -26,7 +26,7 @@ public class WriteVM extends LookVM{
     }
 
     @Override
-    public DiaryBean refreshLookView(int id) {
+    public DiaryBean refreshBean(int id) {
         bean = model.findDataById(id);
         if(id == -1){
             Date date = new Date();
@@ -70,6 +70,10 @@ public class WriteVM extends LookVM{
         refreshPhoto();
     }
 
+    /**
+     * 添加一张图片
+     * @param imgUrl
+     */
     public void addPhoto(String imgUrl){
         bean.photoList.get().add(imgUrl);
         bean.photoList.set(bean.photoList.get());
@@ -109,12 +113,12 @@ public class WriteVM extends LookVM{
     /**
      * 删除日记
      */
-    public void deleteDiary(int diaryId){
+    public void abandonDiary(int diaryId){
         model.abandonData(diaryId,this);
     }
 
-    public void deleteDataSuccess(){
-        activity.showToast("日记删除成功");
+    public void abandonDataSuccess(){
+        activity.showToast("日记放进废纸篓，可前往恢复");
         activity.setResult(RESULT_OK-10);
         activity.onBackPressed();
     }

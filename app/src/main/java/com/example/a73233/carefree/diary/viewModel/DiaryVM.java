@@ -1,15 +1,15 @@
 package com.example.a73233.carefree.diary.viewModel;
 
-import com.example.a73233.carefree.baseview.MyVMImpl;
 import com.example.a73233.carefree.bean.DiaryBean;
 import com.example.a73233.carefree.diary.Model.DiaryModel;
 import com.example.a73233.carefree.diary.view.DiaryListAdapter_;
+import com.example.a73233.carefree.util.ConstantPool;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-public class DiaryVM implements MyVMImpl {
+public class DiaryVM implements DiaryVMImpl {
     private DiaryModel diaryModel;
     private DiaryListAdapter_ adapter;
 
@@ -21,29 +21,7 @@ public class DiaryVM implements MyVMImpl {
      * 刷新列表所有日记
      */
     public void refreshDiaryList(){
-
-        diaryModel.findAllData(this,0);
-    }
-
-    /**
-     * 刷新日历选中日期的日记
-     * @param year
-     * @param month
-     * @param dayOfMonth
-     */
-    public void refreshDiaryList(int year,int month,int dayOfMonth){
-        String yearAndMonth, day;
-        if(month+1 < 10){
-            yearAndMonth = year+"年0"+(month+1)+"月";
-        }else {
-            yearAndMonth = year+"年"+(month+1)+"月";
-        }
-        if(dayOfMonth<10){
-            day = "0"+dayOfMonth;
-        }else {
-            day = dayOfMonth+"";
-        }
-        diaryModel.findDataByDate(yearAndMonth,day,this);
+        diaryModel.findAllData(this, ConstantPool.NOT_ABANDON);
     }
 
     /**
@@ -53,13 +31,11 @@ public class DiaryVM implements MyVMImpl {
     public void refreshDiaryList(String text){
         diaryModel.findDataByText(text,this);
     }
-
-
     /**
      * 初始化今天日期
      * @return
      */
-    public DiaryBean initAddCardData(){
+    public DiaryBean refreshBeanDate(){
         DiaryBean bean = new DiaryBean();
         Date date = new Date();
         String day = new SimpleDateFormat("dd").format(date);
@@ -70,8 +46,9 @@ public class DiaryVM implements MyVMImpl {
         bean.week.set(week);
         return bean;
     }
+
     @Override
-    public void findListSuccess (List<DiaryBean> diaryBeanList) {
+    public void findAllDataSuccess (List<DiaryBean> diaryBeanList) {
         adapter.refreshData(diaryBeanList);
     }
 }

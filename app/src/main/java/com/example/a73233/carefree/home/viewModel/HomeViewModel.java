@@ -1,5 +1,7 @@
 package com.example.a73233.carefree.home.viewModel;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 import android.icu.util.Calendar;
@@ -8,15 +10,21 @@ import android.util.Log;
 import com.example.a73233.carefree.bean.Diary_db;
 import com.example.a73233.carefree.bean.NoteBean;
 import com.example.a73233.carefree.bean.Note_db;
+import com.example.a73233.carefree.home.model.HomeModel;
 import com.example.a73233.carefree.note.view.NoteListAdapter;
-import com.example.a73233.carefree.note.viewModel.NoteVmImpl;
-import com.example.a73233.carefree.util.EmotionUtil;
+import com.example.a73233.carefree.util.EmotionDataUtil;
+import com.example.a73233.carefree.util.LogUtil;
+import com.example.a73233.carefree.util.NoteUtil;
 import com.example.a73233.carefree.util.TimeUtil;
 
 import org.litepal.LitePal;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class HomeViewModel{
     public final ObservableInt emotionValue = new ObservableInt();
@@ -25,42 +33,26 @@ public class HomeViewModel{
     public final ObservableField<int []> dayValues = new ObservableField<>();
     public final ObservableField<int []> dayColors = new ObservableField<>();
     public final ObservableField<String> reportSuggest = new ObservableField<>();
+    public final ObservableField<int []> energyS = new ObservableField<>();
+    public final ObservableInt energySum = new ObservableInt();
 
     private List<Diary_db> diaryDbList;
     private NoteListAdapter noteListAdapter;
+    private HomeModel model;
 
     public HomeViewModel(NoteListAdapter noteListAdapter) {
         this.noteListAdapter = noteListAdapter;
+        model = new HomeModel();
     }
 
     public void refreshNote(){
-        List<Note_db> dbs = LitePal.where("rank>? and isAbandon=?","0","0").find(Note_db.class);
-        List<NoteBean> beans = new ArrayList<>();
-        for (Note_db db : dbs){
-            NoteBean bean = new NoteBean();
-            bean.idAbandon.set(db.getIsAbandon());
-            bean.monthAndDay.set(db.getMonthAndDay());
-            bean.rank.set(db.getRank());
-            bean.text.set(db.getText());
-            bean.time.set(db.getTime());
-            bean.week.set(db.getWeek());
-            bean.id.set(db.getId());
-            bean.hour.set(db.getClockHour());
-            bean.minutes.set(db.getClockMinutes());
-            bean.clockText.set(db.getClockText());
-            beans.add(bean);
-        }
-        noteListAdapter.refreshData(beans);
+        noteListAdapter.refreshData(model.findTaskNote());
     }
-    public void initEmotionValue(){
-        diaryDbList = LitePal.where("isAbandon like ?","0").find(Diary_db.class);
-        if(diaryDbList.size() != 0){
-            emotionValue.set(diaryDbList.get(diaryDbList.size()-1).getEmotionValue());
-        }else {
-            emotionValue.set(28);
-        }
-        moodViewPointColor.set(EmotionUtil.GetColors(emotionValue.get())[0]);
-    }
+
+
+    /**
+     * 找出最近7天的心情值，一天由多篇日记则去平均值
+     */
     public void initReportViewData(){
         String TAG = "情绪报表数据生成测试";
         //获取今天的日期
@@ -97,7 +89,6 @@ public class HomeViewModel{
             dayColors.set(DayColor);
             return;
         }
-
         Diary_db db = diaryDbList.get((diaryDbList.size() - 1) -j);
         j++; sameDaySum++; value = db.getEmotionValue();
         //数据库只有一条数据
@@ -155,12 +146,80 @@ public class HomeViewModel{
 
         //初始化颜色
         for(i=6; i>-1; i--){
-            DayColor[i] = EmotionUtil.GetColors(DayValue[i])[1];
+            DayColor[i] = EmotionDataUtil.GetColors(DayValue[i])[1];
         }
         dayValues.set(DayValue);
         dayNums.set(DayNum);
         dayColors.set(DayColor);
-        reportSuggest.set(EmotionUtil.GetSuggestion(dayValues.get()));
+        reportSuggest.set(EmotionDataUtil.GetSuggestion(dayValues.get()));
     }
 
+    /**
+     * 找出最近7天的能动值的变化。
+     */
+    public void initEnergyReport(){
+        //数据
+        int[][] energys = new int[8][8];
+        //今天日期
+        Date date = new Date();
+        String dayString = new SimpleDateFormat("dd").format(date);
+        String yearAndMonth = new SimpleDateFormat("yyyy年MM月").format(date);
+        String monthAndDay = new SimpleDateFormat("MM月dd日").format(date);
+        String day = null;
+
+        //将日期转化成整型
+        int dayInt = Integer.parseInt(dayString);
+
+        int i = 0;
+        for(i=0; i<7; i++){
+            if(dayInt <= 0){
+                day = ""+TimeUtil.GetDayByMonth(dayInt);
+                yearAndMonth = TimeUtil.getLastMonthByYM(yearAndMonth);
+                monthAndDay = TimeUtil.GetLastMonthByMD(monthAndDay)+"月"+day+"日";
+                dayInt = Integer.parseInt(day);
+            }else if(dayInt <10){
+                day = "0"+dayInt;
+                monthAndDay = monthAndDay.substring(0,3) + day + "日";
+            }else{
+                day = String.valueOf(dayInt);
+                monthAndDay = monthAndDay.substring(0,3) + day + "日";
+            }
+            List<Diary_db> diaryDbs = model.findDiaryByDate(yearAndMonth,day);
+            for(Diary_db diary_db : diaryDbs){
+                energys[i][EmotionDataUtil.GetEnergyType(diary_db.getEmotionValue())] += EmotionDataUtil.GetEnergy(diary_db.getEmotionValue());
+            }
+            List<Note_db> noteDbs = model.findNoteByDate(monthAndDay);
+            for (Note_db noteDb : noteDbs){
+                energys[i][NoteUtil.GetEnergyType(noteDb.getRank())] += NoteUtil.GetEnergy(noteDb.getRank(), noteDb.getIsComplete());
+            }
+            dayInt --;
+        }
+
+        int result[]= new int[8];
+        int sum = 0;
+        int sum_2 = 0;
+        for(i=0; i<7; i++){
+            for(int j=0; j<7; j++){
+                result[i] += energys[j][i];
+            }
+            sum += result[i];
+        }
+        for(i=0; i<7; i++){
+            sum_2 += energys[0][i];
+        }
+
+        energyS.set(result);
+        energySum.set(sum);
+        emotionValue.set(sum_2);
+        moodViewPointColor.set(EmotionDataUtil.GetColors(emotionValue.get())[0]);
+    }
+    public Boolean isShowNote(Activity activity){
+        SharedPreferences pref = activity.getSharedPreferences("note_setting",MODE_PRIVATE);
+        if (pref.getString("home_show_note","显示任务").equals("显示任务")){
+            return true;
+        }else {
+            return false;
+        }
+
+    }
 }

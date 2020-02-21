@@ -4,6 +4,7 @@ import com.example.a73233.carefree.bean.NoteBean;
 import com.example.a73233.carefree.bean.Note_db;
 import com.example.a73233.carefree.note.viewModel.NoteVM;
 import com.example.a73233.carefree.note.viewModel.NoteVmImpl;
+import com.example.a73233.carefree.util.ConstantPool;
 import com.example.a73233.carefree.util.LogUtil;
 
 import org.litepal.LitePal;
@@ -19,8 +20,15 @@ public class NoteModel {
      */
     public void findAllData(NoteVmImpl noteVM, int type){
         List<Note_db> noteDbList = LitePal.where("isAbandon = ?",""+type).find(Note_db.class);
-        LogUtil.LogD("找到便贴数据"+noteDbList.size()+"条");
         noteVM.findSuccess(creatNoteBean(noteDbList));
+    }
+    public void findRankData(NoteVmImpl noteVM, int type){
+        List<Note_db> noteDbList2 = LitePal.where("isAbandon = ? and rank > ?",""+type, "0").find(Note_db.class);
+        List<Note_db> noteDbList = LitePal.where("isAbandon = ? and rank = ?",""+type, "0").find(Note_db.class);
+        List<NoteBean> beans = creatNoteBean(noteDbList);
+        beans.addAll(creatNoteBean(noteDbList2));
+        noteVM.findSuccess(beans);
+
     }
 
     /**
@@ -71,9 +79,10 @@ public class NoteModel {
         LogUtil.LogD("保存便贴成功");
     }
 
-    public void deleteData(int id){
+    public void deleteData(int id, int type){
         Note_db db = LitePal.find(Note_db.class,id);
-        db.setIsAbandon(1);
+        db.setIsAbandon(ConstantPool.ISABANDON);
+        db.setIsComplete(type);
         db.save();
     }
 

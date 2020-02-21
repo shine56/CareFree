@@ -1,6 +1,7 @@
 package com.example.a73233.carefree;
 
 import android.Manifest;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
@@ -13,7 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.a73233.carefree.baseview.BaseActivity;
+import com.example.a73233.carefree.baseView.BaseActivity;
 import com.example.a73233.carefree.bean.Diary_db;
 import com.example.a73233.carefree.bean.Note_db;
 import com.example.a73233.carefree.bean.User_db;
@@ -22,62 +23,40 @@ import com.example.a73233.carefree.me.view.MeFragment;
 import com.example.a73233.carefree.diary.view.DiaryFragment;
 import com.example.a73233.carefree.home.view.HomeFragment;
 import com.example.a73233.carefree.databinding.ActivityMainBinding;
+import com.example.a73233.carefree.util.ConstantPool;
 
+import org.litepal.LitePal;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class MainActivity extends BaseActivity {
-    private ActivityMainBinding binding;
+    private static final int HomePage = 1;
+    private static final int DiaryPage = 2;
+    private static final int NotePage = 3;
+    private static final int MePage = 4;
 
+    private ActivityMainBinding binding;
     private HomeFragment homeFragment;
     private DiaryFragment diaryFragment;
     private NoteFragment noteFragment;
     private MeFragment meFragment;
 
     private int FragmentID = 1;
-    private static final int HomePage = 1;
-    private static final int DiaryPage = 2;
-    private static final int NotePage = 3;
-    private static final int MePage = 4;
+    private Boolean isFragmentCreate = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
         binding.setMainActivity(this);
-        initApp();
-       // LitePal.deleteAll(Diary_db.class);
-       // LitePal.deleteAll(Note_db.class);
-        //initDb();
-        //initNoteDb();
-        //initMeDb();
-    }
-    private void initMeDb(){
-        User_db db = new User_db();
-        db.setUserName("Shine56");
-        db.setUserWords("世界和平、无灾、无难。");
-        db.save();
-    }
-    private void initDiaryDb(){
-        for(int i=15; i<21; i++){
-            Diary_db db = new Diary_db();
-            db.setDay(""+i);
-            db.setDiaryContent("第"+i);
-            db.setEmotionValue(i);
-            db.setWeek("周三");
-            db.setYearAndMonth("2020年01月");
-            db.save();
+
+        //判断是否第一次安装启动app
+        SharedPreferences pref = getSharedPreferences("appSetting",MODE_PRIVATE);
+        if(pref.getBoolean("isFirstStartApp",true)){
+            initApp();
         }
-    }
-    private void initNoteDb(){
-        for(int i=0; i<4; i++){
-            Note_db db = new Note_db();
-            db.setIsAbandon(0);
-            db.setMonthAndDay("1月27");
-            db.setRank(i);
-            db.setText("今天真开心");
-            db.setTime("18:11");
-            db.setWeek("星期三");
-            db.save();
-        }
+        initView();
     }
     public void onClick(View view) {
         switch (view.getId()){
@@ -122,6 +101,7 @@ public class MainActivity extends BaseActivity {
             case HomePage:
                 binding.homeLogo.setImageResource(R.mipmap.home_click);
                 FragmentID = HomePage;
+
                 FragmentManager fragmentManager1 = getSupportFragmentManager();
                 FragmentTransaction transaction1 = fragmentManager1.beginTransaction();
                 transaction1.hide(diaryFragment);
@@ -134,6 +114,10 @@ public class MainActivity extends BaseActivity {
                 binding.diaryLogo.setImageResource(R.mipmap.diary_click);
                 FragmentID = DiaryPage;
 
+                if(!isFragmentCreate){
+                    creatFragment();
+                    isFragmentCreate = true;
+                }
                 FragmentManager fragmentManager2 = getSupportFragmentManager();
                 FragmentTransaction transaction2 = fragmentManager2.beginTransaction();
                 transaction2.hide(homeFragment);
@@ -146,6 +130,10 @@ public class MainActivity extends BaseActivity {
                 binding.noteLogo.setImageResource(R.mipmap.note_click);
                 FragmentID = NotePage;
 
+                if(!isFragmentCreate){
+                    creatFragment();
+                    isFragmentCreate = true;
+                }
                 FragmentManager fragmentManager3 = getSupportFragmentManager();
                 FragmentTransaction transaction3 = fragmentManager3.beginTransaction();
                 transaction3.hide(diaryFragment);
@@ -158,6 +146,10 @@ public class MainActivity extends BaseActivity {
                 binding.meLogo.setImageResource(R.mipmap.me_logo_click);
                 FragmentID = MePage;
 
+                if(!isFragmentCreate){
+                    creatFragment();
+                    isFragmentCreate = true;
+                }
                 FragmentManager fragmentManager4 = getSupportFragmentManager();
                 FragmentTransaction transaction4 = fragmentManager4.beginTransaction();
                 transaction4.hide(diaryFragment);
@@ -167,6 +159,19 @@ public class MainActivity extends BaseActivity {
                 transaction4.commit();
                 break;
         }
+    }
+    private void creatFragment(){
+        diaryFragment = new DiaryFragment();
+        noteFragment = new NoteFragment();
+        meFragment = new MeFragment();
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.add(R.id.fragment_container,diaryFragment,"diaryFragment");
+        transaction.add(R.id.fragment_container,noteFragment,"noteFragment");
+        transaction.add(R.id.fragment_container,meFragment,"meFragment");
+        transaction.commit();
+        logD("创建碎片成功");
     }
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -191,7 +196,7 @@ public class MainActivity extends BaseActivity {
         }*/
 
     }
-    private void  initApp(){
+    private void  initView(){
         ReviseStatusBar(TRANSPARENT_BLACK);
         //初始化底部导航栏
         binding.homeLogo.setImageResource(R.mipmap.home_click);
@@ -206,23 +211,96 @@ public class MainActivity extends BaseActivity {
             ActivityCompat.requestPermissions(MainActivity.this,
                     new String[]{Manifest.permission.CAMERA},2);
         }
-        //实例化碎片
-        homeFragment = new HomeFragment();
-        diaryFragment = new DiaryFragment();
-        noteFragment = new NoteFragment();
-        meFragment = new MeFragment();
 
-        //初始化碎片管理器
+        //初始化首页碎片
+        homeFragment = new HomeFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.add(R.id.fragment_container,diaryFragment,"diaryFragment");
         transaction.add(R.id.fragment_container, homeFragment,"homeFragment");
-        transaction.add(R.id.fragment_container,noteFragment,"noteFragment");
-        transaction.add(R.id.fragment_container,meFragment,"meFragment");
         transaction.addToBackStack("add allFragment");
-        transaction.hide(diaryFragment);
-        transaction.hide(noteFragment);
-        transaction.hide(meFragment);
         transaction.commit();
+    }
+    private void initApp(){
+        logD("首次启动，初始化app");
+        LitePal.deleteAll(Diary_db.class);
+        LitePal.deleteAll(Note_db.class);
+        LitePal.deleteAll(User_db.class);
+        initDiaryDb();
+        initNoteDb();
+        initMeDb();
+        initSetting();
+
+        SharedPreferences.Editor editor = getSharedPreferences("appSetting",MODE_PRIVATE).edit();
+        editor.putBoolean("isFirstStartApp",false);
+        editor.apply();
+    }
+    private void initSetting(){
+        SharedPreferences.Editor editor = getSharedPreferences("note_setting",MODE_PRIVATE).edit();
+        editor.putString("clock_type","非系统闹钟");
+        editor.putString("home_show_note","不显示任务");
+        editor.putString("rank3_top","不置顶");
+        editor.apply();
+    }
+    private void initMeDb(){
+        User_db db = new User_db();
+        db.setUserName("Shine.");
+        db.setUserWords("一切都是最好得安排！");
+        db.save();
+    }
+    private void initDiaryDb(){
+        Date date = new Date();
+        String day = new SimpleDateFormat("dd").format(date);
+        String yearAndMonth = new SimpleDateFormat("yyyy年MM月").format(date);
+        String week = new SimpleDateFormat("EEEE").format(date);
+
+        for(int i=0; i<5; i++){
+            Diary_db db = new Diary_db();
+            db.setIsAbandon(ConstantPool.NOT_ABANDON);
+            db.setDay((i+15)+"");
+            db.setWeek(week);
+            db.setYearAndMonth(yearAndMonth);
+
+            switch (i){
+                case 4:
+                    db.setDiaryContent("日记共四种心情选择，可记录下您写日记时的心情！添加新的日记会增加或减少能动值哦。保持好的心情，能动值越高！");
+                    db.setEmotionValue(28);
+                    break;
+                case 3:
+                    db.setDiaryContent("开心");
+                    db.setEmotionValue(28);
+                    break;
+                case 2:
+                    db.setDiaryContent("平静");
+                    db.setEmotionValue(0);
+                    break;
+                case 1:
+                    db.setDiaryContent("忧伤");
+                    db.setEmotionValue(-10);
+                    break;
+                case 0:
+                    db.setDiaryContent("难过");
+                    db.setEmotionValue(-40);
+                    break;
+            }
+            db.save();
+        }
+    }
+    private void initNoteDb(){
+        Date date = new Date();
+        String year = new SimpleDateFormat("yyyy").format(date);
+        String monthAndDay = new SimpleDateFormat("MM月dd日").format(date);
+        String week = new SimpleDateFormat("EEEE").format(date);
+        String time = new SimpleDateFormat("HH:mm").format(date);
+
+        Note_db db = new Note_db();
+        db.setIsAbandon(ConstantPool.NOT_ABANDON);
+        db.setMonthAndDay(monthAndDay);
+        db.setRank(0);
+        db.setTime(time);
+        db.setWeek(week);
+        db.setYear(year);
+        db.setText("贴纸分为：临时记录贴和任务贴\n临时记录贴无法设置闹钟。\n\n任务贴必须设置闹钟，有三个级别，设定的级别越高，说明该任务越重要，完成任务时能动值加得越多。\n\n" +
+                "系统闹钟：设置系统闹钟即相当于添加了一个手机自带得闹钟，可前往手机闹钟程序查看。\n\n前往-->我的-->设置-->闹钟，选择是否使用系统闹钟");
+        db.save();
     }
 }

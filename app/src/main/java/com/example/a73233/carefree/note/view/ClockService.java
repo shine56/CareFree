@@ -6,6 +6,7 @@ import android.app.Service;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.icu.util.Calendar;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.widget.TimePicker;
 
@@ -36,32 +37,33 @@ public class ClockService extends Service {
         text = intent.getStringExtra("text");
         createAlarm(text,hour,minutes,0);
         //保活操作
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Service.ALARM_SERVICE);
-        long eightHour = 2 * 60 * 60 * 1000;
-        Calendar c = Calendar.getInstance();
-        c.setTimeInMillis(System.currentTimeMillis());
-        Intent i = new Intent(this,ClockService.class);
-        i.putExtra("hour",hour);
-        i.putExtra("minutes",minutes);
-        i.putExtra("text",text);
-        PendingIntent pi = PendingIntent.getService(this,1,i,0);
-        alarmManager.cancel(pi);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, c.getTimeInMillis()+eightHour,pi);
+//        AlarmManager alarmManager = (AlarmManager) getSystemService(Service.ALARM_SERVICE);
+//        long eightHour = 2 * 60 * 60 * 1000;
+//        Calendar c = Calendar.getInstance();
+//        c.setTimeInMillis(System.currentTimeMillis());
+//        Intent i = new Intent(this,ClockService.class);
+//        i.putExtra("hour",hour);
+//        i.putExtra("minutes",minutes);
+//        i.putExtra("text",text);
+//        PendingIntent pi = PendingIntent.getService(this,1,i,0);
+//        alarmManager.cancel(pi);
+//        alarmManager.set(AlarmManager.RTC_WAKEUP, c.getTimeInMillis()+eightHour,pi);
         return super.onStartCommand(intent, flags, startId);
     }
 
     @Override
     public void onDestroy() {
         LogUtil.LogD("服务结束");
-//        Intent intent = new Intent(this,ClockService.class);
-//        startService(intent);
         super.onDestroy();
     }
 
     private void createAlarm(String message, int hour, int minutes, int resId) {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Service.ALARM_SERVICE);
         Intent intent = new Intent(this, ClockReceiver.class);
-        intent.putExtra("text",text);
+        Bundle bundle = new Bundle();
+        bundle.putString("text",text);
+        intent.putExtras(bundle);
+        LogUtil.LogD("放进广播接收器得文本是："+text);
         PendingIntent pi = PendingIntent.getBroadcast(this, 0, intent, 0);
 
         //设置当前时间

@@ -149,7 +149,7 @@ public class EmotionReportView extends View {
                 startX,Height * 11/14,endX,Height * 11/14,},LinePaint);
         //画标题
         int textX = Width * 1/35;
-        canvas.drawText("情绪报表",textX,(int)(textX*2.7), TitlePaint);
+        canvas.drawText("心情报表",textX,(int)(textX*2.7), TitlePaint);
         //Y轴数据
         int numY = Width * 1/90;
         canvas.drawText("50",Width * 1/15,Height * 3/14 ,YtextPaint);

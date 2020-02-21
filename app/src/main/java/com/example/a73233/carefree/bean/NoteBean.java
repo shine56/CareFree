@@ -8,6 +8,7 @@ public class NoteBean {
     public final ObservableInt id = new ObservableInt();
     public final ObservableInt rank = new ObservableInt();
     public final ObservableInt idAbandon = new ObservableInt();
+   // public final ObservableInt isComplete = new ObservableInt();
     public final ObservableField<String> text = new ObservableField<>();
     public final ObservableField<String> monthAndDay = new ObservableField<>();
     public final ObservableField<String> week = new ObservableField<>();

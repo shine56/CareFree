@@ -1,27 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:background="@color/mainBg"
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/mainBg"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/dialog_write_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="标题"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:textStyle="normal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></TextView>
 
     <EditText
-        android:maxLines="1"
-        android:maxLength="25"
-        android:gravity="center"
-        android:background="@drawable/edit_bg"
         android:id="@+id/dialog_write_edit"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:hint="最多25个字"></EditText>
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/edit_bg"
+        android:hint="最多25个字"
+        android:textSize="15dp"
+        android:maxLines="1"
+        android:paddingRight="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_write_title"></EditText>
+
+    <TextView
+        android:id="@+id/dialog_write_cancel"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="16dp"
+        android:gravity="center"
+        android:text="取消"
+        android:textColor="@color/mainBg2"
+        android:textSize="17dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/view2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_write_edit"></TextView>
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="0.1mm"
+        android:layout_height="20dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="5dp"
+        android:background="@color/mainBg2"
+        app:layout_constraintBottom_toBottomOf="@+id/dialog_write_cancel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/dialog_write_cancel"></View>
+
     <TextView
         android:id="@+id/dialog_write_confirm"
-        android:gravity="center"
-        android:layout_marginTop="16dp"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="40dp"
+        android:layout_marginTop="24dp"
+        android:gravity="center"
         android:text="确定"
-        android:textColor="@color/black"
-        android:textSize="20dp"></TextView>
-</LinearLayout>
+        android:textColor="@color/mainBg2"
+        android:textSize="17dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/view2"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_write_edit"></TextView>
+</android.support.constraint.ConstraintLayout>

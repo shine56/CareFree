@@ -1,9 +1,12 @@
 package com.example.a73233.carefree.me.model;
 
+import android.content.SharedPreferences;
+
 import com.example.a73233.carefree.bean.Diary_db;
 import com.example.a73233.carefree.bean.Note_db;
 import com.example.a73233.carefree.bean.UserBean;
 import com.example.a73233.carefree.bean.User_db;
+import com.example.a73233.carefree.util.ConstantPool;
 import com.example.a73233.carefree.util.LogUtil;
 
 import org.litepal.LitePal;
@@ -11,7 +14,8 @@ import org.litepal.LitePal;
 import java.util.List;
 
 public class MeModel {
-    public UserBean getData(){
+
+    public UserBean getUserBean(){
         UserBean bean = new UserBean();
         User_db db = LitePal.findAll(User_db.class).get(0);
         List<Diary_db> diaryDbList = LitePal.where("isAbandon like ?","0").find(Diary_db.class);
@@ -26,15 +30,27 @@ public class MeModel {
                 -noteDbList.size());
         bean.diaryNums.set(diaryDbList.size());
         bean.noteNums.set(noteDbList.size());
-        if(diaryDbList.size() != 0){
-            bean.energyValue.set(diaryDbList.get(diaryDbList.size()-1).getEmotionValue());
-        }else {
-            bean.energyValue.set(28);
-        }
-        LogUtil.LogD("废纸数目"+bean.abandonNums.get());
         return bean;
     }
 
+    /**
+     * 通过日期找diary and note
+     * @param yearAndMonth
+     * @param day
+     * @return
+     */
+    public List<Diary_db> findDiaryByDate(String yearAndMonth, String day){
+        return LitePal.where("yearAndMonth like ? and day like ? and isAbandon like ?"
+                , yearAndMonth, day,"0").find(Diary_db.class);
+    }
+    public List<Note_db> findNoteByDate(String monthAndDay){
+        return LitePal.where("monthAndDay like ? and isAbandon like ?"
+                , monthAndDay,"1").find(Note_db.class);
+    }
+    /**
+     * 保存User数据
+     * @param bean
+     */
     public void saveUserdb(UserBean bean){
         User_db db = LitePal.findAll(User_db.class).get(0);
         db.setUserName(bean.userName.get());
@@ -43,6 +59,11 @@ public class MeModel {
         db.save();
     }
 
+    /**
+     * 恢复数据
+     * @param type
+     * @param id
+     */
     public void recoveryData(int type, int id){
         if(type == 0){
             Diary_db diary_db = LitePal.find(Diary_db.class,id);
@@ -55,12 +76,20 @@ public class MeModel {
         }
     }
 
-    public void deleteData(int type, int id){
+    /**
+     * 删除数据
+     * @param type
+     * @param id
+     */
+    public void deleteOneData(int type, int id){
         if(type == 0){
             LitePal.delete(Diary_db.class, id);
         }else {
             LitePal.delete(Note_db.class, id);
         }
-
+    }
+    public void deleteAllData(){
+        LitePal.deleteAll(Diary_db.class,"isAbandon like ?",""+ConstantPool.ISABANDON);
+        LitePal.deleteAll(Note_db.class,"isAbandon like ?",""+ConstantPool.ISABANDON);
     }
 }

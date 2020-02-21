@@ -76,7 +76,9 @@
                     android:id="@+id/linearLayout2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="24dp"
+                    android:layout_marginEnd="16dp"
                     android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -145,6 +147,7 @@
                 </LinearLayout>
 
                 <TextView
+                    android:onClick="@{noteWriteActivity.onClick}"
                     android:id="@+id/note_text_bg"
                     android:layout_width="match_parent"
                     android:layout_height="450dp"
@@ -170,6 +173,8 @@
                     app:layout_constraintStart_toStartOf="@+id/note_edit_text"
                     app:layout_constraintTop_toTopOf="@+id/note_text_bg" />
                 <EditText
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
                     android:background="@null"
                     android:id="@+id/note_edit_text"
                     android:layout_width="match_parent"
@@ -185,57 +190,116 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/note_text_bg" />
 
-                <ImageView
-                    android:id="@+id/note_clock_logo"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="80dp"
-                    android:onClick="@{noteWriteActivity.onClick}"
-                    android:src="@mipmap/clock_blue"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
-
-                <TimePicker
-                    android:id="@+id/note_clock_hour"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/note_write_clock_bg"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:timePickerMode="spinner"
-                    app:layout_constraintBottom_toBottomOf="@+id/note_clock_logo"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/note_clock_logo"
-                    app:layout_constraintTop_toTopOf="@+id/note_clock_logo" />
-
-                <ImageView
-                    android:id="@+id/note_clock_title_logo"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_marginTop="80dp"
-                    android:layout_marginBottom="20dp"
-                    android:onClick="@{noteWriteActivity.onClick}"
-                    android:src="@mipmap/title_blue"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginBottom="32dp"
+                    android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/note_clock_logo"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="@+id/note_clock_logo"
-                    app:layout_constraintTop_toBottomOf="@+id/note_clock_logo" />
-
-                <EditText
-                    android:background="@drawable/edit_bg"
-                    android:id="@+id/note_clock_title"
-                    android:layout_width="0dp"
-                    android:layout_height="35dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:hint="闹钟标题"
-                    app:layout_constraintBottom_toBottomOf="@+id/note_clock_title_logo"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toEndOf="@+id/note_clock_title_logo"
-                    app:layout_constraintTop_toTopOf="@+id/note_clock_title_logo"
-                    app:layout_constraintVertical_bias="0.6"></EditText>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
+                    <android.support.constraint.ConstraintLayout
+                        android:id="@+id/note_write_clock_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="4dp"
+                        android:onClick="@{noteWriteActivity.onClick}">
+
+                        <TextView
+                            android:id="@+id/textView22"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="16dp"
+                            android:gravity="center"
+                            android:text="闹钟"
+                            android:textColor="@color/black"
+                            android:textSize="16dp"
+                            app:layout_constraintStart_toStartOf="parent"></TextView>
+
+                        <TextView
+                            android:id="@+id/note_write_clock_time_text"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="8dp"
+                            android:gravity="right"
+                            android:maxLines="1"
+                            android:text="@{bean.minutes&lt;10 ? bean.hour+@string/colon+@string/zero+bean.minutes : bean.hour+@string/colon+bean.minutes}"
+                            android:textColor="@color/gray"
+                            android:textSize="16dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/imageView23"
+                            app:layout_constraintStart_toEndOf="@+id/textView22"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/imageView23"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginEnd="16dp"
+                            android:src="@mipmap/next_gray"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                        </ImageView>
+                    </android.support.constraint.ConstraintLayout>
+
+                    <android.support.constraint.ConstraintLayout
+                        android:id="@+id/note_write_clock_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="4dp"
+                        android:onClick="@{noteWriteActivity.onClick}">
+
+                        <TextView
+                            android:id="@+id/textView23"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="16dp"
+                            android:gravity="center"
+                            android:text="内容"
+                            android:textColor="@color/black"
+                            android:textSize="16dp"
+                            app:layout_constraintStart_toStartOf="parent"></TextView>
+
+                        <TextView
+                            android:id="@+id/note_write_clock_title_text"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="48dp"
+                            android:layout_marginEnd="8dp"
+                            android:gravity="right"
+                            android:text="@{bean.clockText}"
+                            android:textColor="@color/gray"
+                            android:textSize="12dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/imageView24"
+                            app:layout_constraintStart_toEndOf="@+id/textView23"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.39"></TextView>
+
+                        <ImageView
+                            android:id="@+id/imageView24"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginEnd="16dp"
+                            android:src="@mipmap/next_gray"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                        </ImageView>
+                    </android.support.constraint.ConstraintLayout>
+                </LinearLayout>
             </android.support.constraint.ConstraintLayout>
         </android.support.v4.widget.NestedScrollView>
 

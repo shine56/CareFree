@@ -2,20 +2,19 @@ package com.example.a73233.carefree.me.view;
 
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.a73233.carefree.R;
-import com.example.a73233.carefree.baseview.BaseActivity;
+import com.example.a73233.carefree.baseView.BaseActivity;
 import com.example.a73233.carefree.diary.view.DiaryListAdapter_;
-import com.example.a73233.carefree.diary.viewModel.DiaryVM;
 import com.example.a73233.carefree.me.viewModel.AbandonVM;
-import com.example.a73233.carefree.me.viewModel.MeVM;
 import com.example.a73233.carefree.note.view.NoteListAdapter;
-import com.example.a73233.carefree.note.viewModel.NoteVM;
 import com.example.a73233.carefree.util.SpacesItemDecoration;
 
 public class AbandonActivity extends BaseActivity {
@@ -40,6 +39,15 @@ public class AbandonActivity extends BaseActivity {
         ReviseStatusBar(TRANSPARENT_BLACK);
         initRecy();
         abandonVM.refreshView();
+        showToast("点击选择恢复.删除");
+
+        TextView textView = findViewById(R.id.abandon_delete_all);
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                confirmDelete();
+            }
+        });
     }
 
     private void initRecy(){
@@ -63,7 +71,6 @@ public class AbandonActivity extends BaseActivity {
             }
         });
         noteAdapter.setItemClick(new NoteListAdapter.ItemClickImpl(){
-
             @Override
             public void onClick(View view, int id, int position, String text) {
                 showAlertDialog(1, id,position,text);
@@ -83,12 +90,29 @@ public class AbandonActivity extends BaseActivity {
                                 showToast("恢复成功");
                                 break;
                             case 1 :
-                                abandonVM.deleteData(type,id,position);
+                                abandonVM.deleteOneData(type,id,position);
                                 showToast("删除成功");
                                 break;
                         }
                     }
                 }).create();
         alertDialog.show();
+    }
+    private void confirmDelete(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("确认清空废纸篓吗");
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+            }
+        });
+        builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                abandonVM.deleteAllData();
+            }
+        });
+        builder.create().show();
+
     }
 }

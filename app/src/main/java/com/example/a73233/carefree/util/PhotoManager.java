@@ -99,6 +99,8 @@ public class PhotoManager {
         }
         return imagePath;
     }
+
+
     //根据路径将图片另存于activity.getExternalCacheDir().getPath();
     public static String copyPhoto(Activity activity,String oldPAth){
         String sdPath = activity.getExternalCacheDir().getPath();
@@ -106,7 +108,6 @@ public class PhotoManager {
         String newPath = sdPath + "/" + imageName;
         File newFile = new File(newPath);
         int byteReadLength = 0;
-        //文件不存在时
 
         try {
             if(!newFile.exists()){
@@ -131,7 +132,7 @@ public class PhotoManager {
         return null;
     }
     //EditText添加图片
-    public static void editViewInsertPhoto (WriteDiaryActivity activity, EditText editText, String imagePath){
+    public static void editViewInsertPhoto (Activity activity, EditText editText, String imagePath){
         Bitmap originalBitmap = BitmapFactory.decodeFile(imagePath);
         int originalWidth = originalBitmap.getWidth();
         int originalHeight = originalBitmap.getHeight();

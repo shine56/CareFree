@@ -10,7 +10,7 @@
         android:layout_width="92dp"
         android:layout_height="92dp"
         android:layout_gravity="center_vertical"
-        android:scaleType="fitXY"
+        android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

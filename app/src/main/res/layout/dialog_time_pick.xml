@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TimePicker
+        android:id="@+id/dialog_time_pick"
+        android:layout_width="wrap_content"
+        android:layout_height="390dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></TimePicker>
+
+    <TextView
+        android:id="@+id/dialog_time_pick_confirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="16dp"
+        android:gravity="center"
+        android:text="确定"
+        android:textColor="@color/mainBg2"
+        android:textSize="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/dialog_time_pick"
+        app:layout_constraintEnd_toEndOf="parent"></TextView>
+
+    <TextView
+        android:id="@+id/dialog_time_pick_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:gravity="center"
+        android:text="取消"
+        android:textSize="16dp"
+        android:textColor="@color/mainBg2"
+        app:layout_constraintBottom_toBottomOf="@+id/dialog_time_pick_confirm"
+        app:layout_constraintEnd_toStartOf="@+id/dialog_time_pick_confirm"
+        app:layout_constraintTop_toTopOf="@+id/dialog_time_pick_confirm"></TextView>
+
+</android.support.constraint.ConstraintLayout>

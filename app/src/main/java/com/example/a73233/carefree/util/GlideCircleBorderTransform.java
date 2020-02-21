@@ -17,9 +17,11 @@ public class GlideCircleBorderTransform  extends BitmapTransformation {
     private Paint mBorderPaint;
     private float borderWidth;
     private int borderColor;
+    private int type;
 
 
-    public GlideCircleBorderTransform(float borderWidth, int borderColor) {
+    public GlideCircleBorderTransform(float borderWidth, int borderColor, int type) {
+        this.type = type;
         this.borderWidth = borderWidth;
         this.borderColor = borderColor;
         mBorderPaint = new Paint();
@@ -36,7 +38,7 @@ public class GlideCircleBorderTransform  extends BitmapTransformation {
 //        return circleCrop(bitmapPool, bitmap);
 //    }
 
-    private Bitmap circleCrop(BitmapPool bitmapPool, Bitmap source) {
+    private Bitmap circleCrop(BitmapPool bitmapPool, Bitmap source, int outWidth, int outHeight) {
 
         int size = Math.min(source.getWidth(), source.getHeight());
         int x = (source.getWidth() - size) / 2;
@@ -55,15 +57,19 @@ public class GlideCircleBorderTransform  extends BitmapTransformation {
         paint.setAntiAlias(true);
         float radius = size / 2f;
         float r = radius - (borderWidth);
-        //绘制一个圆s
-        canvas.drawCircle(radius, radius, r, paint);
+        if(type == 0){
+            //绘制一个圆s
+            canvas.drawCircle(radius, radius, r, paint);
+            //画边框
+            //注意：避免出现描边被屏幕边缘裁掉
+            float borderRadius = radius - (borderWidth / 2);
+            canvas.drawCircle(radius, radius, borderRadius, mBorderPaint);
+        }else {
+            //绘制圆角矩形
+            RectF rectF = new RectF(0,0,outWidth,outHeight);
+            canvas.drawRoundRect(rectF,30,30,paint);
 
-        /************************描边*********************/
-        //注意：避免出现描边被屏幕边缘裁掉
-        float borderRadius = radius - (borderWidth / 2);
-        //画边框
-        canvas.drawCircle(radius, radius, borderRadius, mBorderPaint);
-
+        }
         return result;
     }
 
@@ -85,7 +91,7 @@ public class GlideCircleBorderTransform  extends BitmapTransformation {
     @Override
     protected Bitmap transform(@NonNull BitmapPool pool, @NonNull Bitmap toTransform, int outWidth, int outHeight) {
 //        return null;
-        return circleCrop(pool, toTransform);
+        return circleCrop(pool, toTransform, outWidth, outHeight);
 
     }
 }

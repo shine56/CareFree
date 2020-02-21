@@ -58,15 +58,22 @@
                 app:layout_constraintEnd_toEndOf="parent" />
         </android.support.constraint.ConstraintLayout>
         <Button
-            android:background="@drawable/note_abandon_bg"
-            android:id="@+id/note_remove"
+            android:background="@drawable/note_complete_bg"
+            android:id="@+id/note_list_complete"
             android:layout_width="100dp"
             android:layout_height="match_parent"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:textColor="@color/white"
-
-            android:text="摘掉" />
+            android:text="完成" />
+        <Button
+            android:background="@drawable/note_abandon_bg"
+            android:id="@+id/note_remove"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="8dp"
+            android:textColor="@color/white"
+            android:text="未完成" />
     </LinearLayout>
 
 

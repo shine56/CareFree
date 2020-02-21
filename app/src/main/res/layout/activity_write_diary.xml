@@ -16,6 +16,8 @@
     </data>
 
     <android.support.constraint.ConstraintLayout
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".diary.view.WriteDiaryActivity"
@@ -33,12 +35,11 @@
 
             <ImageView
                 android:id="@+id/write_delete"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
                 android:layout_marginStart="16dp"
                 android:onClick="@{writeActivity.onClick}"
                 android:src="@mipmap/cancel_logo_white"
-                android:visibility="@{bean.isShowDeleteButton? View.VISIBLE : View.GONE}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -85,8 +86,18 @@
             app:layout_constraintTop_toBottomOf="@+id/write_toolbar" />
 
 
+        <View
+            android:onClick="@{writeActivity.onClick}"
+            android:id="@+id/edit_wake_up"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/write_recycle_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/write_sign_line">
+
+        </View>
         <TextView
-            android:transitionName="sharedView_3"
             android:onClick="@{writeActivity.onClick}"
             android:id="@+id/write_add_photo"
             android:layout_width="92dp"

@@ -15,12 +15,11 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.a73233.carefree.R;
-import com.example.a73233.carefree.baseview.BaseAdapter;
+import com.example.a73233.carefree.baseView.BaseAdapter;
 import com.example.a73233.carefree.bean.DiaryBean;
 import com.example.a73233.carefree.databinding.DiaryListViewBinding;
-import com.example.a73233.carefree.util.EmotionUtil;
-
-import java.util.List;
+import com.example.a73233.carefree.util.EmotionDataUtil;
+import com.example.a73233.carefree.util.GlideCircleBorderTransform;
 
 public class DiaryListAdapter_ extends BaseAdapter {
     public DiaryListAdapter_(Context context) {
@@ -41,7 +40,7 @@ public class DiaryListAdapter_ extends BaseAdapter {
         DiaryBean bean = (DiaryBean)mList.get(mList.size()-1-position);
         binding.setDiaryBean(bean);
         binding.executePendingBindings();
-        binding.emotionValue.setTextColor(EmotionUtil.GetColors(bean.diaryEmotionValue.get())[1]);
+        binding.emotionValue.setTextColor(EmotionDataUtil.GetColors(bean.diaryEmotionValue.get())[1]);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,8 +57,13 @@ public class DiaryListAdapter_ extends BaseAdapter {
     @BindingAdapter("diary_list_imgUrl")
     public static void loadListImg(ImageView imageView,String imgUrl){
         if(imgUrl != null){
+            RequestOptions options = new RequestOptions()
+                    .centerCrop()
+                    .bitmapTransform(new GlideCircleBorderTransform(6, R.color.shadowGray,1))
+                    .diskCacheStrategy(DiskCacheStrategy.DATA);
             Glide.with(imageView.getContext()).load(imgUrl)
-                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(25)))
+                    //.apply(RequestOptions.bitmapTransform(new RoundedCorners(25)))
+                    .apply(options)
                     .skipMemoryCache(true) // 不使用内存缓存
                     .diskCacheStrategy(DiskCacheStrategy.NONE) // 不使用磁盘缓存
                     .error(R.mipmap.find_photo_fail)

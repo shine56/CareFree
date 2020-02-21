@@ -1,4 +1,4 @@
-package com.example.a73233.carefree.baseview;
+package com.example.a73233.carefree.baseView;
 
 import android.content.Intent;
 import android.graphics.Color;

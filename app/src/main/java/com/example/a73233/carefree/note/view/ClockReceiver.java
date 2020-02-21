@@ -5,40 +5,36 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.media.MediaPlayer;
-import android.support.v4.app.NotificationCompat;
-import android.support.v7.app.AlertDialog;
 import android.widget.Toast;
 
 import com.example.a73233.carefree.R;
-import com.example.a73233.carefree.baseview.BaseActivity;
 import com.example.a73233.carefree.util.LogUtil;
 
 public class ClockReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        LogUtil.LogD("接受到闹钟");
-        Toast.makeText(context, "您设置的时间到了！",
+        LogUtil.LogD("发送通知开始");
+        String text = intent.getExtras().getString("text");
+        Toast.makeText(context, text,
                 Toast.LENGTH_SHORT).show();
 
-        String text = intent.getStringExtra("text");
+        //发送通知
+        String channelId = "cf"+System.currentTimeMillis();
+        NotificationChannel channel = new NotificationChannel(channelId,
+                "carefree_channel",
+                NotificationManager.IMPORTANCE_DEFAULT);
+
         NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        String channelId = "ChannelId"; // 通知渠道
-        Notification notification= new Notification.Builder(context)
+        manager.createNotificationChannel(channel);
+
+        Notification notification= new Notification.Builder(context,channelId)
                 .setChannelId(channelId)
                 .setContentTitle("careFree提醒您")
                 .setSmallIcon(R.mipmap.icon)
                 .setContentText(text)
+                .setAutoCancel(true)
                 .build();
-
-        NotificationChannel channel = new NotificationChannel(
-                channelId,
-                "通知的渠道名称",
-                NotificationManager.IMPORTANCE_DEFAULT);
-        manager.createNotificationChannel(channel);
-// 3. 发送通知(Notification与NotificationManager的channelId必须对应)
         manager.notify(1, notification);
     }
 }

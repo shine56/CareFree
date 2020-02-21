@@ -13,10 +13,10 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.example.a73233.carefree.R;
-import com.example.a73233.carefree.baseview.BaseActivity;
+import com.example.a73233.carefree.baseView.BaseActivity;
 import com.example.a73233.carefree.databinding.ActivityLookDiaryBinding;
 import com.example.a73233.carefree.diary.viewModel.LookVM;
-import com.example.a73233.carefree.util.EmotionUtil;
+import com.example.a73233.carefree.util.EmotionDataUtil;
 import com.example.a73233.carefree.util.SpacesItemDecoration;
 
 
@@ -41,7 +41,7 @@ public class LookDiaryActivity extends BaseActivity implements View.OnClickListe
         initPhoto();
     }
     private void initView(){
-        binding.setBean(lookVM.refreshLookView(diaryId));
+        binding.setBean(lookVM.refreshBean(diaryId));
         int value = lookVM.getValue();
 
         toolbarLeft = findViewById(R.id.toolbar_left_3);
@@ -61,17 +61,17 @@ public class LookDiaryActivity extends BaseActivity implements View.OnClickListe
         binding.lookRecyclerView.setBackground(recycleBg);
         //标题栏背景
         GradientDrawable bgViewBg = new GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP
-                , EmotionUtil.GetColors(value));
+                , EmotionDataUtil.GetColors(value));
         bgViewBg.setCornerRadius(50);
         binding.bgView.setBackground(bgViewBg);
         //emotionValueBg
         GradientDrawable emotionValueBg = new GradientDrawable();
         emotionValueBg.setCornerRadius(50);
-        emotionValueBg.setColor(EmotionUtil.GetColors(value)[1]);
+        emotionValueBg.setColor(EmotionDataUtil.GetColors(value)[1]);
         binding.lookEmotionValue.setBackground(emotionValueBg);
         //折叠后背景
         GradientDrawable colBg = new GradientDrawable();
-        colBg.setColor(EmotionUtil.GetColors(value)[1]);
+        colBg.setColor(EmotionDataUtil.GetColors(value)[1]);
         binding.colToolbar.setContentScrim(colBg);
     }
     private void initPhoto(){
@@ -110,14 +110,10 @@ public class LookDiaryActivity extends BaseActivity implements View.OnClickListe
         Bundle bundle = new Bundle();
         bundle.putInt("diaryId",diaryId);
         bundle.putInt("addType",-1);
-
         Pair p1 = new Pair(binding.bgView,"sharedView");
-        Pair p2 = new Pair(binding.lookRecyclerView,"sharedView_2");
-        Pair p3 = new Pair(binding.lookRecyclerView,"sharedView_3");
         startActivityForResultWithOptions(WriteDiaryActivity.class,bundle,1
                 ,ActivityOptions.makeSceneTransitionAnimation(LookDiaryActivity.this,p1).toBundle());
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

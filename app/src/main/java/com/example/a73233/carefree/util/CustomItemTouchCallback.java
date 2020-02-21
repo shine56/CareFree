@@ -36,17 +36,17 @@ public class CustomItemTouchCallback extends ItemTouchHelper.Callback {
 
     @Override
     public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
-        max = getMaxWidth(viewHolder);
+        max = getMaxWidth(viewHolder) * 2;
         int scrollX = viewHolder.itemView.getScrollX();
         //LogUtil.LogD("dx = "+dX+"      sX = " + scrollX);
 
         if(dX >= 0){
             viewHolder.itemView.scrollTo(max - (int)dX,0);
-            if(scrollX <= (max*1/3) ){
+            if(scrollX <= (max*2/3) ){
                 viewHolder.itemView.scrollTo(0,0);
             }
         }else {
-            if(scrollX < (max*2/3)){
+            if(scrollX < (max*1/2)){
                 viewHolder.itemView.scrollTo(-(int)dX,0);
             }else {
                 viewHolder.itemView.scrollTo(max,0);

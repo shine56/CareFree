@@ -1,22 +1,19 @@
 package com.example.a73233.carefree.note.view;
 
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.a73233.carefree.R;
-import com.example.a73233.carefree.baseview.BaseFragment;
+import com.example.a73233.carefree.baseView.BaseFragment;
 import com.example.a73233.carefree.databinding.FragmentNoteBinding;
 import com.example.a73233.carefree.note.viewModel.NoteVM;
+import com.example.a73233.carefree.util.ConstantPool;
 import com.example.a73233.carefree.util.CustomItemTouchCallback;
 import com.example.a73233.carefree.util.SpacesItemDecoration;
 
@@ -54,7 +51,7 @@ public class NoteFragment extends BaseFragment {
         binding.noteRecy.setAdapter(adapter);
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new CustomItemTouchCallback(adapter));
         itemTouchHelper.attachToRecyclerView(binding.noteRecy);
-        noteVM.refreshAllData();
+        noteVM.refreshAllData(activity);
 
         adapter.setItemClick(new NoteListAdapter.ItemClickImpl(){
 
@@ -67,7 +64,10 @@ public class NoteFragment extends BaseFragment {
                         startActivity(NoteWriteActivity.class,bundle);
                         break;
                     case R.id.note_remove:
-                        noteVM.deleteData(id);
+                        noteVM.deleteData(id, ConstantPool.NOTCOMPLETE);
+                        break;
+                    case R.id.note_list_complete:
+                        noteVM.deleteData(id,ConstantPool.COMPLETE);
                         break;
                 }
             }
@@ -75,9 +75,17 @@ public class NoteFragment extends BaseFragment {
     }
 
     @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if(!hidden){
+            noteVM.refreshAllData(activity);
+        }
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
-        noteVM.refreshAllData();
+        noteVM.refreshAllData(activity);
     }
 
     public void onClick(View view){

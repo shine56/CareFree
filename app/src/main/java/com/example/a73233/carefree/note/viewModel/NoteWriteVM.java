@@ -1,11 +1,16 @@
 package com.example.a73233.carefree.note.viewModel;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
+
 import com.example.a73233.carefree.bean.NoteBean;
 import com.example.a73233.carefree.note.model.NoteModel;
 import com.example.a73233.carefree.util.LogUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class NoteWriteVM {
     NoteModel model;
@@ -50,6 +55,9 @@ public class NoteWriteVM {
         bean.hour.set(h);
         bean.minutes.set(m);
     }
+    public void setClockTitle(String text){
+        bean.clockText.set(text);
+    }
     public int getHour(){
         return bean.hour.get();
     }
@@ -85,7 +93,13 @@ public class NoteWriteVM {
     public int getRank(){
         return bean.rank.get();
     }
-    public void findSuccess(NoteBean bean){
-
+    public Boolean isSystemClock(Activity activity){
+        SharedPreferences pref = activity.getSharedPreferences("note_setting",MODE_PRIVATE);
+        if (pref.getString("clock_type","非系统闹钟").equals("系统闹钟")){
+            return true;
+        }else {
+            return false;
+        }
     }
+    public void findSuccess(NoteBean bean){}
 }

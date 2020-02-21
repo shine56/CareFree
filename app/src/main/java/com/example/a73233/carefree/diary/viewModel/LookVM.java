@@ -19,7 +19,7 @@ public class LookVM{
      * @param id
      * @return
      */
-    public DiaryBean refreshLookView(int id){
+    public DiaryBean refreshBean(int id){
         bean =  model.findDataById(id);
         return bean;
     }

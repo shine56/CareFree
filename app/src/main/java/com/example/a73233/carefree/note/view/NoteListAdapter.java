@@ -1,9 +1,7 @@
 package com.example.a73233.carefree.note.view;
 
 import android.content.Context;
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.a73233.carefree.R;
-import com.example.a73233.carefree.baseview.BaseAdapter;
+import com.example.a73233.carefree.baseView.BaseAdapter;
 import com.example.a73233.carefree.bean.NoteBean;
 import com.example.a73233.carefree.databinding.NoteListItemBinding;
 import com.example.a73233.carefree.util.NoteUtil;
@@ -46,6 +44,13 @@ public class NoteListAdapter extends BaseAdapter {
             }
         });
         binding.noteRemove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                removeItem(position);
+                itemClick.onClick(view, bean.id.get(),position,null);
+            }
+        });
+        binding.noteListComplete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 removeItem(position);

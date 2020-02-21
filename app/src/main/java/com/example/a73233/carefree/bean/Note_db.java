@@ -11,9 +11,18 @@ public class Note_db extends LitePalSupport {
     private String time;
     private int rank;//强帖等级 记录贴等级为0，任务贴三个等级：日常(1)、一般(2)、紧急(3)
     private int isAbandon;//是否丢进垃圾桶0和1表示
+    private int isComplete; //0和1表示
     private int clockHour;
     private int clockMinutes;
     private String clockText;
+
+    public int getIsComplete() {
+        return isComplete;
+    }
+
+    public void setIsComplete(int isComplete) {
+        this.isComplete = isComplete;
+    }
 
     public String getClockText() {
         return clockText;

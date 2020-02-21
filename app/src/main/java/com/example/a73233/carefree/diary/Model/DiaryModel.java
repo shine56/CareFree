@@ -2,7 +2,7 @@ package com.example.a73233.carefree.diary.Model;
 
 import com.example.a73233.carefree.bean.DiaryBean;
 import com.example.a73233.carefree.bean.Diary_db;
-import com.example.a73233.carefree.baseview.MyVMImpl;
+import com.example.a73233.carefree.diary.viewModel.DiaryVMImpl;
 import com.example.a73233.carefree.diary.viewModel.WriteVM;
 import com.example.a73233.carefree.util.LogUtil;
 
@@ -17,21 +17,20 @@ public class DiaryModel {
      * 查找日记
      * @param diaryVM
      */
-    public void findAllData(MyVMImpl diaryVM, int type){
+    public void findAllData(DiaryVMImpl diaryVM, int type){
         List<Diary_db> diaryDbList = LitePal.where("isAbandon like ?",""+type).find(Diary_db.class);
-        LogUtil.LogD("找到数据"+diaryDbList.size()+"条");
-        diaryVM.findListSuccess(changeDbToBean(diaryDbList));
+        diaryVM.findAllDataSuccess(changeDbToBean(diaryDbList));
     }
-    public void findDataByDate(String yearAndMonth, String day, MyVMImpl diaryVM){
+    public void findDataByDate(String yearAndMonth, String day, DiaryVMImpl diaryVM){
         List<Diary_db> diaryDbList = LitePal.where("yearAndMonth like ? and day like ? and isAbandon like ?"
                 , yearAndMonth, day,"0").find(Diary_db.class);
         LogUtil.LogD("日期：");
-        diaryVM.findListSuccess(changeDbToBean(diaryDbList));
+        diaryVM.findAllDataSuccess(changeDbToBean(diaryDbList));
     }
-    public void findDataByText(String text, MyVMImpl diaryVM){
+    public void findDataByText(String text, DiaryVMImpl diaryVM){
         List<Diary_db> diaryDbList = LitePal.where("isAbandon like ? and diaryContent like ?","0","%"+text+"%")
                 .find(Diary_db.class);
-        diaryVM.findListSuccess(changeDbToBean(diaryDbList));
+        diaryVM.findAllDataSuccess(changeDbToBean(diaryDbList));
     }
     public DiaryBean findDataById(int id){
         DiaryBean bean = new DiaryBean();
@@ -86,22 +85,7 @@ public class DiaryModel {
         Diary_db db = LitePal.find(Diary_db.class,id);
         db.setIsAbandon(1);
         db.save();
-        writeVM.deleteDataSuccess();
-    }
-    /**
-     * 删除数据
-     * @param id
-     * @param writeVM
-     */
-    public void deleteData(int id,WriteVM writeVM){
-        Diary_db db = LitePal.find(Diary_db.class,id);
-        for(String path : db.getPhotoList()){
-            File file = new File(path);
-            if(file.exists()){
-                file.delete();
-            }
-        }
-        LitePal.delete(Diary_db.class, id);
+        writeVM.abandonDataSuccess();
     }
 
     /**

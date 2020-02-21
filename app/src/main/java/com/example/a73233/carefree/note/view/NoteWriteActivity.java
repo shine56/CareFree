@@ -1,21 +1,29 @@
 package com.example.a73233.carefree.note.view;
 
 import android.app.AlarmManager;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
-import android.icu.util.Calendar;
-import android.os.Build;
-import android.provider.AlarmClock;
 import android.os.Bundle;
+import android.provider.AlarmClock;
+import android.text.Editable;
+import android.text.Selection;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.example.a73233.carefree.R;
-import com.example.a73233.carefree.baseview.BaseActivity;
+import com.example.a73233.carefree.baseView.BaseActivity;
 import com.example.a73233.carefree.databinding.ActivityNoteWriteBinding;
 import com.example.a73233.carefree.note.viewModel.NoteWriteVM;
 
@@ -24,8 +32,9 @@ public class NoteWriteActivity extends BaseActivity {
     private NoteWriteVM noteWriteVM;
     private int hour = 8;
     private int minutes = 10;
-    private Boolean isSetClock = false;  //判断用户是否选择子女的时间
+    private String clockText;
     private int noteId;
+    private Boolean isSetClock = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,14 +53,13 @@ public class NoteWriteActivity extends BaseActivity {
             case R.id.note_complete:
                 if(isSetClock){
                     setClock();
-                    noteWriteVM.setClock(hour,minutes);
                     noteWriteVM.saveNote(noteId);
                     showToast("保存成功");
                     finish();
                 }
                 if(noteWriteVM.getRank()!=0 && !isSetClock){
                     if(noteId == -1){
-                        showToast("任务贴需点亮闹钟图标。");
+                        showToast("任务贴需设置闹钟");
                     }else {
                         noteWriteVM.saveNote(noteId);
                         showToast("保存成功");
@@ -82,74 +90,170 @@ public class NoteWriteActivity extends BaseActivity {
                 noteWriteVM.refreshRank(3);
                 refreshTextBg();
                 break;
-            case R.id.note_clock_logo:
-                if(noteId == -1){
-                    if(noteWriteVM.getRank() == 0){
-                        showToast("记录贴无法设置闹钟");
-                    }else {
-                        isSetClock = true;
-                        binding.noteClockLogo.setImageResource(R.mipmap.clock_blue);
-                        binding.noteClockTitleLogo.setImageResource(R.mipmap.title_blue);
-                    }
-                }
+            case R.id.note_text_bg:
+                binding.noteEditText.requestFocus();
+                //显示软键盘
+                InputMethodManager inputManager =
+                        (InputMethodManager) binding.noteEditText.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputManager.showSoftInput(binding.noteEditText, 0);
+                Editable editable = binding.noteEditText.getText();
+                Selection.setSelection(editable,editable.length());
                 break;
+            case R.id.note_write_clock_time:
+                isSetClock = true;
+                initClockTimeDialog();
+                break;
+            case R.id.note_write_clock_title:
+                initClockTitleDialog();
+                break;
+
         }
     }
     private void initView(){
         ReviseStatusBar(TRANSPARENT_BLACK);
         refreshTextBg();
-        initClock();
-    }
 
-    private void initClock(){
-        binding.noteClockHour.setDescendantFocusability(TimePicker.FOCUS_BLOCK_DESCENDANTS);  //设置点击事件不弹键盘
-        binding.noteClockHour.setIs24HourView(true);   //设置时间显示为24小时
-        binding.noteClockHour.setHour(noteWriteVM.getHour());  //设置当前小时
-        binding.noteClockHour.setMinute(noteWriteVM.getMinutes()); //设置当前分（0-59）
+        if(noteWriteVM.getRank() == 0){
+            binding.noteWriteClockBg.setVisibility(View.GONE);
+        }else {
+            binding.noteWriteClockBg.setVisibility(View.VISIBLE);
+        }
 
-        //监控闹钟选择
-        binding.noteClockHour.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {  //获取当前选择的时间
+        //便贴书写监控
+        binding.noteEditText.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
-                hour = hourOfDay;
-                minutes = minute;
-                if(noteWriteVM.getRank() != 0){
-                    isSetClock = true;
-                    binding.noteClockLogo.setImageResource(R.mipmap.clock_blue);
-                    binding.noteClockTitleLogo.setImageResource(R.mipmap.title_blue);
-                }else {
-                    showToast("记录贴提醒闹钟无效");
+            public boolean onTouch(View v, MotionEvent motionEvent) {
+                if (v.getId() == R.id.note_edit_text && canVerticalScroll(binding.noteEditText)) {
+                    // 请求父控件不拦截事件
+                    v.getParent().requestDisallowInterceptTouchEvent(true);
+                    if (MotionEvent.ACTION_UP == motionEvent.getAction()) {
+                        // 可拦截事件
+                        v.getParent().requestDisallowInterceptTouchEvent(false);
+                    }
                 }
+                return false;
             }
         });
-
-        binding.noteClockTitle.setText(noteWriteVM.getNoteFirstText());
     }
+
+    private void initClockTimeDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_time_pick,null, false);
+        builder.setView(view);
+        Dialog dialog = builder.create();
+
+        TimePicker timePack = view.findViewById(R.id.dialog_time_pick);
+        TextView confirm = view.findViewById(R.id.dialog_time_pick_confirm);
+        TextView cancel = view.findViewById(R.id.dialog_time_pick_cancel);
+        timePack.setIs24HourView(true);   //设置时间显示为24小时
+        timePack.setHour(noteWriteVM.getHour());  //设置当前小时
+        timePack.setMinute(noteWriteVM.getMinutes()); //设置当前分（0-59）
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                hour = timePack.getHour();
+                minutes = timePack.getMinute();
+                noteWriteVM.setClock(hour,minutes);
+                dialog.dismiss();
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+    private void initClockTitleDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_write,null,false);
+        builder.setView(view);
+        Dialog dialog = builder.create();
+
+        EditText editText = view.findViewById(R.id.dialog_write_edit);
+        TextView confirm = view.findViewById(R.id.dialog_write_confirm);
+        TextView cancel = view.findViewById(R.id.dialog_write_cancel);
+        TextView textView = view.findViewById(R.id.dialog_write_title);
+        textView.setText("闹钟内容");
+        editText.setText(noteWriteVM.getNoteFirstText());
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clockText = editText.getText().toString();
+                noteWriteVM.setClockTitle(clockText);
+                dialog.dismiss();
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
 
     private void setClock(){
-        Intent intent = new Intent(this,ClockService.class);
-        intent.putExtra("hour",hour);
-        intent.putExtra("minutes",minutes);
-        intent.putExtra("text",noteWriteVM.getNoteFirstText());
-        startService(intent);
+        if(noteWriteVM.isSystemClock(this)){
+            //设置系统闹钟
+            Intent intent = new Intent(AlarmClock.ACTION_SET_ALARM)
+                    //闹钟的小时
+                    .putExtra(AlarmClock.EXTRA_HOUR, hour)
+                    //闹钟的分钟
+                    .putExtra(AlarmClock.EXTRA_MINUTES, minutes)
+                    //响铃时提示的信息
+                    .putExtra(AlarmClock.EXTRA_MESSAGE, clockText)
+                    //用于指定该闹铃触发时是否振动
+                    .putExtra(AlarmClock.EXTRA_VIBRATE, true)
+                    //如果为true，则调用startActivity()不会进入手机的闹钟设置界面
+                    .putExtra(AlarmClock.EXTRA_SKIP_UI, false);
+            if (intent.resolveActivity(getPackageManager()) != null) {
+                startActivity(intent);
+                showToast("确认你的闹钟");
+            }
+        }else {
+            Intent intent = new Intent(this,ClockService.class);
+            intent.putExtra("hour",hour);
+            intent.putExtra("minutes",minutes);
+            intent.putExtra("text",clockText);
+            startService(intent);
+        }
     }
+
     private void cancelClock(){
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Service.ALARM_SERVICE);
-        Intent intent = new Intent(this, ClockReceiver.class);
-        PendingIntent pi = PendingIntent.getBroadcast(this, 0, intent, 0);
-        alarmManager.cancel(pi);
+        if(noteWriteVM.isSystemClock(this)){
+            Intent intent = new Intent(AlarmClock.ACTION_SET_ALARM)
+                    //闹钟的小时
+                    .putExtra(AlarmClock.EXTRA_HOUR, noteWriteVM.getHour())
+                    //闹钟的分钟
+                    .putExtra(AlarmClock.EXTRA_MINUTES, noteWriteVM.getMinutes())
+                    //响铃时提示的信息
+                    .putExtra(AlarmClock.EXTRA_MESSAGE, noteWriteVM.getNoteFirstText())
+                    //用于指定该闹铃触发时是否振动
+                    .putExtra(AlarmClock.EXTRA_VIBRATE, true)
+                    //如果为true，则调用startActivity()不会进入手机的闹钟设置界面
+                    .putExtra(AlarmClock.EXTRA_SKIP_UI, false);
+            if (intent.resolveActivity(getPackageManager()) != null) {
+                startActivity(intent);
+                showToast("系统闹钟需要主动取消");
+            }
+        }else {
+            AlarmManager alarmManager = (AlarmManager) getSystemService(Service.ALARM_SERVICE);
+            Intent intent = new Intent(this, ClockReceiver.class);
+            PendingIntent pi = PendingIntent.getBroadcast(this, 0, intent, 0);
+            alarmManager.cancel(pi);
+            showToast("闹钟取消");
+        }
     }
     private void refreshTextBg(){
-        if(noteId == -1){
-            binding.noteClockLogo.setImageResource(R.mipmap.clock_logo_gray);
-            binding.noteClockTitleLogo.setImageResource(R.mipmap.title_gray);
-        }
+        binding.noteWriteClockBg.setVisibility(View.VISIBLE);
         switch (noteWriteVM.getRank()){
             case 0:
                 binding.noteTextBg.setBackgroundResource(R.drawable.note_bg_0);
                 binding.noteTextTitle.setText("临时记录贴");
-                binding.noteClockLogo.setImageResource(R.mipmap.clock_logo_gray);
-                binding.noteClockTitleLogo.setImageResource(R.mipmap.title_gray);
+                binding.noteWriteClockBg.setVisibility(View.GONE);
                 break;
             case 1:
                 binding.noteTextBg.setBackgroundResource(R.drawable.note_bg_1);
@@ -163,6 +267,27 @@ public class NoteWriteActivity extends BaseActivity {
                 binding.noteTextBg.setBackgroundResource(R.drawable.note_bg_3);
                 binding.noteTextTitle.setText("三级任务贴");
                 break;
+        }
+    }
+
+    /**
+     * EditText竖直方向是否可以滚动
+     * @return true：可以滚动   false：不可以滚动
+     */
+    private Boolean canVerticalScroll(EditText editText){
+        //滚动的距离
+        int scrollY = editText.getScrollY();
+        //控件内容的总高度
+        int scrollRange = editText.getLayout().getHeight();
+        //控件实际显示的高度
+        int scrollExtent = editText.getHeight() - editText.getCompoundPaddingTop() - editText.getCompoundPaddingBottom();
+        //控件内容总高度与实际显示高度的差值
+        int mOffsetHeight = scrollRange - scrollExtent;
+
+        if (mOffsetHeight == 0) {
+            return false;
+        } else{
+            return (scrollY > 0 || scrollY < mOffsetHeight - 1);
         }
     }
 }

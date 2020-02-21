@@ -17,6 +17,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.a73233.carefree.R;
 import com.example.a73233.carefree.util.BigPhotoViewer;
+import com.example.a73233.carefree.util.GlideCircleBorderTransform;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,10 +74,16 @@ public class PhotoListAdapter extends RecyclerView.Adapter<PhotoListAdapter.View
     public void onBindViewHolder(@NonNull ViewHolder holder, int i) {
         if(photoPathList!=null && photoPathList.size()>0){
             String imagePath = photoPathList.get(i);
+
+            RequestOptions options = new RequestOptions()
+                    .centerCrop()
+                    .bitmapTransform(new GlideCircleBorderTransform(6, R.color.shadowGray,1))
+                    .diskCacheStrategy(DiskCacheStrategy.DATA);
             Glide.with(activity).load(imagePath)
                     .skipMemoryCache(true) // 不使用内存缓存
                     .diskCacheStrategy(DiskCacheStrategy.NONE) // 不使用磁盘缓存
-                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(40)))
+                    //.apply(RequestOptions.bitmapTransform(new RoundedCorners(40)))
+                    .apply(options)
                     .error(R.mipmap.find_photo_fail)
                     .into(holder.photo);
             holder.photo.setOnClickListener(new View.OnClickListener() {

@@ -1,45 +1,32 @@
 package com.example.a73233.carefree.diary.view;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.Selection;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.view.inputmethod.InputMethodManager;
 
 import com.example.a73233.carefree.R;
-import com.example.a73233.carefree.baseview.BaseActivity;
+import com.example.a73233.carefree.baseView.BaseActivity;
 import com.example.a73233.carefree.databinding.ActivityWriteDiaryBinding;
 import com.example.a73233.carefree.databinding.DialogChoosePhotoBinding;
 import com.example.a73233.carefree.diary.viewModel.WriteVM;
-import com.example.a73233.carefree.util.EmotionUtil;
+import com.example.a73233.carefree.util.EmotionDataUtil;
 import com.example.a73233.carefree.util.PhotoManager;
 import com.example.a73233.carefree.util.SpacesItemDecoration;
-import com.example.a73233.carefree.bean.Diary_db;
-
-import org.litepal.LitePal;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 public class WriteDiaryActivity extends BaseActivity{
     private static final int AI = 1;
@@ -62,27 +49,6 @@ public class WriteDiaryActivity extends BaseActivity{
         adapter = new PhotoListAdapter(this,PhotoListAdapter.BIG);
         writeVM = new WriteVM(adapter,this);
         initView();
-        //监听输入框
-        binding.writeWriteDiary.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-            @Override
-            public void afterTextChanged(Editable s) {
-                writeVM.refreshSingle();
-            }
-        });
-
-        //对照片进行监听
-        adapter.setOnitemClickLintener(new PhotoListAdapter.OnitemClick() {
-            @Override
-            public void onItemClick(int position) {
-                writeVM.reMovePhoto(position);
-            }
-        });
     }
     public void onClick(View v) {
         switch (v.getId()){
@@ -90,7 +56,11 @@ public class WriteDiaryActivity extends BaseActivity{
                 dialog.show();
                 break;
             case R.id.write_delete:
-                writeVM.deleteDiary(diaryId);
+                if(diaryId == -1){
+                    finish();
+                }else {
+                    writeVM.abandonDiary(diaryId);
+                }
                 break;
             case R.id.write_complete:
                 writeVM.saveDiary(addType,diaryId);
@@ -107,6 +77,15 @@ public class WriteDiaryActivity extends BaseActivity{
                 break;
             case R.id.cancel_add_photo:
                 dialog.hide();
+                break;
+            case R.id.edit_wake_up:
+                binding.writeWriteDiary.requestFocus();
+                //显示软键盘
+                InputMethodManager inputManager =
+                        (InputMethodManager) binding.writeWriteDiary.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputManager.showSoftInput(binding.writeWriteDiary, 0);
+                Editable editable = binding.writeWriteDiary.getText();
+                Selection.setSelection(editable,editable.length());
                 break;
         }
 
@@ -129,10 +108,20 @@ public class WriteDiaryActivity extends BaseActivity{
         }
     }
     private void initView(){
-        binding.setBean(writeVM.refreshLookView(diaryId));
+        binding.setBean(writeVM.refreshBean(diaryId));
         binding.setWriteActivity(this);
+        //设置对话框
+        initDialogView();
         //设置状态栏
         ReviseStatusBar(TRANSPARENT_WHITE);
+        //标题栏
+        if(diaryId == -1 && addType == AI){
+            binding.writeDelete.setImageResource(R.mipmap.back_black);
+        }else if(diaryId == -1){
+            binding.writeDelete.setImageResource(R.mipmap.back_logo);
+        }else {
+            binding.writeDelete.setImageResource(R.mipmap.cancel_logo_white);
+        }
         //添加图片按钮
         GradientDrawable addPhotoBg = new GradientDrawable();
         addPhotoBg.setColor(Color.WHITE);
@@ -142,10 +131,10 @@ public class WriteDiaryActivity extends BaseActivity{
         GradientDrawable parentBackground;
         if(addType == -1){
              parentBackground= new GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP
-                            ,EmotionUtil.GetColors(writeVM.getValue()));
+                            , EmotionDataUtil.GetColors(writeVM.getValue()));
         }else {
             parentBackground = new GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP
-                            ,EmotionUtil.GetColorsByType(addType));
+                            , EmotionDataUtil.GetColorsByType(addType));
         }
 
         binding.activityWriteDiary.setBackground(parentBackground);
@@ -172,11 +161,30 @@ public class WriteDiaryActivity extends BaseActivity{
         binding.writeRecycleView.addItemDecoration(new SpacesItemDecoration(1,30));
         binding.writeRecycleView.setAdapter(adapter);
         writeVM.refreshPhoto();
+        //对照片进行监听
+        adapter.setOnitemClickLintener(new PhotoListAdapter.OnitemClick() {
+            @Override
+            public void onItemClick(int position) {
+                writeVM.reMovePhoto(position);
+            }
+        });
+        //初始化editText
+        //监听输入框
+        binding.writeWriteDiary.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-        initDialogView();
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                writeVM.refreshSingle();
+            }
+        });
     }
     private void initDialogView(){
-        //设置对话框
         dialog = new Dialog(this,R.style.ActionSheetDialogStyle);
         //填充对话框的布局
         LayoutInflater inflate = LayoutInflater.from(this);

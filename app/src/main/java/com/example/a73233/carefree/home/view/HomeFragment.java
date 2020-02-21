@@ -1,22 +1,19 @@
 package com.example.a73233.carefree.home.view;
 
-import android.app.Activity;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.a73233.carefree.R;
-import com.example.a73233.carefree.baseview.BaseFragment;
+import com.example.a73233.carefree.baseView.BaseFragment;
 import com.example.a73233.carefree.databinding.FragmentHomeBinding;
 import com.example.a73233.carefree.home.viewModel.HomeViewModel;
 import com.example.a73233.carefree.note.view.NoteListAdapter;
 import com.example.a73233.carefree.note.view.NoteWriteActivity;
-import com.example.a73233.carefree.note.viewModel.NoteVM;
 import com.example.a73233.carefree.util.SpacesItemDecoration;
 
 public class HomeFragment extends BaseFragment {
@@ -46,21 +43,38 @@ public class HomeFragment extends BaseFragment {
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if(!hidden){
+            viewModel.initReportViewData();
+            viewModel.initEnergyReport();
             initMoodView();
-            initReportView();
-            viewModel.refreshNote();
+            if(viewModel.isShowNote(activity)){
+                initRecy();
+                binding.textView.setVisibility(View.VISIBLE);
+                binding.homeNoteRecy.setVisibility(View.VISIBLE);
+            }else {
+                binding.textView.setVisibility(View.GONE);
+                binding.homeNoteRecy.setVisibility(View.GONE);
+            }
         }
     }
 
     private void initView(){
+        viewModel.initEnergyReport();
         initMoodView();
-        initReportView();
+        viewModel.initReportViewData();
         initRecy();
+        binding.homeNoteRecy.addItemDecoration(new SpacesItemDecoration(0,50));
+        if(viewModel.isShowNote(activity)){
+            binding.textView.setVisibility(View.VISIBLE);
+            binding.homeNoteRecy.setVisibility(View.VISIBLE);
+        }else {
+            binding.textView.setVisibility(View.GONE);
+            binding.homeNoteRecy.setVisibility(View.GONE);
+        }
+
     }
     private void initRecy(){
         LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
         binding.homeNoteRecy.setLayoutManager(layoutManager);
-        binding.homeNoteRecy.addItemDecoration(new SpacesItemDecoration(0,50));
         binding.homeNoteRecy.setAdapter(noteAdapter);
         viewModel.refreshNote();
 
@@ -79,22 +93,17 @@ public class HomeFragment extends BaseFragment {
     }
     //初始化能动值卡片
     private void initMoodView(){
-        viewModel.initEmotionValue();
-
         int value = viewModel.emotionValue.get();
-        if(value>15 && value<=50){
+        if(value>15){
             binding.homeMoodView.moodView.setBackgroundResource(R.drawable.mood_view_happy_bg);
         }else if(value>-10 && value<=15){
             binding.homeMoodView.moodView.setBackgroundResource(R.drawable.mood_view_calm_bg);
         }else if(value>-30 && value<=-10){
             binding.homeMoodView.moodView.setBackgroundResource(R.drawable.mood_view_sad_bg);
-        }else if(value>=-50 && value<=-30){
+        }else if(value<=-30){
             binding.homeMoodView.moodView.setBackgroundResource(R.drawable.mood_view_repression_bg);
         }
     }
-    //初始化能动值报表
-    private void initReportView(){
-        viewModel.initReportViewData();
-    }
+
 
 }

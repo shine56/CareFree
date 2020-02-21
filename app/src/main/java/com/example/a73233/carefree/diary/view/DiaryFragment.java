@@ -1,7 +1,6 @@
 package com.example.a73233.carefree.diary.view;
 
 
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,10 +10,9 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CalendarView;
 
 import com.example.a73233.carefree.R;
-import com.example.a73233.carefree.baseview.BaseFragment;
+import com.example.a73233.carefree.baseView.BaseFragment;
 import com.example.a73233.carefree.databinding.FragmentDiaryBinding;
 import com.example.a73233.carefree.diary.viewModel.DiaryVM;
 import com.example.a73233.carefree.util.SpacesItemDecoration;
@@ -63,7 +61,7 @@ public class DiaryFragment extends BaseFragment{
         diaryVM.refreshDiaryList();
     }
     private void initAddCard(){
-        binding.setBean(diaryVM.initAddCardData());
+        binding.setBean(diaryVM.refreshBeanDate());
     }
     private void initRecyclerView(){
         LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
@@ -72,7 +70,6 @@ public class DiaryFragment extends BaseFragment{
         binding.diaryRecycleView.addItemDecoration(new SpacesItemDecoration(0,space));
 
         adapter.setItemClick(new DiaryListAdapter_.ItemClickImpl(){
-
             @Override
             public void onClick(View view, int id, int position, String text) {
                 Bundle bundle = new Bundle();

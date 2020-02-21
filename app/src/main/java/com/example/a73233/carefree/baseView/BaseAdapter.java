@@ -1,11 +1,9 @@
-package com.example.a73233.carefree.baseview;
+package com.example.a73233.carefree.baseView;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-
-import com.example.a73233.carefree.bean.DiaryBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +24,10 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter {
 
     public void refreshData(List<T> data){
         mList.clear();
+        mList.addAll(data);
+        notifyDataSetChanged();
+    }
+    public void addItems(List<T> data){
         mList.addAll(data);
         notifyDataSetChanged();
     }

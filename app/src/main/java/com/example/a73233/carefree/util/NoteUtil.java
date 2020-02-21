@@ -17,4 +17,35 @@ public class NoteUtil{
                 return R.drawable.note_list_bg_0;
         }
     }
+    public static int GetEnergy(int rank, int type){
+        switch (rank){
+            case 0:
+                return 0;
+            case 1:
+                if(type == ConstantPool.COMPLETE) return 5;
+                else return -5;
+            case 2:
+                if(type == ConstantPool.COMPLETE) return 10;
+                else return -10;
+            case 3:
+                if(type == ConstantPool.COMPLETE) return 15;
+                else return -15;
+            default:
+                return 0;
+        }
+    }
+    public static int GetEnergyType(int rank){
+        switch (rank){
+            case 0:
+                return 7;
+            case 1:
+                return 4;
+            case 2:
+                return 5;
+            case 3:
+                return 6;
+            default:
+                return 7;
+        }
+    }
 }

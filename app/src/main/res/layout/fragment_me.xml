@@ -51,10 +51,10 @@
 
                 <ImageView
                     android:id="@+id/imageView"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_width="88dp"
+                    android:layout_height="88dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="24dp"
                     android:elevation="10mm"
                     android:scaleType="fitXY"
                     app:layout_constraintStart_toStartOf="parent"
@@ -184,8 +184,8 @@
                         app:layout_constraintTop_toTopOf="parent"></TextView>
 
                     <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="wrap_content"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_marginEnd="16dp"
                         android:src="@mipmap/diary_black"
                         app:layout_constraintBottom_toBottomOf="@+id/textView12"
@@ -242,7 +242,7 @@
                 <android.support.constraint.ConstraintLayout
                     android:id="@+id/me_abandon_bg"
                     android:layout_width="140dp"
-                    android:layout_height="140dp"
+                    android:layout_height="180dp"
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="32dp"
                     android:background="@drawable/diary_list_view_bg"
@@ -275,13 +275,22 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="24dp"
-                        android:layout_marginBottom="32dp"
+                        android:layout_marginBottom="64dp"
                         android:text="@{String.valueOf(bean.abandonNums)}"
                         android:textColor="@color/black"
                         android:textSize="20dp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"></TextView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="废纸"
+                        android:textColor="@color/gray"
+                        app:layout_constraintEnd_toEndOf="@+id/me_abandon_value"
+                        app:layout_constraintStart_toStartOf="@+id/me_abandon_value"
+                        app:layout_constraintTop_toBottomOf="@+id/me_abandon_value"></TextView>
 
                 </android.support.constraint.ConstraintLayout>
 
@@ -315,6 +324,52 @@
                         app:layout_constraintBottom_toBottomOf="@+id/me_setting_text"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/me_setting_text"></ImageView>
+
+                    <TextView
+                        android:id="@+id/textView15"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:text="首页显示任务"
+                        android:textColor="@color/black"
+                        android:textSize="12dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView16"></TextView>
+
+                    <ImageView
+                        android:id="@+id/me_home_show_note"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_marginEnd="16dp"
+                        android:src="@mipmap/is_not_choose"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView15"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/textView15"></ImageView>
+
+
+                    <ImageView
+                        android:id="@+id/me_rank3_yop"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_marginEnd="16dp"
+                        android:src="@mipmap/is_not_choose"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView16"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/textView16"></ImageView>
+
+                    <TextView
+                        android:id="@+id/textView16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginBottom="72dp"
+                        android:text="任务置顶"
+                        android:textColor="@color/black"
+                        android:textSize="12dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"></TextView>
+
                 </android.support.constraint.ConstraintLayout>
             </android.support.constraint.ConstraintLayout>
         </android.support.v4.widget.NestedScrollView>

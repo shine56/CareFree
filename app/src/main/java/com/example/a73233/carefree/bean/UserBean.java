@@ -11,4 +11,7 @@ public class UserBean {
     public ObservableInt noteNums = new ObservableInt();
     public ObservableInt abandonNums = new ObservableInt();
     public ObservableInt energyValue = new ObservableInt();
+    public ObservableField<String> clockType = new ObservableField<>();
+    public ObservableField<String> rank3Top = new ObservableField<>();
+    public ObservableField<String> homeShowNote = new ObservableField<>();
 }

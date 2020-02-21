@@ -1,4 +1,4 @@
-package com.example.a73233.carefree.baseview;
+package com.example.a73233.carefree.baseView;
 
 import android.app.Activity;
 import android.content.Intent;

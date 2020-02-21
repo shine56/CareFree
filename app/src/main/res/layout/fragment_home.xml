@@ -56,7 +56,6 @@
 
                 <include
                     android:id="@+id/home_emotion_report_view"
-                    app:homeViewModel="@{homeViewModel}"
                     layout="@layout/emotion_report_view"
                     android:layout_width="match_parent"
                     android:layout_height="280dp"
@@ -64,21 +63,277 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="24dp"
                     android:layout_marginEnd="16dp"
+                    app:homeViewModel="@{homeViewModel}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/home_mood_view" />
+
+<!--                <TextView-->
+<!--                    android:id="@+id/textView15"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="24dp"-->
+<!--                    android:text="过去七天"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    android:textSize="20dp"-->
+<!--                    android:textStyle="bold"-->
+<!--                    app:layout_constraintStart_toStartOf="@+id/home_mood_view"-->
+<!--                    app:layout_constraintTop_toBottomOf="@+id/home_mood_view" />-->
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/home_energy_report"
+                    android:layout_width="0dp"
+                    android:layout_height="230dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/diary_list_view_bg"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/home_emotion_report_view">
+
+                    <TextView
+                        android:id="@+id/textView19"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginTop="8dp"
+                        android:text="能动值"
+                        android:textColor="@color/black"
+                        android:textSize="17dp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textView21"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="平均值："
+                        android:textColor="@color/repression"
+                        android:textSize="16dp"
+                        app:layout_constraintEnd_toEndOf="@+id/textView18"
+                        app:layout_constraintTop_toBottomOf="@+id/textView18"></TextView>
+
+                    <TextView
+                        android:id="@+id/textView18"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="32dp"
+                        android:layout_marginTop="16dp"
+                        android:text="总值："
+                        android:textColor="@color/repression"
+                        android:textSize="16dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView19"></TextView>
+
+                    <TextView
+                        android:id="@+id/home_all_e"
+                        android:layout_width="45dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/button_purple"
+                        android:gravity="center"
+                        android:text="@{String.valueOf(homeViewModel.energySum)}"
+                        android:textColor="@color/white"
+                        android:textSize="13dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView18"
+                        app:layout_constraintStart_toEndOf="@+id/textView18"
+                        app:layout_constraintTop_toTopOf="@+id/textView18"></TextView>
+
+                    <TextView
+                        android:id="@+id/home_average_e"
+                        android:layout_width="45dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/button_green"
+                        android:gravity="center"
+                        android:text="@{String.valueOf(homeViewModel.energySum/7)}"
+                        android:textColor="@color/white"
+                        android:textSize="13dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView21"
+                        app:layout_constraintStart_toEndOf="@+id/textView21"
+                        app:layout_constraintTop_toTopOf="@+id/textView21"></TextView>
+
+                    <TextView
+                        android:id="@+id/home_tip_e"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="32dp"
+                        android:layout_marginBottom="16dp"
+                        android:text="最近七天能动值由日记心情和任务贴完成程度生成，保持好的心情和积极完成你给自己的任务都会增加能动值哦！"
+                        android:textColor="@color/repression"
+                        android:textSize="12dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/imageView5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView21" />
+
+                    <ImageView
+                        android:id="@+id/imageView5"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginEnd="8dp"
+                        android:src="@mipmap/happy"
+                        app:layout_constraintEnd_toStartOf="@+id/home_happy_e"
+                        app:layout_constraintTop_toTopOf="@+id/home_all_e"></ImageView>
+
+                    <ImageView
+                        android:id="@+id/imageView6"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginTop="8dp"
+                        android:src="@mipmap/calm"
+                        app:layout_constraintEnd_toEndOf="@+id/imageView5"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="@+id/imageView5"
+                        app:layout_constraintTop_toBottomOf="@+id/imageView5"></ImageView>
+
+                    <ImageView
+                        android:id="@+id/imageView7"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginTop="8dp"
+                        android:src="@mipmap/sad"
+                        app:layout_constraintStart_toStartOf="@+id/imageView6"
+                        app:layout_constraintTop_toBottomOf="@+id/imageView6"></ImageView>
+
+                    <ImageView
+                        android:id="@+id/imageView8"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginTop="8dp"
+                        android:src="@mipmap/repression"
+                        app:layout_constraintEnd_toEndOf="@+id/imageView7"
+                        app:layout_constraintStart_toStartOf="@+id/imageView7"
+                        app:layout_constraintTop_toBottomOf="@+id/imageView7"></ImageView>
+
+                    <TextView
+                        android:id="@+id/textView17"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/note_list_bg_1"
+                        app:layout_constraintBottom_toBottomOf="@+id/imageView5"
+                        app:layout_constraintEnd_toStartOf="@+id/home_rank1_e"
+                        app:layout_constraintTop_toTopOf="@+id/imageView5"></TextView>
+
+                    <TextView
+                        android:id="@+id/textView20"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/note_list_bg_2"
+                        app:layout_constraintEnd_toEndOf="@+id/textView17"
+                        app:layout_constraintStart_toStartOf="@+id/textView17"
+                        app:layout_constraintTop_toBottomOf="@+id/textView17"></TextView>
+
+                    <TextView
+                        android:id="@+id/textView30"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/note_list_bg_3"
+                        app:layout_constraintEnd_toEndOf="@id/textView20"
+                        app:layout_constraintStart_toStartOf="@id/textView20"
+                        app:layout_constraintTop_toBottomOf="@id/textView20"></TextView>
+
+
+                    <TextView
+                        android:id="@+id/home_happy_e"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:text="@{@string/plus+String.valueOf(homeViewModel.energyS[0])}"
+                        android:textColor="@color/mainBg2"
+                        app:layout_constraintBottom_toBottomOf="@+id/imageView5"
+                        app:layout_constraintEnd_toStartOf="@+id/textView17"
+                        app:layout_constraintTop_toTopOf="@+id/imageView5"></TextView>
+
+                    <TextView
+                        android:id="@+id/home_rank3_e"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="@{homeViewModel.energyS[6]>=0?@string/plus+String.valueOf(homeViewModel.energyS[6]):String.valueOf(homeViewModel.energyS[6])}"
+                        android:textColor="@color/mainBg2"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView30"
+                        app:layout_constraintStart_toEndOf="@+id/textView30"
+                        app:layout_constraintTop_toTopOf="@+id/textView30"></TextView>
+
+                    <TextView
+                        android:id="@+id/home_rank2_e"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginBottom="3dp"
+                        android:text="@{homeViewModel.energyS[5]>=0?@string/plus+String.valueOf(homeViewModel.energyS[5]):String.valueOf(homeViewModel.energyS[5])}"
+                        android:textColor="@color/mainBg2"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView20"
+                        app:layout_constraintStart_toEndOf="@id/textView20"
+                        app:layout_constraintTop_toTopOf="@id/textView20"></TextView>
+
+                    <TextView
+                        android:id="@+id/home_rank1_e"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="24dp"
+                        android:text="@{homeViewModel.energyS[4]>=0?@string/plus+String.valueOf(homeViewModel.energyS[4]):String.valueOf(homeViewModel.energyS[4])}"
+                        android:textColor="@color/mainBg2"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView17"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/textView17"></TextView>
+
+                    <TextView
+                        android:id="@+id/home_repression_e"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="@{homeViewModel.energyS[3]==0? @string/plus+String.valueOf(homeViewModel.energyS[3]):String.valueOf(homeViewModel.energyS[3])}"
+                        android:textColor="@color/mainBg2"
+                        app:layout_constraintBottom_toBottomOf="@+id/imageView8"
+                        app:layout_constraintStart_toEndOf="@+id/imageView8"
+                        app:layout_constraintTop_toTopOf="@+id/imageView8"></TextView>
+
+                    <TextView
+                        android:id="@+id/home_sad_e"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="@{homeViewModel.energyS[2]==0? @string/plus+String.valueOf(homeViewModel.energyS[2]): String.valueOf(homeViewModel.energyS[2])}"
+                        android:textColor="@color/mainBg2"
+                        app:layout_constraintBottom_toBottomOf="@+id/imageView7"
+                        app:layout_constraintStart_toEndOf="@+id/imageView7"
+                        app:layout_constraintTop_toTopOf="@+id/imageView7"></TextView>
+
+                    <TextView
+                        android:id="@+id/home_calm_e"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="@{@string/plus+String.valueOf(homeViewModel.energyS[1])}"
+                        android:textColor="@color/mainBg2"
+                        app:layout_constraintBottom_toBottomOf="@+id/imageView6"
+                        app:layout_constraintStart_toEndOf="@+id/imageView6"
+                        app:layout_constraintTop_toTopOf="@+id/imageView6"></TextView>
+
+                </android.support.constraint.ConstraintLayout>
 
                 <TextView
                     android:id="@+id/textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
-                    android:text="我的任务"
+                    android:text="今日任务"
                     android:textColor="@color/black"
                     android:textSize="20dp"
                     android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="@+id/home_emotion_report_view"
-                    app:layout_constraintTop_toBottomOf="@+id/home_emotion_report_view" />
+                    app:layout_constraintStart_toStartOf="@+id/home_energy_report"
+                    app:layout_constraintTop_toBottomOf="@+id/home_energy_report" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/home_note_recy"

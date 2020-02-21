@@ -9,9 +9,7 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.example.a73233.carefree.util.EmotionUtil;
-import com.example.a73233.carefree.util.LogUtil;
-import com.example.a73233.carefree.util.NoteUtil;
+import com.example.a73233.carefree.util.EmotionDataUtil;
 
 public class Circular_view extends View {
     private static Paint bigCirPaint;
@@ -28,7 +26,7 @@ public class Circular_view extends View {
 
     @BindingAdapter("circularColor")
     public static void loadCircularColor(Circular_view view,int circularColor){
-        bigCirPaint.setColor(EmotionUtil.GetColors(circularColor)[1]);
+        bigCirPaint.setColor(EmotionDataUtil.GetColors(circularColor)[1]);
     }
 
     private static void init(){
