@@ -8,6 +8,9 @@
 * 开发环境: Android Studio 3.5、 JDK1.8
 * 设计模式: MVVM
 
+
+![](https://shine56.github.io/about/cf_home.jpg)
+
 ## Screenshot
 
 .|.|.|.
