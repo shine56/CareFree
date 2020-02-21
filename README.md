@@ -8,15 +8,14 @@
 * 开发环境: Android Studio 3.5、 JDK1.8
 * 设计模式: MVVM
 
-
-![](https://shine56.github.io/about/cf_home.jpg)
-
 ## Screenshot
 
-.|.|.|.
----:|:---:|:---:|:---
-![](https://shine56.github.io/about/cf_home.jpg)|![](https://shine56.github.io/about/cf_home2.jpg)|![](https://shine56.github.io/about/cf_diary.jpg)|![](https://shine56.github.io/about/cf_diary2.jpg)
+![](https://s2.ax1x.com/2020/02/21/3K8QUA.jpg)
 
 .|.|.|.
 ---:|:---:|:---:|:---
-![](https://shine56.github.io/about/cf_diary_look.jpg)|![](https://shine56.github.io/about/cf_note.jpg)|![](https://shine56.github.io/about/cf_me.jpg)|![](https://shine56.github.io/about/cf_setting.jpg)
+![](https://s2.ax1x.com/2020/02/21/3K8QUA.jpg)|![](https://s2.ax1x.com/2020/02/21/3K8l4I.jpg)|![](https://s2.ax1x.com/2020/02/21/3K8E36.jpg)|![](https://s2.ax1x.com/2020/02/21/3K8MEd.jpg)
+
+.|.|.|.
+---:|:---:|:---:|:---
+![](https://s2.ax1x.com/2020/02/21/3K8muD.jpg)|![](https://s2.ax1x.com/2020/02/21/3K8UbQ.jpg)|![](https://s2.ax1x.com/2020/02/21/3K8Ggf.jpg)|![](https://s2.ax1x.com/2020/02/21/3K8wUs.jpg)
