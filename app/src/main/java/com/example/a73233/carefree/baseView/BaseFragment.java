@@ -1,3 +1,9 @@
+/**
+ * 名称：CareFree-无忧日记
+ * 作者：shine56
+ * 日期：2020年2月12日
+ */
+
 package com.example.a73233.carefree.baseView;
 
 import android.app.Activity;

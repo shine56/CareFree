@@ -43,7 +43,7 @@ public class PhotoManager {
         Uri imageUri;
 
         //图片会随着APP删除而删除
-       sdPath = activity.getExternalCacheDir().getPath();
+       sdPath = activity.getExternalFilesDir(null).getPath();
        imageName = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".jpg";
        imagePath = sdPath +"/"+ imageName;
        outPutImage = new File(imagePath);
@@ -61,7 +61,13 @@ public class PhotoManager {
        Log.d("启动相机测试","启动相机完成");
        return imagePath;
     }
-    //根据Uri获取图片真实路径
+
+    /**
+     * 根据Uri获取图片真实路径
+     * @param activity
+     * @param uri
+     * @return
+     */
     public static String GetPathFromUri(Activity activity, Uri uri){
         String imagePath = null;
         if (DocumentsContract.isDocumentUri(activity, uri)) {
@@ -100,10 +106,14 @@ public class PhotoManager {
         return imagePath;
     }
 
-
-    //根据路径将图片另存于activity.getExternalCacheDir().getPath();
+    /**
+     * 根据路径将图片另存于activity.getExternalFilesDir().getPath();
+     * @param activity
+     * @param oldPAth
+     * @return
+     */
     public static String copyPhoto(Activity activity,String oldPAth){
-        String sdPath = activity.getExternalCacheDir().getPath();
+        String sdPath = activity.getExternalFilesDir(null).getPath();
         String imageName =  new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".jpg";
         String newPath = sdPath + "/" + imageName;
         File newFile = new File(newPath);

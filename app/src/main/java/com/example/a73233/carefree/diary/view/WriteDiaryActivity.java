@@ -1,5 +1,4 @@
 package com.example.a73233.carefree.diary.view;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;

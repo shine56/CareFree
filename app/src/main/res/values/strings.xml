@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CareFree</string>
+    <string name="app_name">无忧日记</string>
     <string name="emotion_zh">情绪值&#160;</string>
     <string name="day_name">日</string>
     <string name="right">✔</string>

@@ -30,7 +30,6 @@
             android:exported="true"
             android:process=":remote" />
 
-        <activity android:name=".note.view.ClockActivity" />
         <activity android:name=".note.view.NoteWriteActivity" />
         <activity android:name=".diary.view.WriteDiaryActivity" />
         <activity android:name=".diary.view.LookDiaryActivity" />

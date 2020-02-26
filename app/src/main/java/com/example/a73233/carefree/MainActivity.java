@@ -1,5 +1,11 @@
-package com.example.a73233.carefree;
+/**
+ * 名称：CareFree-无忧日记
+ * 作者：shine56
+ * 日期：2020年2月12日
+ */
 
+
+package com.example.a73233.carefree;
 import android.Manifest;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -256,7 +262,7 @@ public class MainActivity extends BaseActivity {
         for(int i=0; i<5; i++){
             Diary_db db = new Diary_db();
             db.setIsAbandon(ConstantPool.NOT_ABANDON);
-            db.setDay((i+15)+"");
+            db.setDay(day);
             db.setWeek(week);
             db.setYearAndMonth(yearAndMonth);
 
