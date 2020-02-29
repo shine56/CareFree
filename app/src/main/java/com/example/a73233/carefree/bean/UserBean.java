@@ -14,4 +14,5 @@ public class UserBean {
     public ObservableField<String> clockType = new ObservableField<>();
     public ObservableField<String> rank3Top = new ObservableField<>();
     public ObservableField<String> homeShowNote = new ObservableField<>();
+    public ObservableField<String> card = new ObservableField<>();
 }

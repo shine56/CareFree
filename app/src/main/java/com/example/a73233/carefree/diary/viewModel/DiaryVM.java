@@ -47,8 +47,16 @@ public class DiaryVM implements DiaryVMImpl {
         return bean;
     }
 
+    public void abandonDiary(int diaryId){
+        diaryModel.abandonData(diaryId,this);
+    }
     @Override
     public void findAllDataSuccess (List<DiaryBean> diaryBeanList) {
         adapter.refreshData(diaryBeanList);
+    }
+
+    @Override
+    public void abandonDataSuccess() {
+
     }
 }

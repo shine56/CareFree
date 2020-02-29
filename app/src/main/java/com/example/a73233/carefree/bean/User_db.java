@@ -2,7 +2,10 @@ package com.example.a73233.carefree.bean;
 
 import org.litepal.crud.LitePalSupport;
 
-public class User_db extends LitePalSupport {
+import java.io.Serializable;
+
+public class User_db extends LitePalSupport implements Serializable {
+    private static final long serialVersionUID = -2083503801423301343L;
     private String userHeadIma;
     private String userId;
     private String userName;

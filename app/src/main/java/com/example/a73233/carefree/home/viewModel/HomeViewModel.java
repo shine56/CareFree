@@ -12,6 +12,7 @@ import com.example.a73233.carefree.bean.NoteBean;
 import com.example.a73233.carefree.bean.Note_db;
 import com.example.a73233.carefree.home.model.HomeModel;
 import com.example.a73233.carefree.note.view.NoteListAdapter;
+import com.example.a73233.carefree.util.ConstantPool;
 import com.example.a73233.carefree.util.EmotionDataUtil;
 import com.example.a73233.carefree.util.LogUtil;
 import com.example.a73233.carefree.util.NoteUtil;
@@ -39,9 +40,11 @@ public class HomeViewModel{
     private List<Diary_db> diaryDbList;
     private NoteListAdapter noteListAdapter;
     private HomeModel model;
+    private Activity activity;
 
-    public HomeViewModel(NoteListAdapter noteListAdapter) {
+    public HomeViewModel(NoteListAdapter noteListAdapter, Activity activity) {
         this.noteListAdapter = noteListAdapter;
+        this.activity = activity;
         model = new HomeModel();
     }
 
@@ -49,9 +52,8 @@ public class HomeViewModel{
         noteListAdapter.refreshData(model.findTaskNote());
     }
 
-
     /**
-     * 找出最近7天的心情值，一天由多篇日记则去平均值
+     * 找出最近7天的心情值，一天有多篇日记则取平均值
      */
     public void initReportViewData(){
         String TAG = "情绪报表数据生成测试";
@@ -69,7 +71,7 @@ public class HomeViewModel{
         int[] DayValue = {0,0,0,0,0,0,0};
         String[] DayNum = {"01","02","03","04","05","06","07"};
         int[] DayColor = {0XFF38D5D6, 0XFF64B0E8, 0XFF9B85FF, 0XFF38D5D6, 0XFF2B5876, 0XFF38D5D6, 0XFF9B85FF};
-        diaryDbList = LitePal.findAll(Diary_db.class);
+        diaryDbList  = LitePal.where("isAbandon like ?",""+ ConstantPool.NOT_ABANDON).find(Diary_db.class);
 
         //初始化日期
         for(i=6; i>-1; i--){
@@ -210,16 +212,28 @@ public class HomeViewModel{
 
         energyS.set(result);
         energySum.set(sum);
-        emotionValue.set(sum_2);
+        if(isShowEmotionValue()){
+            emotionValue.set(model.findLastData().getEmotionValue());
+        }else {
+            emotionValue.set(sum_2);
+        }
         moodViewPointColor.set(EmotionDataUtil.GetColors(emotionValue.get())[0]);
     }
-    public Boolean isShowNote(Activity activity){
+    public Boolean isShowNote(){
         SharedPreferences pref = activity.getSharedPreferences("note_setting",MODE_PRIVATE);
         if (pref.getString("home_show_note","显示任务").equals("显示任务")){
             return true;
         }else {
             return false;
         }
+    }
 
+    public Boolean isShowEmotionValue(){
+        SharedPreferences pref = activity.getSharedPreferences("note_setting",MODE_PRIVATE);
+        if (pref.getString("home_show_emotion_value","显示当前情绪值").equals("显示当前情绪值")){
+            return true;
+        }else {
+            return false;
+        }
     }
 }

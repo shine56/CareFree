@@ -59,6 +59,11 @@ public class AbandonVM implements DiaryVMImpl, NoteVmImpl {
     }
 
     @Override
+    public void abandonDataSuccess() {
+
+    }
+
+    @Override
     public void findSuccess(List<NoteBean> beanList) {
         noteAdapter.refreshData(beanList);
     }

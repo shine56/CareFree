@@ -1,11 +1,13 @@
 package com.example.a73233.carefree.me.view;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
+import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
@@ -25,11 +27,12 @@ import com.example.a73233.carefree.baseView.BaseActivity;
 import com.example.a73233.carefree.databinding.ActivitySettingBinding;
 import com.example.a73233.carefree.me.viewModel.MeVM;
 import com.example.a73233.carefree.util.ConstantPool;
+import com.example.a73233.carefree.util.DataBackup;
 import com.example.a73233.carefree.util.PhotoManager;
 
 public class SettingActivity extends BaseActivity {
-    ActivitySettingBinding binding;
-    MeVM vm;
+    private ActivitySettingBinding binding;
+    private MeVM vm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +54,9 @@ public class SettingActivity extends BaseActivity {
             case R.id.setting_words:
                 setWords();
                 break;
+            case R.id.setting_card:
+                setCard();
+                break;
             case R.id.setting_home_show_note:
                 setHomeShowNote();
                 break;
@@ -61,7 +67,7 @@ public class SettingActivity extends BaseActivity {
                 setClockType();
                 break;
             case R.id.setting_feed_back:
-                startActivity(FeedBackActivity.class);
+                openKuanAddress();
                 break;
             case R.id.setting_about:
                 startActivity(AboutActivity.class);
@@ -69,7 +75,33 @@ public class SettingActivity extends BaseActivity {
             case R.id.setting_toolbar_left:
                 finish();
                 break;
+            case R.id.setting_backup:
+                showBackupDialog();
+                break;
         }
+    }
+    private void openKuanAddress(){
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("https://www.coolapk.com/apk/com.example.a73233.carefree"));
+        startActivity(intent);
+    }
+    private void setCard(){
+        String[] items = {"显示当前情绪值","显示当前能动值"};
+        AlertDialog alertDialog = new AlertDialog.Builder(this)
+                .setItems(items, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        switch (i){
+                            case 0 :
+                                vm.setCard("显示当前情绪值");
+                                break;
+                            case 1 :
+                                vm.setCard("显示当前能动值");
+                                break;
+                        }
+                    }
+                }).create();
+        alertDialog.show();
     }
     private void setHomeShowNote(){
         String[] items = {"显示任务","不显示任务"};
@@ -125,6 +157,33 @@ public class SettingActivity extends BaseActivity {
                 }).create();
         alertDialog.show();
     }
+    private void showBackupDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_text_confim,null,false);
+        builder.setView(view);
+        Dialog dialog = builder.create();
+        TextView text = view.findViewById(R.id.dialog_confirm_content);
+        TextView confirm = view.findViewById(R.id.dialog_confirm_confirm);
+        TextView title = view.findViewById(R.id.dialog_confirm_title);
+        TextView cancel = view.findViewById(R.id.dialog_confirm_cancel);
+        title.setText("备份");
+
+        text.setText("即将备份你的日记、便贴等信息。备份成功后，即使多次安装也可以恢复备份的数据");
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                vm.backupData(showLoadDialog());
+                dialog.dismiss();
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
     private void setWords(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_write,null,false);
@@ -159,6 +218,10 @@ public class SettingActivity extends BaseActivity {
         Dialog dialog = builder.create();
         EditText editText = view.findViewById(R.id.dialog_write_edit);
         TextView textView = view.findViewById(R.id.dialog_write_confirm);
+        TextView title = view.findViewById(R.id.dialog_write_title);
+        TextView cancel = view.findViewById(R.id.dialog_write_cancel);
+        title.setText("昵称");
+
 
         editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(9)});
         editText.setHint("最多9个字");
@@ -167,6 +230,13 @@ public class SettingActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 vm.setName(editText.getText().toString());
+                dialog.dismiss();
+
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 dialog.dismiss();
             }
         });
@@ -205,13 +275,22 @@ public class SettingActivity extends BaseActivity {
                     .error(R.mipmap.find_photo_fail)
                     .into(imageView);
         }else {
-            Glide.with(imageView.getContext()).load(R.drawable.user_head_ima)
+            Glide.with(imageView.getContext()).load(R.drawable.user_head_img)
                     .apply(RequestOptions.bitmapTransform(new RoundedCorners(15)))
                     .skipMemoryCache(true) // 不使用内存缓存
                     .diskCacheStrategy(DiskCacheStrategy.NONE) // 不使用磁盘缓存
                     .error(R.mipmap.find_photo_fail)
                     .into(imageView);
         }
+    }
+
+    private Dialog showLoadDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_progressbar,null,false);
+        builder.setView(view);
+        Dialog dialog = builder.create();
+        dialog.show();
+        return dialog;
     }
 
     @Override

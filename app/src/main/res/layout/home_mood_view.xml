@@ -38,7 +38,7 @@
             android:layout_gravity="right"
             android:layout_marginRight="40dp"
             android:layout_marginTop="60dp"
-            android:text="当前能动值"
+            android:text="@{homeViewModel.isShowEmotionValue()? @string/show_emotion_value : @string/show_energy_value}"
             android:textColor="@color/white"
             android:textSize="14sp" />
 

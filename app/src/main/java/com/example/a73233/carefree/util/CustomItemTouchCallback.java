@@ -6,13 +6,14 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.ViewGroup;
 
+import com.example.a73233.carefree.baseView.BaseAdapter;
 import com.example.a73233.carefree.note.view.NoteListAdapter;
 
 public class CustomItemTouchCallback extends ItemTouchHelper.Callback {
-    private NoteListAdapter adapter;
+    private BaseAdapter adapter;
     private int max = 350;
 
-    public CustomItemTouchCallback(NoteListAdapter adapter) {
+    public CustomItemTouchCallback(BaseAdapter adapter) {
         this.adapter = adapter;
     }
 
@@ -36,7 +37,7 @@ public class CustomItemTouchCallback extends ItemTouchHelper.Callback {
 
     @Override
     public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
-        max = getMaxWidth(viewHolder) * 2;
+        max = getMaxWidth(viewHolder);
         int scrollX = viewHolder.itemView.getScrollX();
         //LogUtil.LogD("dx = "+dX+"      sX = " + scrollX);
 
@@ -56,7 +57,7 @@ public class CustomItemTouchCallback extends ItemTouchHelper.Callback {
 
     private int getMaxWidth(RecyclerView.ViewHolder viewHolder){
         ViewGroup viewGroup = (ViewGroup) viewHolder.itemView;
-        return viewGroup.getChildAt(1).getWidth()+40;
+        return viewGroup.getChildAt(1).getWidth();
     }
 
     //当 侧滑滑动的距离 / RecyclerView的宽大于该方法返回值，那么就会触发侧滑删除的操作

@@ -7,9 +7,12 @@
 
 package com.example.a73233.carefree;
 import android.Manifest;
+import android.content.ContentResolver;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
@@ -30,11 +33,15 @@ import com.example.a73233.carefree.diary.view.DiaryFragment;
 import com.example.a73233.carefree.home.view.HomeFragment;
 import com.example.a73233.carefree.databinding.ActivityMainBinding;
 import com.example.a73233.carefree.util.ConstantPool;
+import com.example.a73233.carefree.util.DataBackup;
 
 import org.litepal.LitePal;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class MainActivity extends BaseActivity {
     private static final int HomePage = 1;
@@ -231,11 +238,18 @@ public class MainActivity extends BaseActivity {
         LitePal.deleteAll(Diary_db.class);
         LitePal.deleteAll(Note_db.class);
         LitePal.deleteAll(User_db.class);
-        initDiaryDb();
-        initNoteDb();
-        initMeDb();
         initSetting();
+        DataBackup.initPhotoFile();
 
+        if(DataBackup.getMarkData()){
+            DataBackup.ReStoreData();
+            logD("有备份，恢复数据");
+        }else {
+            logD("无备份，初始化数据");
+            initDiaryDb();
+            initNoteDb();
+            initMeDb();
+        }
         SharedPreferences.Editor editor = getSharedPreferences("appSetting",MODE_PRIVATE).edit();
         editor.putBoolean("isFirstStartApp",false);
         editor.apply();
@@ -245,11 +259,12 @@ public class MainActivity extends BaseActivity {
         editor.putString("clock_type","非系统闹钟");
         editor.putString("home_show_note","不显示任务");
         editor.putString("rank3_top","不置顶");
+        editor.putString("home_show_emotion_value","显示当前情绪值");
         editor.apply();
     }
     private void initMeDb(){
         User_db db = new User_db();
-        db.setUserName("Shine.");
+        db.setUserName("CareFree");
         db.setUserWords("一切都是最好得安排！");
         db.save();
     }
@@ -259,34 +274,28 @@ public class MainActivity extends BaseActivity {
         String yearAndMonth = new SimpleDateFormat("yyyy年MM月").format(date);
         String week = new SimpleDateFormat("EEEE").format(date);
 
-        for(int i=0; i<5; i++){
+        for(int i=0; i<2; i++){
             Diary_db db = new Diary_db();
             db.setIsAbandon(ConstantPool.NOT_ABANDON);
             db.setDay(day);
             db.setWeek(week);
             db.setYearAndMonth(yearAndMonth);
 
-            switch (i){
-                case 4:
-                    db.setDiaryContent("日记共四种心情选择，可记录下您写日记时的心情！添加新的日记会增加或减少能动值哦。保持好的心情，能动值越高！");
-                    db.setEmotionValue(28);
-                    break;
-                case 3:
-                    db.setDiaryContent("开心");
-                    db.setEmotionValue(28);
-                    break;
-                case 2:
-                    db.setDiaryContent("平静");
-                    db.setEmotionValue(0);
-                    break;
-                case 1:
-                    db.setDiaryContent("忧伤");
-                    db.setEmotionValue(-10);
-                    break;
-                case 0:
-                    db.setDiaryContent("难过");
-                    db.setEmotionValue(-40);
-                    break;
+            if(i == 1){
+                int id = R.drawable.user_head_img;
+                Resources resources = getResources();
+                String path = ContentResolver.SCHEME_ANDROID_RESOURCE + "://"
+                        + resources.getResourcePackageName(id) + "/"
+                        + resources.getResourceTypeName(id) + "/"
+                        + resources.getResourceEntryName(id);
+                List<String> photos = new ArrayList<>();
+                photos.add(path);
+                db.setPhotoList(photos);
+                db.setDiaryContent("日记共四种心情选择，可记录下您写日记时的心情！添加新的日记会增加或减少能动值哦。保持好的心情，能动值越高！");
+                db.setEmotionValue(28);
+            }else {
+                db.setDiaryContent("左滑删除日记");
+                db.setEmotionValue(0);
             }
             db.save();
         }
@@ -298,15 +307,22 @@ public class MainActivity extends BaseActivity {
         String week = new SimpleDateFormat("EEEE").format(date);
         String time = new SimpleDateFormat("HH:mm").format(date);
 
-        Note_db db = new Note_db();
-        db.setIsAbandon(ConstantPool.NOT_ABANDON);
-        db.setMonthAndDay(monthAndDay);
-        db.setRank(0);
-        db.setTime(time);
-        db.setWeek(week);
-        db.setYear(year);
-        db.setText("贴纸分为：临时记录贴和任务贴\n临时记录贴无法设置闹钟。\n\n任务贴必须设置闹钟，有三个级别，设定的级别越高，说明该任务越重要，完成任务时能动值加得越多。\n\n" +
-                "系统闹钟：设置系统闹钟即相当于添加了一个手机自带得闹钟，可前往手机闹钟程序查看。\n\n前往-->我的-->设置-->闹钟，选择是否使用系统闹钟");
-        db.save();
+        for(int i=0; i<2; i++){
+            Note_db db = new Note_db();
+            db.setIsAbandon(ConstantPool.NOT_ABANDON);
+            db.setMonthAndDay(monthAndDay);
+            db.setRank(0);
+            db.setTime(time);
+            db.setWeek(week);
+            db.setYear(year);
+
+            if(i==1){
+                db.setText("贴纸分为：临时记录贴和任务贴\n临时记录贴无法设置闹钟。\n\n任务贴必须设置闹钟，有三个级别，设定的级别越高，说明该任务越重要，完成任务时能动值加得越多。\n\n" +
+                        "系统闹钟：设置系统闹钟即相当于添加了一个手机自带得闹钟，可前往手机闹钟程序查看。\n\n前往-->我的-->设置-->闹钟，选择是否使用系统闹钟");
+            }else {
+                db.setText("左滑删除便贴");
+            }
+            db.save();
+        }
     }
 }

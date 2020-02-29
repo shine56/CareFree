@@ -5,6 +5,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import com.example.a73233.carefree.R;
 import com.example.a73233.carefree.baseView.BaseFragment;
 import com.example.a73233.carefree.databinding.FragmentDiaryBinding;
 import com.example.a73233.carefree.diary.viewModel.DiaryVM;
+import com.example.a73233.carefree.util.CustomItemTouchCallback;
 import com.example.a73233.carefree.util.SpacesItemDecoration;
 
 public class DiaryFragment extends BaseFragment{
@@ -69,12 +71,22 @@ public class DiaryFragment extends BaseFragment{
         int space = 50; //间距
         binding.diaryRecycleView.addItemDecoration(new SpacesItemDecoration(0,space));
 
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new CustomItemTouchCallback(adapter));
+        itemTouchHelper.attachToRecyclerView(binding.diaryRecycleView);
+
         adapter.setItemClick(new DiaryListAdapter_.ItemClickImpl(){
             @Override
             public void onClick(View view, int id, int position, String text) {
-                Bundle bundle = new Bundle();
-                bundle.putInt("diaryId",id);
-                startActivity(LookDiaryActivity.class,bundle);
+                switch (view.getId()){
+                    case R.id.diary_list_root:
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("diaryId",id);
+                        startActivity(LookDiaryActivity.class,bundle);
+                        break;
+                    case R.id.diary_list_abandon:
+                        diaryVM.abandonDiary(id);
+                        break;
+                }
             }
         });
     }

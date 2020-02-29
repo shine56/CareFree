@@ -34,6 +34,7 @@ public class NoteWriteVM {
         bean.year.set(year);
         bean.monthAndDay.set(monthAndDay);
         bean.week.set(week);
+        bean.clockText.set(getNoteFirstText());
         return bean;
     }
 

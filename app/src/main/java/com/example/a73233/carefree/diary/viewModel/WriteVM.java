@@ -9,6 +9,7 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 import static android.app.Activity.RESULT_OK;
@@ -18,7 +19,7 @@ import static com.example.a73233.carefree.util.ConstantPool.HAPPY;
 import static com.example.a73233.carefree.util.ConstantPool.REPRESSION;
 import static com.example.a73233.carefree.util.ConstantPool.SAD;
 
-public class WriteVM extends LookVM{
+public class WriteVM extends LookVM implements DiaryVMImpl{
     private WriteDiaryActivity activity;
     public WriteVM(PhotoListAdapter adapter,WriteDiaryActivity activity) {
         super(adapter);
@@ -117,6 +118,12 @@ public class WriteVM extends LookVM{
         model.abandonData(diaryId,this);
     }
 
+    @Override
+    public void findAllDataSuccess(List<DiaryBean> beanList) {
+
+    }
+
+    @Override
     public void abandonDataSuccess(){
         activity.showToast("日记放进废纸篓，可前往恢复");
         activity.setResult(RESULT_OK-10);

@@ -7,6 +7,8 @@
     <string name="plus">+</string>
     <string name="colon">:</string>
     <string name="zero">0</string>
+    <string name="show_emotion_value">当前情绪值</string>
+    <string name="show_energy_value">当前能动值</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

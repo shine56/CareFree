@@ -4,6 +4,7 @@ import com.example.a73233.carefree.bean.DiaryBean;
 import com.example.a73233.carefree.bean.Diary_db;
 import com.example.a73233.carefree.diary.viewModel.DiaryVMImpl;
 import com.example.a73233.carefree.diary.viewModel.WriteVM;
+import com.example.a73233.carefree.util.ConstantPool;
 import com.example.a73233.carefree.util.LogUtil;
 
 import org.litepal.LitePal;
@@ -81,9 +82,9 @@ public class DiaryModel {
      * @param id
      * @param writeVM
      */
-    public void abandonData(int id,WriteVM writeVM){
+    public void abandonData(int id,DiaryVMImpl writeVM){
         Diary_db db = LitePal.find(Diary_db.class,id);
-        db.setIsAbandon(1);
+        db.setIsAbandon(ConstantPool.ISABANDON);
         db.save();
         writeVM.abandonDataSuccess();
     }

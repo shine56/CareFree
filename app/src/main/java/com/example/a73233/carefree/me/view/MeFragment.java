@@ -141,7 +141,7 @@ public class MeFragment extends BaseFragment {
                     .error(R.mipmap.find_photo_fail)
                     .into(imageView);
         }else {
-            Glide.with(imageView.getContext()).load(R.drawable.user_head_ima)
+            Glide.with(imageView.getContext()).load(R.drawable.user_head_img)
                     .apply(options)
                     .skipMemoryCache(true) // 不使用内存缓存
                     .diskCacheStrategy(DiskCacheStrategy.NONE) // 不使用磁盘缓存

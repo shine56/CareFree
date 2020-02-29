@@ -6,6 +6,8 @@ public class ConstantPool {
     public static final int CALM = 3;
     public static final int SAD = 4;
     public static final int REPRESSION = 5;
+    public static final int DIARY = 6;
+    public static final int NOTE = 7;
 
     public static final int COMPLETE = 1;
     public static final int NOTCOMPLETE = 0;

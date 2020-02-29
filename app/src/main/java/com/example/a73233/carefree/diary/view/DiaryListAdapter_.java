@@ -40,11 +40,20 @@ public class DiaryListAdapter_ extends BaseAdapter {
         DiaryBean bean = (DiaryBean)mList.get(mList.size()-1-position);
         binding.setDiaryBean(bean);
         binding.executePendingBindings();
+        holder.itemView.scrollTo(0,0);
+
         binding.emotionValue.setTextColor(EmotionDataUtil.GetColors(bean.diaryEmotionValue.get())[1]);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        binding.diaryListRoot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 itemClick.onClick(view,bean.id.get(),position,bean.diaryContent.get());
+            }
+        });
+        binding.diaryListAbandon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                removeItem(position);
+                itemClick.onClick(view,bean.id.get(),position,null);
             }
         });
     }

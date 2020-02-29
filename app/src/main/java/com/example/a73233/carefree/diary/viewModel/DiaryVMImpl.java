@@ -11,4 +11,5 @@ public interface DiaryVMImpl {
      * @param beanList
      */
     public void findAllDataSuccess(List<DiaryBean> beanList);
+    public void abandonDataSuccess();
 }

@@ -27,7 +27,7 @@ public class HomeFragment extends BaseFragment {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_home,container,false);
         activity = getActivity();
         noteAdapter = new NoteListAdapter(activity);
-        viewModel = new HomeViewModel(noteAdapter);
+        viewModel = new HomeViewModel(noteAdapter, activity);
         binding.setHomeViewModel(viewModel);
         return binding.getRoot();
     }
@@ -46,7 +46,7 @@ public class HomeFragment extends BaseFragment {
             viewModel.initReportViewData();
             viewModel.initEnergyReport();
             initMoodView();
-            if(viewModel.isShowNote(activity)){
+            if(viewModel.isShowNote()){
                 initRecy();
                 binding.textView.setVisibility(View.VISIBLE);
                 binding.homeNoteRecy.setVisibility(View.VISIBLE);
@@ -63,7 +63,7 @@ public class HomeFragment extends BaseFragment {
         viewModel.initReportViewData();
         initRecy();
         binding.homeNoteRecy.addItemDecoration(new SpacesItemDecoration(0,50));
-        if(viewModel.isShowNote(activity)){
+        if(viewModel.isShowNote()){
             binding.textView.setVisibility(View.VISIBLE);
             binding.homeNoteRecy.setVisibility(View.VISIBLE);
         }else {

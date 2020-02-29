@@ -92,4 +92,9 @@ public class MeModel {
         LitePal.deleteAll(Diary_db.class,"isAbandon like ?",""+ConstantPool.ISABANDON);
         LitePal.deleteAll(Note_db.class,"isAbandon like ?",""+ConstantPool.ISABANDON);
     }
+    public Diary_db findLastData(){
+        List<Diary_db> diaryDbs = LitePal.where("isAbandon like ?"
+                ,ConstantPool.NOT_ABANDON+"").find(Diary_db.class);
+        return diaryDbs.get(diaryDbs.size()-1);
+    }
 }

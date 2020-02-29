@@ -45,4 +45,9 @@ public class HomeModel {
         return LitePal.where("monthAndDay like ? and isAbandon like ?"
                 , monthAndDay,""+ConstantPool.ISABANDON).find(Note_db.class);
     }
+    public Diary_db findLastData(){
+        List<Diary_db> diaryDbs = LitePal.where("isAbandon like ?"
+                ,ConstantPool.NOT_ABANDON+"").find(Diary_db.class);
+        return diaryDbs.get(diaryDbs.size()-1);
+    }
 }

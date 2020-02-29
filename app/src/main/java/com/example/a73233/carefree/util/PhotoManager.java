@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
@@ -36,17 +37,18 @@ public class PhotoManager {
     public static final int CHOOSE_PHOTO = 2;
     //拍照
     public static String TakePhoto(Activity activity){
-        String imagePath;
-        String sdPath;
         String imageName;
         File outPutImage;
         Uri imageUri;
+        DataBackup.initPhotoFile();
 
-        //图片会随着APP删除而删除
-       sdPath = activity.getExternalFilesDir(null).getPath();
-       imageName = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".jpg";
-       imagePath = sdPath +"/"+ imageName;
-       outPutImage = new File(imagePath);
+        //图片不会随着APP删除而删除
+        File sdCard = Environment.getExternalStorageDirectory();
+        File parentFile = new File(sdCard,"无忧日记-备份");
+        File photosFile = new File(parentFile,"Photos");
+        imageName = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".jpg";
+        outPutImage = new File(photosFile,imageName);
+
        if(Build.VERSION.SDK_INT > 24){
            imageUri = FileProvider.getUriForFile(activity,
                    "com.example.a73233.carefree.util.fileprovider",outPutImage);
@@ -59,7 +61,7 @@ public class PhotoManager {
        intent.putExtra(MediaStore.EXTRA_OUTPUT,imageUri);
        activity.startActivityForResult(intent, TAKE_PHOTO);
        Log.d("启动相机测试","启动相机完成");
-       return imagePath;
+       return outPutImage.getPath();
     }
 
     /**
@@ -107,20 +109,23 @@ public class PhotoManager {
     }
 
     /**
-     * 根据路径将图片另存于activity.getExternalFilesDir().getPath();
+     * 根据路径将图片另存于Environment.getExternalStorageDirectory();
      * @param activity
      * @param oldPAth
      * @return
      */
     public static String copyPhoto(Activity activity,String oldPAth){
-        String sdPath = activity.getExternalFilesDir(null).getPath();
+        DataBackup.initPhotoFile();
+        File sdCard = Environment.getExternalStorageDirectory();
+        File parentFile = new File(sdCard,"无忧日记-备份");
+        File photosFile = new File(parentFile,"Photos");
         String imageName =  new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".jpg";
-        String newPath = sdPath + "/" + imageName;
-        File newFile = new File(newPath);
+        File newFile = new File(photosFile,imageName);
         int byteReadLength = 0;
 
         try {
             if(!newFile.exists()){
+                newFile.createNewFile();
                 InputStream inputStream = new FileInputStream(oldPAth);
                 OutputStream outputStream = new FileOutputStream(newFile);
                 byte[] bytes = new byte[1024];
@@ -130,7 +135,9 @@ public class PhotoManager {
                 }
                 inputStream.close();
                 outputStream.close();
-                return newPath;
+                return newFile.getPath();
+            }else {
+                Log.d("文件名重复","复制图片失败 e :");
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
