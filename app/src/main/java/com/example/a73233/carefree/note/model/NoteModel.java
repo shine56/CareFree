@@ -79,11 +79,12 @@ public class NoteModel {
         LogUtil.LogD("保存便贴成功");
     }
 
-    public void deleteData(int id, int type){
+    public void abandonData(int id, int type, NoteVmImpl noteVm){
         Note_db db = LitePal.find(Note_db.class,id);
         db.setIsAbandon(ConstantPool.ISABANDON);
         db.setIsComplete(type);
         db.save();
+        noteVm.abandonSuccess();
     }
 
     private List<NoteBean> creatNoteBean(List<Note_db> noteDbList){

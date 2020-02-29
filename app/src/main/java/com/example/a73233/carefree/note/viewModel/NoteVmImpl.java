@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface NoteVmImpl {
     void findSuccess(List<NoteBean> beanList);
+    void abandonSuccess();
 }

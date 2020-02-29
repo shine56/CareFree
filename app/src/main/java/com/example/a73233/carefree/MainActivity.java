@@ -265,7 +265,7 @@ public class MainActivity extends BaseActivity {
     private void initMeDb(){
         User_db db = new User_db();
         db.setUserName("CareFree");
-        db.setUserWords("一切都是最好得安排！");
+        db.setUserWords("一切都是最好的安排！");
         db.save();
     }
     private void initDiaryDb(){
@@ -320,7 +320,7 @@ public class MainActivity extends BaseActivity {
                 db.setText("贴纸分为：临时记录贴和任务贴\n临时记录贴无法设置闹钟。\n\n任务贴必须设置闹钟，有三个级别，设定的级别越高，说明该任务越重要，完成任务时能动值加得越多。\n\n" +
                         "系统闹钟：设置系统闹钟即相当于添加了一个手机自带得闹钟，可前往手机闹钟程序查看。\n\n前往-->我的-->设置-->闹钟，选择是否使用系统闹钟");
             }else {
-                db.setText("左滑删除便贴");
+                db.setText("左滑便贴选择完成/未完成摘下便贴");
             }
             db.save();
         }

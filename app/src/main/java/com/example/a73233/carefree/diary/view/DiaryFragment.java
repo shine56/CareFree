@@ -31,7 +31,7 @@ public class DiaryFragment extends BaseFragment{
         binding.setDiaryFragment(this);
         activity = getActivity();
         adapter = new DiaryListAdapter_(activity);
-        diaryVM = new DiaryVM(adapter);
+        diaryVM = new DiaryVM(adapter, activity);
         return binding.getRoot();
     }
 

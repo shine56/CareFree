@@ -1,5 +1,8 @@
 package com.example.a73233.carefree.diary.viewModel;
 
+import android.app.Activity;
+import android.widget.Toast;
+
 import com.example.a73233.carefree.bean.DiaryBean;
 import com.example.a73233.carefree.diary.Model.DiaryModel;
 import com.example.a73233.carefree.diary.view.DiaryListAdapter_;
@@ -12,8 +15,10 @@ import java.util.List;
 public class DiaryVM implements DiaryVMImpl {
     private DiaryModel diaryModel;
     private DiaryListAdapter_ adapter;
+    private Activity activity;
 
-    public DiaryVM(DiaryListAdapter_ adapter) {
+    public DiaryVM(DiaryListAdapter_ adapter,  Activity activity) {
+        this.activity = activity;
         this.adapter = adapter;
         diaryModel = new DiaryModel();
     }
@@ -57,6 +62,6 @@ public class DiaryVM implements DiaryVMImpl {
 
     @Override
     public void abandonDataSuccess() {
-
+        Toast.makeText(activity,"日记已扔进废纸篓",Toast.LENGTH_SHORT).show();
     }
 }

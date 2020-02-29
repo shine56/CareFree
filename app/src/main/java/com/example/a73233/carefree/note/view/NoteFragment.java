@@ -35,7 +35,7 @@ public class NoteFragment extends BaseFragment {
         binding.setNoteFragment(this);
         activity = getActivity();
         adapter = new NoteListAdapter(activity);
-        noteVM = new NoteVM(adapter);
+        noteVM = new NoteVM(adapter, activity);
         logD("这里");
         return binding.getRoot();
     }
@@ -64,10 +64,10 @@ public class NoteFragment extends BaseFragment {
                         startActivity(NoteWriteActivity.class,bundle);
                         break;
                     case R.id.note_remove:
-                        noteVM.deleteData(id, ConstantPool.NOTCOMPLETE);
+                        noteVM.abandonData(id, ConstantPool.NOTCOMPLETE);
                         break;
                     case R.id.note_list_complete:
-                        noteVM.deleteData(id,ConstantPool.COMPLETE);
+                        noteVM.abandonData(id,ConstantPool.COMPLETE);
                         break;
                 }
             }
