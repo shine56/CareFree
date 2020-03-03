@@ -331,7 +331,8 @@
                     app:layout_constraintTop_toBottomOf="@+id/setting_user_bg">
 
                     <android.support.constraint.ConstraintLayout
-                        android:id="@+id/setting_rank3_top"
+                        android:id="@+id/setting_card"
+
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginTop="16dp"
@@ -426,8 +427,7 @@
                     </android.support.constraint.ConstraintLayout>
 
                     <android.support.constraint.ConstraintLayout
-                        android:id="@+id/setting_card"
-
+                        android:id="@+id/setting_rank3_top"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginTop="16dp"

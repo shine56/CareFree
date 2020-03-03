@@ -54,11 +54,15 @@ public class MeModel {
         Users_db db = LitePal.findAll(Users_db.class).get(0);
         db.setUserName(bean.userName.get());
         db.setUserWords(bean.userWords.get());
-        if(!db.getUserHeadIma().equals(bean.userHeadIma.get())){
+        if (db.getUserHeadIma() == null){
+            db.setUserHeadIma(bean.userHeadIma.get());
+        }
+        if(db.getUserHeadIma()!= null && !db.getUserHeadIma().equals(bean.userHeadIma.get())){
             FileUtil.deleteFile(db.getUserHeadIma());
             db.setUserHeadIma(bean.userHeadIma.get());
         }
         db.save();
+
     }
 
     /**

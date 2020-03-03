@@ -62,14 +62,13 @@ public class MeVM {
         return bean;
     }
 
-    public void saveUser(){
+    public void saveSetting(){
         SharedPreferences.Editor editor = activity.getSharedPreferences("note_setting",MODE_PRIVATE).edit();
         editor.putString("clock_type",bean.clockType.get());
         editor.putString("home_show_note",bean.homeShowNote.get());
         editor.putString("rank3_top",bean.rank3Top.get());
         editor.putString("home_show_emotion_value",bean.card.get());
         editor.apply();
-        model.saveUserdb(bean);
     }
 
     public void setImgUrl(String url){
@@ -118,7 +117,6 @@ public class MeVM {
             return false;
         }
     }
-
     public int getGraphHeight(int max){
         if(bean.energyValue.get() == 0){
             return 1;

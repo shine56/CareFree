@@ -70,12 +70,10 @@ public class BackupVM {
                             case 4:
                                 Toast.makeText(activity, "备份失败", Toast.LENGTH_SHORT).show();
                                 break;
-
                         }
                     }
                 });
     }
-
     public void restoreData(Dialog dialog, int type){
         Observable.create(new ObservableOnSubscribe<Integer>() {
             @Override
@@ -118,6 +116,7 @@ public class BackupVM {
                                 break;
                             case 3:
                                 Toast.makeText(activity, "恢复成功", Toast.LENGTH_SHORT).show();
+                                activity.finish();
                                 break;
                             case 4:
                                 Toast.makeText(activity, "恢复失败", Toast.LENGTH_SHORT).show();
@@ -127,8 +126,6 @@ public class BackupVM {
                     }
                 });
     }
-
-
     public void setName(String name){
         saveData("name", name);
     }

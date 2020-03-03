@@ -13,14 +13,10 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
 import android.text.InputFilter;
-import android.transition.Slide;
-import android.transition.TransitionInflater;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -28,11 +24,11 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.a73233.carefree.R;
+import com.example.a73233.carefree.baseView.ActivityManager;
 import com.example.a73233.carefree.baseView.BaseActivity;
 import com.example.a73233.carefree.databinding.ActivitySettingBinding;
 import com.example.a73233.carefree.me.viewModel.MeVM;
 import com.example.a73233.carefree.util.ConstantPool;
-import com.example.a73233.carefree.util.DataBackup;
 import com.example.a73233.carefree.util.LogUtil;
 import com.example.a73233.carefree.util.PhotoManager;
 
@@ -43,14 +39,7 @@ public class SettingActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(getIntent().getStringExtra("transition")!=null && getIntent().getStringExtra("transition").equals("slide")){
-            Slide slide = new Slide(Gravity.LEFT);
-            slide.setDuration(400);//间歇时间
-            getWindow().setEnterTransition(slide);
-            Slide slide1 = new Slide(Gravity.RIGHT);
-            slide1.setDuration(400);//间歇时间
-            getWindow().setReturnTransition(slide1);
-        }
+        ActivityManager.addActiivty(this);
         binding = DataBindingUtil.setContentView(this,R.layout.activity_setting);
         vm = new MeVM(this);
         binding.setSettingActivity(this);
@@ -92,7 +81,6 @@ public class SettingActivity extends BaseActivity {
                 break;
             case R.id.setting_backup:
                 startActivity(BackupActivity.class);
-                finish();
                 break;
         }
     }
@@ -293,13 +281,15 @@ public class SettingActivity extends BaseActivity {
         }
     }
 
-    private void setupWindowAnimations() {
-        Slide slide = (Slide) TransitionInflater.from(this).inflateTransition(R.transition.slide);
-        getWindow().setEnterTransition(slide);
-    }
     @Override
     public void finish() {
+        vm.saveSetting();
         super.finish();
-        vm.saveUser();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityManager.removeActivity(this);
     }
 }

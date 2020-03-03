@@ -21,4 +21,7 @@ public class ConstantPool {
 
     public static final int SDCARD = 0;
     public static final int CLOUND = 1;
+
+
+    public static final int START_BACKUP = 1001;
 }

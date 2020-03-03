@@ -8,16 +8,13 @@ import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
 import android.text.InputType;
-import android.transition.Slide;
-import android.transition.TransitionInflater;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.a73233.carefree.R;
+import com.example.a73233.carefree.baseView.ActivityManager;
 import com.example.a73233.carefree.baseView.BaseActivity;
 import com.example.a73233.carefree.databinding.ActivityBackupBinding;
 import com.example.a73233.carefree.me.viewModel.BackupVM;
@@ -160,6 +157,7 @@ public class BackupActivity extends BaseActivity {
         dialog.show();
     }
     private void restoreData(int type){
+        ActivityManager.finishAllActivity();
         vm.restoreData(showLoadDialog(),type);
     }
     private void showBackupDialog(int type){
@@ -201,14 +199,6 @@ public class BackupActivity extends BaseActivity {
         dialog.setCanceledOnTouchOutside(false);
         dialog.show();
         return dialog;
-    }
-    @Override
-    public void onBackPressed() {
-        Intent mIntent = new Intent();
-        mIntent.setClass(this, SettingActivity.class);
-        mIntent.putExtra("transition", "slide");
-        startActivity(mIntent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
-        super.onBackPressed();
     }
 
     @Override

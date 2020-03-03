@@ -19,6 +19,7 @@ import com.example.a73233.carefree.databinding.FragmentMeBinding;
 import com.example.a73233.carefree.me.viewModel.MeVM;
 import com.example.a73233.carefree.util.EmotionDataUtil;
 import com.example.a73233.carefree.util.GlideCircleBorderTransform;
+import com.example.a73233.carefree.util.LogUtil;
 
 public class MeFragment extends BaseFragment {
     private FragmentMeBinding binding;
@@ -41,8 +42,8 @@ public class MeFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        initView();
         binding.setBean(meVM.refreshData());
+        initView();
     }
 
     @Override
@@ -103,11 +104,11 @@ public class MeFragment extends BaseFragment {
                 if(meVM.isRank3Top()){
                     binding.meRank3Yop.setImageResource(R.mipmap.is_not_choose);
                     meVM.setRank3Top("不置顶");
-                    meVM.saveUser();
+                    meVM.saveSetting();
                 }else {
                     binding.meRank3Yop.setImageResource(R.mipmap.is_choose);
                     meVM.setRank3Top("置顶");
-                    meVM.saveUser();
+                    meVM.saveSetting();
                 }
             }
         });
@@ -117,11 +118,11 @@ public class MeFragment extends BaseFragment {
                 if(meVM.isHomeShowNote()){
                     binding.meHomeShowNote.setImageResource(R.mipmap.is_not_choose);
                     meVM.setHomeShowNote("不显示任务");
-                    meVM.saveUser();
+                    meVM.saveSetting();
                 }else {
                     binding.meHomeShowNote.setImageResource(R.mipmap.is_choose);
                     meVM.setHomeShowNote("显示任务");
-                    meVM.saveUser();
+                    meVM.saveSetting();
                 }
             }
         });
