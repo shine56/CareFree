@@ -49,13 +49,13 @@ public class BackupActivity extends BaseActivity {
                 setUrl();
                 break;
             case R.id.backup_put:
-                showBackupDialog("云盘/CareFree/",ConstantPool.CLOUND);
+                showBackupDialog(ConstantPool.CLOUND);
                 break;
             case R.id.backup_get:
                 restoreData(ConstantPool.CLOUND);
                 break;
             case R.id.backup_local_put:
-                showBackupDialog("本地mnt/sdcard/CareFree/",ConstantPool.SDCARD);
+                showBackupDialog(ConstantPool.SDCARD);
                 break;
             case R.id.backup_local_get:
                 restoreData(ConstantPool.SDCARD);
@@ -156,7 +156,7 @@ public class BackupActivity extends BaseActivity {
     private void restoreData(int type){
         vm.restoreData(showLoadDialog(),type);
     }
-    private void showBackupDialog(String location, int type){
+    private void showBackupDialog(int type){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_text_confim,null,false);
         builder.setView(view);
@@ -167,7 +167,11 @@ public class BackupActivity extends BaseActivity {
         TextView cancel = view.findViewById(R.id.dialog_confirm_cancel);
         title.setText("备份");
 
-        text.setText("你的数据将会备份在"+location+"目录下");
+        if(type == ConstantPool.SDCARD){
+            text.setText("        你的数据将会备份在本地 mnt/sdcard/CareFree/ 目录下");
+        }else {
+            text.setText("        确认即表示你将同意将数据上传至第三方云盘，请确保你选择了信任的云盘上传数据。\n        你的数据将会备份在 云盘/CareFree/ 目录下");
+        }
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
