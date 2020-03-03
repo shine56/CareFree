@@ -4,6 +4,7 @@ import android.app.ActivityOptions;
 import android.app.Dialog;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
 import android.text.InputType;
@@ -62,6 +63,11 @@ public class BackupActivity extends BaseActivity {
                 break;
             case R.id.backup_toolbar_left:
                 onBackPressed();
+                break;
+            case R.id.backup_how_user:
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("https://sspai.com/post/55874?hippy=1"));
+                startActivity(intent);
                 break;
         }
     }
@@ -170,7 +176,7 @@ public class BackupActivity extends BaseActivity {
         if(type == ConstantPool.SDCARD){
             text.setText("        你的数据将会备份在本地 mnt/sdcard/CareFree/ 目录下");
         }else {
-            text.setText("        确认即表示你将同意将数据上传至第三方云盘，请确保你选择了信任的云盘上传数据。\n        你的数据将会备份在 云盘/CareFree/ 目录下");
+            text.setText("        确认即表示你将同意将数据上传至第三方网盘，请确保你选择了信任的网盘上传数据。\n        你的数据将会备份在 网盘/CareFree/ 目录下");
         }
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
