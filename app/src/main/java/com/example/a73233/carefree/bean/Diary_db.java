@@ -7,8 +7,7 @@ import org.litepal.crud.LitePalSupport;
 import java.io.Serializable;
 import java.util.List;
 
-public class Diary_db extends LitePalSupport implements Serializable {
-    private static final long serialVersionUID = -2083503801423301341L;
+public class Diary_db extends LitePalSupport{
     private int id;
     private String diaryContent; //日记内容
     private String day;          //

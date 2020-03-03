@@ -1,5 +1,7 @@
 package com.example.a73233.carefree.util;
 
+import android.os.Environment;
+
 public class ConstantPool {
     public static final int AI = 1;
     public static final int HAPPY = 2;
@@ -16,4 +18,7 @@ public class ConstantPool {
     public static final int NOT_ABANDON = 0;
 
     public static final Boolean IS_FIRST_START_APP = true;
+
+    public static final int SDCARD = 0;
+    public static final int CLOUND = 1;
 }

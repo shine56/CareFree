@@ -33,21 +33,17 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class PhotoManager {
-    private static final int TAKE_PHOTO = 1;
+    public static final int TAKE_PHOTO = 1;
     public static final int CHOOSE_PHOTO = 2;
     //拍照
     public static String TakePhoto(Activity activity){
         String imageName;
         File outPutImage;
         Uri imageUri;
-        DataBackup.initPhotoFile();
-
-        //图片不会随着APP删除而删除
-        File sdCard = Environment.getExternalStorageDirectory();
-        File parentFile = new File(sdCard,"无忧日记-备份");
-        File photosFile = new File(parentFile,"Photos");
+        //图片会随着APP删除而删除
+        File sdDirectory = activity.getExternalFilesDir(null);
         imageName = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".jpg";
-        outPutImage = new File(photosFile,imageName);
+        outPutImage = new File(sdDirectory,imageName);
 
        if(Build.VERSION.SDK_INT > 24){
            imageUri = FileProvider.getUriForFile(activity,
@@ -109,44 +105,19 @@ public class PhotoManager {
     }
 
     /**
-     * 根据路径将图片另存于Environment.getExternalStorageDirectory();
+     * 根据路径将图片另存于activity.getExternalFilesDir(null);
      * @param activity
-     * @param oldPAth
+     * @param sourcePAth
      * @return
      */
-    public static String copyPhoto(Activity activity,String oldPAth){
-        DataBackup.initPhotoFile();
-        File sdCard = Environment.getExternalStorageDirectory();
-        File parentFile = new File(sdCard,"无忧日记-备份");
-        File photosFile = new File(parentFile,"Photos");
-        String imageName =  new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".jpg";
-        File newFile = new File(photosFile,imageName);
-        int byteReadLength = 0;
-
-        try {
-            if(!newFile.exists()){
-                newFile.createNewFile();
-                InputStream inputStream = new FileInputStream(oldPAth);
-                OutputStream outputStream = new FileOutputStream(newFile);
-                byte[] bytes = new byte[1024];
-
-                while ((byteReadLength = inputStream.read(bytes)) != -1){
-                    outputStream.write(bytes,0,byteReadLength);
-                }
-                inputStream.close();
-                outputStream.close();
-                return newFile.getPath();
-            }else {
-                Log.d("文件名重复","复制图片失败 e :");
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            Log.d("复制图片测试","复制图片失败 e :"+e);
-        } catch (IOException e) {
-            Log.d("复制图片测试","复制图片失败 e :"+e);
-            e.printStackTrace();
+    public static String copyPhoto(Activity activity,String sourcePAth){
+        String imageName = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".jpg";
+        String targetPath = activity.getExternalFilesDir(null).getPath()+"/"+imageName;
+        if(FileUtil.copyFile(sourcePAth, targetPath)){
+            return targetPath;
+        }else {
+            return null;
         }
-        return null;
     }
     //EditText添加图片
     public static void editViewInsertPhoto (Activity activity, EditText editText, String imagePath){

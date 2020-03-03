@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.TextView;
 
 import com.example.a73233.carefree.R;
 import com.example.a73233.carefree.baseView.BaseActivity;
@@ -26,6 +27,8 @@ import com.example.a73233.carefree.diary.viewModel.WriteVM;
 import com.example.a73233.carefree.util.EmotionDataUtil;
 import com.example.a73233.carefree.util.PhotoManager;
 import com.example.a73233.carefree.util.SpacesItemDecoration;
+
+import java.lang.reflect.Field;
 
 public class WriteDiaryActivity extends BaseActivity{
     private static final int AI = 1;
@@ -151,6 +154,20 @@ public class WriteDiaryActivity extends BaseActivity{
                 binding.writeAddPhoto.setBackground(addPhotoBg);
                 binding.writeAddPhotoLogo.setImageResource(R.mipmap.camera_logo_white);
                 binding.activityWriteDiary.setBackgroundResource(R.color.mainBg);
+
+
+                Field f = null;
+                try {
+                    f = TextView.class.getDeclaredField("mCursorDrawableRes");
+                    f.setAccessible(true);
+                    f.set(binding.writeWriteDiary, R.drawable.cursor);
+                } catch (NoSuchFieldException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+
+
             }
         }
         //初始化图片

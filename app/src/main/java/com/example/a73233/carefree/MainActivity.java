@@ -12,7 +12,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
@@ -26,18 +25,17 @@ import android.widget.Toast;
 import com.example.a73233.carefree.baseView.BaseActivity;
 import com.example.a73233.carefree.bean.Diary_db;
 import com.example.a73233.carefree.bean.Note_db;
-import com.example.a73233.carefree.bean.User_db;
+import com.example.a73233.carefree.bean.Users_db;
 import com.example.a73233.carefree.note.view.NoteFragment;
 import com.example.a73233.carefree.me.view.MeFragment;
 import com.example.a73233.carefree.diary.view.DiaryFragment;
 import com.example.a73233.carefree.home.view.HomeFragment;
 import com.example.a73233.carefree.databinding.ActivityMainBinding;
 import com.example.a73233.carefree.util.ConstantPool;
-import com.example.a73233.carefree.util.DataBackup;
+import com.example.a73233.carefree.util.FileUtil;
 
 import org.litepal.LitePal;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -63,7 +61,6 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
         binding.setMainActivity(this);
-
         //判断是否第一次安装启动app
         SharedPreferences pref = getSharedPreferences("appSetting",MODE_PRIVATE);
         if(pref.getBoolean("isFirstStartApp",true)){
@@ -235,21 +232,14 @@ public class MainActivity extends BaseActivity {
     }
     private void initApp(){
         logD("首次启动，初始化app");
+        FileUtil.createAppDirectory();
         LitePal.deleteAll(Diary_db.class);
         LitePal.deleteAll(Note_db.class);
-        LitePal.deleteAll(User_db.class);
+        LitePal.deleteAll(Users_db.class);
         initSetting();
-        DataBackup.initPhotoFile();
-
-        if(DataBackup.getMarkData()){
-            DataBackup.ReStoreData();
-            logD("有备份，恢复数据");
-        }else {
-            logD("无备份，初始化数据");
-            initDiaryDb();
-            initNoteDb();
-            initMeDb();
-        }
+        initDiaryDb();
+        initNoteDb();
+        initMeDb();
         SharedPreferences.Editor editor = getSharedPreferences("appSetting",MODE_PRIVATE).edit();
         editor.putBoolean("isFirstStartApp",false);
         editor.apply();
@@ -263,7 +253,7 @@ public class MainActivity extends BaseActivity {
         editor.apply();
     }
     private void initMeDb(){
-        User_db db = new User_db();
+        Users_db db = new Users_db();
         db.setUserName("CareFree");
         db.setUserWords("一切都是最好的安排！");
         db.save();

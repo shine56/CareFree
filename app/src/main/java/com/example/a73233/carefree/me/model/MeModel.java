@@ -1,23 +1,22 @@
 package com.example.a73233.carefree.me.model;
 
-import android.content.SharedPreferences;
-
 import com.example.a73233.carefree.bean.Diary_db;
 import com.example.a73233.carefree.bean.Note_db;
 import com.example.a73233.carefree.bean.UserBean;
-import com.example.a73233.carefree.bean.User_db;
+import com.example.a73233.carefree.bean.Users_db;
 import com.example.a73233.carefree.util.ConstantPool;
-import com.example.a73233.carefree.util.LogUtil;
+import com.example.a73233.carefree.util.FileUtil;
 
 import org.litepal.LitePal;
 
+import java.io.File;
 import java.util.List;
 
 public class MeModel {
 
     public UserBean getUserBean(){
         UserBean bean = new UserBean();
-        User_db db = LitePal.findAll(User_db.class).get(0);
+        Users_db db = LitePal.findAll(Users_db.class).get(0);
         List<Diary_db> diaryDbList = LitePal.where("isAbandon like ?","0").find(Diary_db.class);
         List<Note_db> noteDbList = LitePal.where("isAbandon = ?","0").find(Note_db.class);
         bean.userName.set(db.getUserName());
@@ -52,10 +51,13 @@ public class MeModel {
      * @param bean
      */
     public void saveUserdb(UserBean bean){
-        User_db db = LitePal.findAll(User_db.class).get(0);
+        Users_db db = LitePal.findAll(Users_db.class).get(0);
         db.setUserName(bean.userName.get());
         db.setUserWords(bean.userWords.get());
-        db.setUserHeadIma(bean.userHeadIma.get());
+        if(!db.getUserHeadIma().equals(bean.userHeadIma.get())){
+            FileUtil.deleteFile(db.getUserHeadIma());
+            db.setUserHeadIma(bean.userHeadIma.get());
+        }
         db.save();
     }
 
@@ -83,12 +85,26 @@ public class MeModel {
      */
     public void deleteOneData(int type, int id){
         if(type == 0){
+            Diary_db diary_db = LitePal.find(Diary_db.class, id);
+            if(diary_db.getPhotoList() != null){
+                for(String path : diary_db.getPhotoList()){
+                    FileUtil.deleteFile(path);
+                }
+            }
             LitePal.delete(Diary_db.class, id);
         }else {
             LitePal.delete(Note_db.class, id);
         }
     }
     public void deleteAllData(){
+        List<Diary_db> diaryDbs = LitePal.where("isAbandon like ?",""+ConstantPool.ISABANDON).find(Diary_db.class);
+        for (Diary_db db : diaryDbs){
+            if(db.getPhotoList() != null){
+                for(String path : db.getPhotoList()){
+                    FileUtil.deleteFile(path);
+                }
+            }
+        }
         LitePal.deleteAll(Diary_db.class,"isAbandon like ?",""+ConstantPool.ISABANDON);
         LitePal.deleteAll(Note_db.class,"isAbandon like ?",""+ConstantPool.ISABANDON);
     }
@@ -97,4 +113,5 @@ public class MeModel {
                 ,ConstantPool.NOT_ABANDON+"").find(Diary_db.class);
         return diaryDbs.get(diaryDbs.size()-1);
     }
+
 }

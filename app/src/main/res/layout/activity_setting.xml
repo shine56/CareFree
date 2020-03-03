@@ -204,9 +204,7 @@
                             android:src="@mipmap/next_gray"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent">
-
-                        </ImageView>
+                            app:layout_constraintTop_toTopOf="parent"></ImageView>
                     </android.support.constraint.ConstraintLayout>
 
                 </LinearLayout>
@@ -273,8 +271,6 @@
                             android:textColor="@color/black"
                             android:textSize="16dp"
                             app:layout_constraintStart_toStartOf="parent"></TextView>
-
-
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
@@ -335,7 +331,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/setting_user_bg">
 
                     <android.support.constraint.ConstraintLayout
-                        android:id="@+id/setting_card"
+                        android:id="@+id/setting_rank3_top"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginTop="16dp"
@@ -354,7 +350,7 @@
                             app:layout_constraintStart_toStartOf="parent"></TextView>
 
                         <TextView
-                            android:id="@+id/setting_home_show_note_text"
+                            android:id="@+id/setting_card_text"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
@@ -401,7 +397,7 @@
                             app:layout_constraintStart_toStartOf="parent"></TextView>
 
                         <TextView
-                            android:id="@+id/setting_card_text"
+                            android:id="@+id/setting_home_show_note_text"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="48dp"
@@ -430,7 +426,8 @@
                     </android.support.constraint.ConstraintLayout>
 
                     <android.support.constraint.ConstraintLayout
-                        android:id="@+id/setting_rank3_top"
+                        android:id="@+id/setting_card"
+
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginTop="16dp"
@@ -456,6 +453,7 @@
                             android:layout_marginEnd="8dp"
                             android:gravity="right"
                             android:text="@{bean.rank3Top}"
+
                             android:textColor="@color/gray"
                             android:textSize="12dp"
                             app:layout_constraintBottom_toBottomOf="parent"

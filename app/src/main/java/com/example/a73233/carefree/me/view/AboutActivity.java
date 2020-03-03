@@ -49,7 +49,7 @@ public class AboutActivity extends BaseActivity {
     }
     private void showAgreement(){
         String agreement = "        CareFree是一款提供用户记录日记、便笺的工具。\n        " +
-                "卸载应用前请在设置中对数据进行备份，否则再次安装CareFree不会保留上一次安装时APP拥有的数据。" +
+                "卸载应用前请在设置中对数据进行备份，否则会造成数据丢失。" +
                 "对于用户在此应用记录的内容不作任何保证：不保证日记和便笺等记录内容永久不会损坏、丢失。因任何原因导致您不能正常使用此应用，CareFree不承担任何法律责任。" +
                 "\n        应用尊重并保护所有使用CareFree的用户的个人隐私权。您在CareFree写下的所有日记和便笺都保存在手机本地，非经过您亲自许可或根据相关法律、法规强制性规定，应用不会以以任何形式主动泄露给第三方。";
         showMyDialog("用户协议说明", agreement);

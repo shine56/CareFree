@@ -4,8 +4,7 @@ import org.litepal.crud.LitePalSupport;
 
 import java.io.Serializable;
 
-public class Note_db extends LitePalSupport implements Serializable {
-    private static final long serialVersionUID = -2083503801423301342L;
+public class Note_db extends LitePalSupport{
     private int id;
     private String text; //墙贴文本
     private String year;

@@ -1,21 +1,17 @@
 package com.example.a73233.carefree.util;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Environment;
 
-import com.example.a73233.carefree.bean.Diary_db;
-import com.example.a73233.carefree.bean.Note_db;
-import com.example.a73233.carefree.bean.User_db;
-import com.example.a73233.carefree.me.viewModel.MeVM;
-
-import org.litepal.LitePal;
+import com.thegrizzlylabs.sardineandroid.DavResource;
+import com.thegrizzlylabs.sardineandroid.Sardine;
+import com.thegrizzlylabs.sardineandroid.impl.OkHttpSardine;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
 
@@ -28,218 +24,159 @@ import java.util.List;
 public class DataBackup {
 
     /**
+     * 备份数据到本地
      *备份数据到getExternalStorageDirectory()
      */
-    public static void BackupData(MeVM vm){
-        List<Diary_db> diaryDbs = LitePal.findAll(Diary_db.class);
-        List<Note_db> noteDbs = LitePal.findAll(Note_db.class);
-        List<User_db> userDbs = LitePal.findAll(User_db.class);
-        File sdCard = Environment.getExternalStorageDirectory();
-        File parentFile = new File(sdCard,"无忧日记-备份");
-        if(!parentFile.exists()){
-            parentFile.mkdir();
-        }
-
-        File diaryFile = new File(parentFile,"Diary");
-        File noteFile = new File(parentFile,"note");
-        File userFile = new File(parentFile,"user");
-        if(!diaryFile.exists()){
-            diaryFile.mkdir();
-        }
-        if(!noteFile.exists()){
-            noteFile.mkdir();
-        }
-        if(!userFile.exists()){
-            userFile.mkdir();
-        }
-
-        for(int i=0; i<diaryDbs.size(); i++){
-            File targetFile = new File(diaryFile,"d"+i);
-            try {
-                if(!targetFile.exists()){
-                    targetFile.createNewFile();
+    public static Boolean BackupDataSdCard(Activity context){
+        int flag = 1;
+        String sourcePath = context.getDatabasePath("diary.db").getPath();
+        String dbTargetPath = Environment.getExternalStorageDirectory().getPath()+"/CareFree/diary.db";
+        String photoTargetDirectory = Environment.getExternalStorageDirectory().getPath()+"/CareFree/Photos/";
+        //复制数据库
+        if(FileUtil.copyFile(sourcePath, dbTargetPath)){
+            //复制图片
+            File[] subFile = context.getExternalFilesDir(null).listFiles();
+            for(int i=0; i<subFile.length; i++){
+                if(!FileUtil.copyFile(subFile[i].getPath(),photoTargetDirectory+subFile[i].getName())){
+                    flag = 0;
                 }
-                ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(targetFile));
-                oos.writeObject(diaryDbs.get(i));
-                oos.close();
-            }catch (IOException e){
-                e.printStackTrace();
-                vm.backupFail(e);
             }
-        }
-        for(int i=0; i<noteDbs.size(); i++){
-            File targetFile = new File(noteFile,"n"+i);
-            try {
-                if(!targetFile.exists()){
-                    targetFile.createNewFile();
-                }
-                ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(targetFile));
-                oos.writeObject(noteDbs.get(i));
-                oos.close();
-            }catch (IOException e){
-                e.printStackTrace();
-                vm.backupFail(e);
-            }
-        }
-        File targetFile = new File(userFile,"u0");
-        try {
-            if(!targetFile.exists()){
-                targetFile.createNewFile();
-            }
-            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(targetFile));
-            oos.writeObject(userDbs.get(0));
-            oos.close();
-            vm.backupSuccess();
-        }catch (IOException e){
-            e.printStackTrace();
-            vm.backupFail(e);
-        }
-
-        writeDataInFile("1","mark.txt");
-    }
-
-    /**
-     * 恢复数据
-     */
-    public static Boolean ReStoreData(){
-        File sdCard = Environment.getExternalStorageDirectory();
-        File parentFile = new File(sdCard,"无忧日记-备份");
-        if(!parentFile.exists()){
-            parentFile.mkdir();
-        }
-
-        File diaryFile = new File(parentFile,"Diary");
-        File noteFile = new File(parentFile,"note");
-        File userFile = new File(parentFile,"user");
-        if(!diaryFile.exists()){
-            diaryFile.mkdir();
-        }
-        if(!noteFile.exists()){
-            noteFile.mkdir();
-        }
-        if(!userFile.exists()){
-            userFile.mkdir();
-        }
-        File[] dFiles = diaryFile.listFiles();
-        File[] nFiles = noteFile.listFiles();
-        File uFile = new File(userFile,"u0");
-
-        for(int i=0; i<dFiles.length; i++){
-            try {
-                ObjectInputStream ois = new ObjectInputStream(new FileInputStream(dFiles[i]));
-                Diary_db diary_db = (Diary_db) ois.readObject();
-                ois.close();
-                diary_db.save();
-            } catch (IOException e) {
-                e.printStackTrace();
-                return false;
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-                return false;
-            }
-        }
-        for(int i=0; i<nFiles.length; i++){
-            try {
-                ObjectInputStream ois = new ObjectInputStream(new FileInputStream(nFiles[i]));
-                Note_db note_db  = (Note_db) ois.readObject();
-                ois.close();
-                note_db.save();
-            } catch (IOException e) {
-                e.printStackTrace();
-                return false;
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-                return false;
-            }
-        }
-        if(uFile.exists()){
-            try {
-                ObjectInputStream ois = new ObjectInputStream(new FileInputStream(uFile));
-                User_db user_db  = (User_db) ois.readObject();
-                ois.close();
-                LitePal.deleteAll(User_db.class);
-                user_db.save();
+            if(flag == 1){
                 return true;
-            } catch (IOException e) {
-                e.printStackTrace();
-                return false;
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
+            }else {
                 return false;
             }
         }else {
-            try {
-                uFile.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return true;
+            return false;
         }
     }
 
     /**
-     * 将字符串存入getExternalStorageDirectory()指定文件
-     * @param data
-     * @param fileName
+     * 从本地恢复数据
+     */
+    public static Boolean ReStoreDataFromSd(Activity context){
+        int flag = 1;
+        String dbTargetPath = context.getDatabasePath("diary.db").getPath();
+        String dbSourcePath = Environment.getExternalStorageDirectory().getPath()+"/CareFree/diary.db";
+        String photoSourceDirectory = Environment.getExternalStorageDirectory().getPath()+"/CareFree/Photos/";
+        String photoTargetDirectory = context.getExternalFilesDir(null).getPath()+"/";
+        //恢复数据库
+        if(FileUtil.copyFile(dbSourcePath, dbTargetPath)){
+            //恢复图片
+            File[] subFiles = new File(photoSourceDirectory).listFiles();
+            for(int i=0; i<subFiles.length; i++){
+                if(!FileUtil.copyFile(subFiles[i].getPath(),photoTargetDirectory+subFiles[i].getName())){
+                    flag = 0;
+                }
+            }
+            if(flag == 1){
+                return true;
+            }else {
+                return false;
+            }
+        }else {
+            return false;
+        }
+    }
+    /**
+     * 备份数据到云端
+     *
+     */
+    public static Boolean BackupDataCloud(String name, String password, String url, Activity context){
+        String dbUrl = url+"Carefree/";
+        String photosUrl = dbUrl+"photos/";
+        Sardine sardine = new OkHttpSardine();
+        sardine.setCredentials(name,password);
+        try {
+            if(!sardine.exists(dbUrl)){
+                sardine.createDirectory(dbUrl);
+            }
+            if (!sardine.exists(photosUrl)){
+                sardine.createDirectory(photosUrl);
+            }
+
+            if(sardine.exists(dbUrl+"diary.db")){
+                sardine.delete(dbUrl+"diary.db");
+            }
+            //备份数据库
+            File dbFile = context.getDatabasePath("diary.db");
+            sardine.put(dbUrl+"diary.db",dbFile,null);
+
+            //备份图片
+            int sum =0;
+            File[] subFile = context.getExternalFilesDir(null).listFiles();
+            for(int i=0; i<subFile.length; i++){
+                if(!sardine.exists(photosUrl+subFile[i].getName())){
+                    sardine.put(photosUrl+subFile[i].getName(), subFile[i],null);
+                    sum++;
+                }
+            }
+            LogUtil.LogD("共上传"+sum+"张图片");
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            LogUtil.LogD("上传失败"+e.getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * 从云端恢复数据
+     * @param name
+     * @param password
+     * @param url
+     * @param context
      * @return
      */
-    private static Boolean writeDataInFile(String data, String fileName){
-        File sdCard = Environment.getExternalStorageDirectory();
-        File parentFile = new File(sdCard,"无忧日记-备份");
-        File targetFile = new File(parentFile,fileName);
+    public static Boolean RestoreDataCloud(String name, String password, String url, Activity context) {
+        String dbUrl = url+"Carefree/";
+        String photosUrl = dbUrl+"photos/";
+        Sardine sardine = new OkHttpSardine();
+        sardine.setCredentials(name,password);
+
         try {
-            if(!parentFile.exists()){
-                parentFile.mkdir();
+            if(!sardine.exists(dbUrl)){
+                return false;
             }
-            if(!targetFile.exists()){
-                targetFile.createNewFile();
+            if (!sardine.exists(photosUrl)){
+                return false;
             }
-            OutputStream outputStream = new FileOutputStream(targetFile);
+            //恢复数据库
+            File dbFile = context.getDatabasePath("diary.db");
+            InputStream dbIs = sardine.get(dbUrl+"diary.db");
+            OutputStream dbOs = new FileOutputStream(dbFile);
             byte[] bytes = new byte[1024];
-            bytes = data.getBytes();
-            outputStream.write(bytes,0, bytes.length);
-            outputStream.close();
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-        return false;
-    }
-    public static Boolean getMarkData(){
-        File sdCard = Environment.getExternalStorageDirectory();
-        File parentFile = new File(sdCard,"无忧日记-备份");
-        if (!parentFile.exists()){
-            return false;
-        }
-        File targetFile = new File(parentFile,"mark.txt");
-
-        if(targetFile.exists()){
-            try {
-                FileInputStream fis = new FileInputStream(targetFile);
-                byte[] bytes = new byte[1024];
-                int len = fis.read(bytes);
-                String mark = new String(bytes,0, len);
-                fis.close();
-
-                if(mark.equals("1")){
-                    return true;
-                }else return false;
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-                return false;
-            } catch (IOException e) {
-                e.printStackTrace();
-                return false;
+            int length = 0;
+            while ((length = dbIs.read(bytes)) != -1){
+                dbOs.write(bytes,0,length);
             }
-        }else {
+            dbIs.close();
+            dbOs.close();
+
+            //恢复图片
+            int sum = 0;
+            List<DavResource> resources = sardine.list(photosUrl);
+            for (int i=1; i<resources.size(); i++){
+                File targetFile = new File(context.getExternalFilesDir(null), resources.get(i).getName());
+                if(!targetFile.exists()){
+                    InputStream imgIs = sardine.get(photosUrl + resources.get(i).getName());
+                    OutputStream imgOs = new FileOutputStream(targetFile);
+                    byte[] bytes_ = new byte[1024];
+                    int length_ = 0;
+                    while ((length_ = imgIs.read(bytes_)) != -1){
+                        imgOs.write(bytes_,0,length_);
+                    }
+                    imgIs.close();
+                    imgOs.close();
+                    sum++;
+                }
+            }
+            LogUtil.LogD("共拉取"+sum+"张图片");
+            return true;
+        }catch (IOException e) {
+            e.printStackTrace();
+            LogUtil.LogD("拉取失败"+e.getMessage());
             return false;
-        }
-    }
-    public static void initPhotoFile(){
-        File sdCard = Environment.getExternalStorageDirectory();
-        File parentFile = new File(sdCard,"无忧日记-备份");
-        File targetFile = new File(parentFile,"Photos");
-        if (!targetFile.exists()){
-            targetFile.mkdir();
         }
     }
 }

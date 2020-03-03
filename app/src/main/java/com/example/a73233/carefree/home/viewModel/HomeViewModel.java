@@ -75,10 +75,13 @@ public class HomeViewModel{
 
         //初始化日期
         for(i=6; i>-1; i--){
-            if(day<10)
+            if(day<10 && day>0){
                 dayString = "0"+day;
-            else
+            } else if(day<0){
+                dayString = ""+TimeUtil.GetDayByMonth(day);
+            }else {
                 dayString = ""+day;
+            }
             DayNum[i] = dayString;
             day--;
         }

@@ -26,7 +26,6 @@ public class MeVM {
     private MeModel model;
     private UserBean bean;
     private Activity activity;
-    private Dialog progressDialog;
 
     public MeVM(Activity activity) {
         this.activity = activity;
@@ -63,19 +62,6 @@ public class MeVM {
         return bean;
     }
 
-    public void backupData(Dialog dialog){
-        progressDialog = dialog;
-        DataBackup.BackupData(this);
-    }
-    public void backupSuccess(){
-        progressDialog.dismiss();
-        Toast.makeText(activity,"备份成功",Toast.LENGTH_SHORT).show();
-    }
-    public void backupFail(IOException e){
-        progressDialog.dismiss();
-        Toast.makeText(activity,"备份失败"+e.getMessage(),Toast.LENGTH_SHORT).show();
-    }
-
     public void saveUser(){
         SharedPreferences.Editor editor = activity.getSharedPreferences("note_setting",MODE_PRIVATE).edit();
         editor.putString("clock_type",bean.clockType.get());
@@ -88,18 +74,21 @@ public class MeVM {
 
     public void setImgUrl(String url){
         bean.userHeadIma.set(url);
+        model.saveUserdb(bean);
     }
     public String getName(){
         return bean.userName.get();
     }
     public void setName(String name){
         bean.userName.set(name);
+        model.saveUserdb(bean);
     }
     public String getWords(){
         return bean.userWords.get();
     }
     public void setWords(String words){
         bean.userWords.set(words);
+        model.saveUserdb(bean);
     }
 
     public void setClockType(String clockType) {

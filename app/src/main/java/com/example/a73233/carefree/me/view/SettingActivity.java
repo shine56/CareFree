@@ -1,5 +1,6 @@
 package com.example.a73233.carefree.me.view;
 
+import android.app.ActivityOptions;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -12,10 +13,14 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
 import android.text.InputFilter;
+import android.transition.Slide;
+import android.transition.TransitionInflater;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -28,14 +33,24 @@ import com.example.a73233.carefree.databinding.ActivitySettingBinding;
 import com.example.a73233.carefree.me.viewModel.MeVM;
 import com.example.a73233.carefree.util.ConstantPool;
 import com.example.a73233.carefree.util.DataBackup;
+import com.example.a73233.carefree.util.LogUtil;
 import com.example.a73233.carefree.util.PhotoManager;
 
 public class SettingActivity extends BaseActivity {
     private ActivitySettingBinding binding;
     private MeVM vm;
+    private String takePhotoUrl;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(getIntent().getStringExtra("transition")!=null && getIntent().getStringExtra("transition").equals("slide")){
+            Slide slide = new Slide(Gravity.LEFT);
+            slide.setDuration(400);//间歇时间
+            getWindow().setEnterTransition(slide);
+            Slide slide1 = new Slide(Gravity.RIGHT);
+            slide1.setDuration(400);//间歇时间
+            getWindow().setReturnTransition(slide1);
+        }
         binding = DataBindingUtil.setContentView(this,R.layout.activity_setting);
         vm = new MeVM(this);
         binding.setSettingActivity(this);
@@ -76,7 +91,8 @@ public class SettingActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.setting_backup:
-                showBackupDialog();
+                startActivity(BackupActivity.class);
+                finish();
                 break;
         }
     }
@@ -157,33 +173,6 @@ public class SettingActivity extends BaseActivity {
                 }).create();
         alertDialog.show();
     }
-    private void showBackupDialog(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        View view = LayoutInflater.from(this).inflate(R.layout.dialog_text_confim,null,false);
-        builder.setView(view);
-        Dialog dialog = builder.create();
-        TextView text = view.findViewById(R.id.dialog_confirm_content);
-        TextView confirm = view.findViewById(R.id.dialog_confirm_confirm);
-        TextView title = view.findViewById(R.id.dialog_confirm_title);
-        TextView cancel = view.findViewById(R.id.dialog_confirm_cancel);
-        title.setText("备份");
-
-        text.setText("即将备份你的日记、便贴等信息。备份成功后，即使多次安装也可以恢复备份的数据");
-        confirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                vm.backupData(showLoadDialog());
-                dialog.dismiss();
-            }
-        });
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
-    }
     private void setWords(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_write,null,false);
@@ -194,6 +183,8 @@ public class SettingActivity extends BaseActivity {
         TextView title = view.findViewById(R.id.dialog_write_title);
         TextView cancel = view.findViewById(R.id.dialog_write_cancel);
         title.setText("签名");
+        editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(25)});
+        editText.setHint("最多25个字");
 
         editText.setText(vm.getWords());
         confirm.setOnClickListener(new View.OnClickListener() {
@@ -250,8 +241,7 @@ public class SettingActivity extends BaseActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         switch (i){
                             case 0 :
-                                String imgUrl = PhotoManager.TakePhoto(SettingActivity.this);
-                                vm.setImgUrl(imgUrl);
+                                takePhotoUrl = PhotoManager.TakePhoto(SettingActivity.this);
                                 break;
                             case 1 :
                                 Intent intentAlbum = new Intent(Intent.ACTION_GET_CONTENT);
@@ -283,27 +273,30 @@ public class SettingActivity extends BaseActivity {
                     .into(imageView);
         }
     }
-
-    private Dialog showLoadDialog(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        View view = LayoutInflater.from(this).inflate(R.layout.dialog_progressbar,null,false);
-        builder.setView(view);
-        Dialog dialog = builder.create();
-        dialog.show();
-        return dialog;
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode){
             case PhotoManager.CHOOSE_PHOTO:
-                String url = PhotoManager.GetPathFromUri(this,data.getData());
-                vm.setImgUrl(url);
+                if(resultCode == RESULT_OK){
+                    String url = PhotoManager.GetPathFromUri(this,data.getData());
+                    vm.setImgUrl(PhotoManager.copyPhoto(this,url));
+                }
+                break;
+            case PhotoManager.TAKE_PHOTO:
+                if(resultCode == RESULT_OK){
+                    vm.setImgUrl(takePhotoUrl);
+                }else {
+                    LogUtil.LogD("拍照失败");
+                }
                 break;
         }
     }
 
+    private void setupWindowAnimations() {
+        Slide slide = (Slide) TransitionInflater.from(this).inflateTransition(R.transition.slide);
+        getWindow().setEnterTransition(slide);
+    }
     @Override
     public void finish() {
         super.finish();
