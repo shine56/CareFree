@@ -24,9 +24,7 @@ public class SpacesItemDecoration extends RecyclerView.ItemDecoration{
                 outRect.top = space;
             outRect.bottom = space;
         }else {
-            if (parent.getChildLayoutPosition(view) == 0)
-                outRect.left = space;
-            outRect.right = space;
+            outRect.left = space;
         }
 
     }}

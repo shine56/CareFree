@@ -34,7 +34,9 @@ public class NoteWriteVM {
         bean.year.set(year);
         bean.monthAndDay.set(monthAndDay);
         bean.week.set(week);
-        bean.clockText.set(getNoteFirstText());
+        if(bean.clockText.get() == null || bean.clockText.get().equals("")){
+            bean.clockText.set(getNoteFirstText());
+        }
         return bean;
     }
 
@@ -59,6 +61,9 @@ public class NoteWriteVM {
     public void setClockTitle(String text){
         bean.clockText.set(text);
     }
+    public String getClockTitle(){
+        return bean.clockText.get();
+    }
     public int getHour(){
         return bean.hour.get();
     }
@@ -70,7 +75,7 @@ public class NoteWriteVM {
      * 获取文本首句
      * @return
      */
-    public String getNoteFirstText(){
+    private String getNoteFirstText(){
         String text = bean.text.get();
         String firstText = "";
         int min = 0;

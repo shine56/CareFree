@@ -93,11 +93,13 @@
 
                 <android.support.constraint.ConstraintLayout
                     android:id="@+id/me_value_bg"
-                    android:layout_width="140dp"
+                    android:layout_width="0dp"
                     android:layout_height="180dp"
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="32dp"
+                    android:layout_marginEnd="16dp"
                     android:background="@drawable/mood_view_happy_bg"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/imageView">
 
@@ -164,11 +166,13 @@
 
                 <android.support.constraint.ConstraintLayout
                     android:id="@+id/me_statistics_bg"
-                    android:layout_width="140dp"
+                    android:layout_width="0dp"
                     android:layout_height="180dp"
+                    android:layout_marginStart="16dp"
                     android:layout_marginEnd="24dp"
                     android:background="@drawable/diary_list_view_bg"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/guideline"
                     app:layout_constraintTop_toTopOf="@+id/me_value_bg">
 
                     <TextView
@@ -241,11 +245,13 @@
 
                 <android.support.constraint.ConstraintLayout
                     android:id="@+id/me_abandon_bg"
-                    android:layout_width="140dp"
+                    android:layout_width="0dp"
                     android:layout_height="180dp"
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="32dp"
+                    android:layout_marginEnd="16dp"
                     android:background="@drawable/diary_list_view_bg"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/me_value_bg">
 
@@ -296,12 +302,14 @@
 
                 <android.support.constraint.ConstraintLayout
                     android:id="@+id/me_setting_bg"
-                    android:layout_width="140dp"
+                    android:layout_width="0dp"
                     android:layout_height="180dp"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="32dp"
                     android:layout_marginEnd="24dp"
                     android:background="@drawable/diary_list_view_bg"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/guideline"
                     app:layout_constraintTop_toBottomOf="@+id/me_statistics_bg">
 
                     <TextView
@@ -371,6 +379,13 @@
                         app:layout_constraintStart_toStartOf="parent"></TextView>
 
                 </android.support.constraint.ConstraintLayout>
+
+                <android.support.constraint.Guideline
+                    android:id="@+id/guideline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.5" />
             </android.support.constraint.ConstraintLayout>
         </android.support.v4.widget.NestedScrollView>
 

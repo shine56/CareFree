@@ -12,8 +12,9 @@ import android.widget.TimePicker;
 
 import com.example.a73233.carefree.util.LogUtil;
 
+import static android.app.PendingIntent.FLAG_CANCEL_CURRENT;
+
 public class ClockService extends Service {
-    private String text;
     public ClockService() {
     }
 
@@ -34,8 +35,9 @@ public class ClockService extends Service {
         //设置闹钟
         int hour = intent.getIntExtra("hour",-1);
         int minutes = intent.getIntExtra("minutes",-1);
-        text = intent.getStringExtra("text");
-        createAlarm(text,hour,minutes,0);
+        String text = intent.getStringExtra("text");
+        int id = intent.getIntExtra("noteDb_id",-1);
+        createAlarm(text,hour,minutes,id);
         //保活操作
 //        AlarmManager alarmManager = (AlarmManager) getSystemService(Service.ALARM_SERVICE);
 //        long eightHour = 2 * 60 * 60 * 1000;
@@ -57,14 +59,14 @@ public class ClockService extends Service {
         super.onDestroy();
     }
 
-    private void createAlarm(String message, int hour, int minutes, int resId) {
+    private void createAlarm(String message, int hour, int minutes, int noteDb_id) {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Service.ALARM_SERVICE);
         Intent intent = new Intent(this, ClockReceiver.class);
         Bundle bundle = new Bundle();
-        bundle.putString("text",text);
+        bundle.putString("text",message);
+        bundle.putInt("noteDb_id",noteDb_id);
         intent.putExtras(bundle);
-        LogUtil.LogD("放进广播接收器得文本是："+text);
-        PendingIntent pi = PendingIntent.getBroadcast(this, 0, intent, 0);
+        PendingIntent pi = PendingIntent.getBroadcast(this,noteDb_id, intent, FLAG_CANCEL_CURRENT);
 
         //设置当前时间
         Calendar c = Calendar.getInstance();

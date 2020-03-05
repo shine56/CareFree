@@ -266,7 +266,7 @@
                             android:layout_height="match_parent"
                             android:layout_marginStart="16dp"
                             android:gravity="center"
-                            android:text="内容"
+                            android:text="闹钟内容"
                             android:textColor="@color/black"
                             android:textSize="16dp"
                             app:layout_constraintStart_toStartOf="parent"></TextView>

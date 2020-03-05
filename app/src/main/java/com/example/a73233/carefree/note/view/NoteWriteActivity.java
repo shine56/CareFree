@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.provider.AlarmClock;
 import android.text.Editable;
 import android.text.Selection;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -26,13 +27,13 @@ import com.example.a73233.carefree.R;
 import com.example.a73233.carefree.baseView.BaseActivity;
 import com.example.a73233.carefree.databinding.ActivityNoteWriteBinding;
 import com.example.a73233.carefree.note.viewModel.NoteWriteVM;
+import com.example.a73233.carefree.util.LogUtil;
 
 public class NoteWriteActivity extends BaseActivity {
     private ActivityNoteWriteBinding binding;
     private NoteWriteVM noteWriteVM;
     private int hour = 8;
     private int minutes = 10;
-    private String clockText;
     private int noteId;
     private Boolean isSetClock = false;
     @Override
@@ -176,12 +177,11 @@ public class NoteWriteActivity extends BaseActivity {
         TextView cancel = view.findViewById(R.id.dialog_write_cancel);
         TextView textView = view.findViewById(R.id.dialog_write_title);
         textView.setText("闹钟内容");
-        editText.setText(noteWriteVM.getNoteFirstText());
+        editText.setText(noteWriteVM.getClockTitle());
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                clockText = editText.getText().toString();
-                noteWriteVM.setClockTitle(clockText);
+                noteWriteVM.setClockTitle(editText.getText().toString());
                 dialog.dismiss();
             }
         });
@@ -204,7 +204,7 @@ public class NoteWriteActivity extends BaseActivity {
                     //闹钟的分钟
                     .putExtra(AlarmClock.EXTRA_MINUTES, minutes)
                     //响铃时提示的信息
-                    .putExtra(AlarmClock.EXTRA_MESSAGE, clockText)
+                    .putExtra(AlarmClock.EXTRA_MESSAGE, noteWriteVM.getClockTitle())
                     //用于指定该闹铃触发时是否振动
                     .putExtra(AlarmClock.EXTRA_VIBRATE, true)
                     //如果为true，则调用startActivity()不会进入手机的闹钟设置界面
@@ -217,7 +217,9 @@ public class NoteWriteActivity extends BaseActivity {
             Intent intent = new Intent(this,ClockService.class);
             intent.putExtra("hour",hour);
             intent.putExtra("minutes",minutes);
-            intent.putExtra("text",clockText);
+            intent.putExtra("text",noteWriteVM.getClockTitle());
+            intent.putExtra("noteDb_id",noteId);
+            LogUtil.LogD("广播测试，放进服务接收器得文本是："+noteWriteVM.getClockTitle());
             startService(intent);
         }
     }
@@ -230,7 +232,7 @@ public class NoteWriteActivity extends BaseActivity {
                     //闹钟的分钟
                     .putExtra(AlarmClock.EXTRA_MINUTES, noteWriteVM.getMinutes())
                     //响铃时提示的信息
-                    .putExtra(AlarmClock.EXTRA_MESSAGE, noteWriteVM.getNoteFirstText())
+                    .putExtra(AlarmClock.EXTRA_MESSAGE, noteWriteVM.getClockTitle())
                     //用于指定该闹铃触发时是否振动
                     .putExtra(AlarmClock.EXTRA_VIBRATE, true)
                     //如果为true，则调用startActivity()不会进入手机的闹钟设置界面

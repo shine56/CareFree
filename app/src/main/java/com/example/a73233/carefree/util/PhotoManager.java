@@ -2,7 +2,10 @@ package com.example.a73233.carefree.util;
 
 import android.app.Activity;
 import android.content.ContentUris;
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -18,6 +21,7 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 
 import com.example.a73233.carefree.diary.view.WriteDiaryActivity;
@@ -105,6 +109,39 @@ public class PhotoManager {
     }
 
     /**
+     * Gets the content:// URI from the given corresponding path to a file
+     * 绝对路径转uri
+     *
+     * @param context
+     * @param imageFile
+     * @return content Uri
+     */
+    /**
+     * 根据绝对路径落去Uri
+     * @param context
+     * @param imageFile
+     * @return
+     */
+    public static Uri getImageContentUri(Context context, java.io.File imageFile) {
+        String filePath = imageFile.getAbsolutePath();
+        Cursor cursor = context.getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                new String[]{MediaStore.Images.Media._ID}, MediaStore.Images.Media.DATA + "=? ",
+                new String[]{filePath}, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            int id = cursor.getInt(cursor.getColumnIndex(MediaStore.MediaColumns._ID));
+            Uri baseUri = Uri.parse("content://media/external/images/media");
+            return Uri.withAppendedPath(baseUri, "" + id);
+        } else {
+            if (imageFile.exists()) {
+                ContentValues values = new ContentValues();
+                values.put(MediaStore.Images.Media.DATA, filePath);
+                return context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+            } else {
+                return null;
+            }
+        }
+    }
+    /**
      * 根据路径将图片另存于activity.getExternalFilesDir(null);
      * @param activity
      * @param sourcePAth
@@ -118,6 +155,42 @@ public class PhotoManager {
         }else {
             return null;
         }
+    }
+    /**
+     *截图，除去状态栏
+     */
+    public static String screenshot(Activity activity){
+        View dView = activity.getWindow().getDecorView();
+        dView.destroyDrawingCache();
+        dView.setDrawingCacheEnabled(true);
+        dView.buildDrawingCache();
+        Bitmap bitmap = Bitmap.createBitmap(dView.getDrawingCache());
+        if (bitmap != null) {
+            Bitmap newBitmap = Bitmap.createBitmap(bitmap,0,getStatusBarHeight(activity),
+                    bitmap.getWidth(), bitmap.getHeight()-getStatusBarHeight(activity));
+            try {
+                File sdCardPath = activity.getExternalFilesDir(null);
+                String imageName = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + "screenshot.jpg";
+                File file = new File(sdCardPath,imageName);
+                FileOutputStream os = new FileOutputStream(file);
+                newBitmap.compress(Bitmap.CompressFormat.PNG, 100, os);
+                os.flush();
+                return file.getPath();
+            } catch (Exception e) {
+                LogUtil.LogD("截图失败"+e.getMessage());
+                return null;
+            }
+        }else {
+            LogUtil.LogD("截图失败");
+            return null;
+        }
+    }
+    //获取状态栏高度
+    private static int getStatusBarHeight(Activity activity) {
+        Resources resources = activity.getResources();
+        int resourceId = resources.getIdentifier("status_bar_height", "dimen","android");
+        int height = resources.getDimensionPixelSize(resourceId);
+        return height;
     }
     //EditText添加图片
     public static void editViewInsertPhoto (Activity activity, EditText editText, String imagePath){

@@ -3,12 +3,14 @@ package com.example.a73233.carefree.diary.view;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Pair;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -16,8 +18,15 @@ import com.example.a73233.carefree.R;
 import com.example.a73233.carefree.baseView.BaseActivity;
 import com.example.a73233.carefree.databinding.ActivityLookDiaryBinding;
 import com.example.a73233.carefree.diary.viewModel.LookVM;
+import com.example.a73233.carefree.util.ConstantPool;
 import com.example.a73233.carefree.util.EmotionDataUtil;
+import com.example.a73233.carefree.util.PhotoManager;
 import com.example.a73233.carefree.util.SpacesItemDecoration;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class LookDiaryActivity extends BaseActivity implements View.OnClickListener {
@@ -62,7 +71,8 @@ public class LookDiaryActivity extends BaseActivity implements View.OnClickListe
         //标题栏背景
         GradientDrawable bgViewBg = new GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP
                 , EmotionDataUtil.GetColors(value));
-        bgViewBg.setCornerRadius(50);
+        bgViewBg.setCornerRadii(getCornerRadii(0f, 0f, 24f, 24f));
+        //bgViewBg.setCornerRadius(50);
         binding.bgView.setBackground(bgViewBg);
         //emotionValueBg
         GradientDrawable emotionValueBg = new GradientDrawable();
@@ -73,6 +83,15 @@ public class LookDiaryActivity extends BaseActivity implements View.OnClickListe
         GradientDrawable colBg = new GradientDrawable();
         colBg.setColor(EmotionDataUtil.GetColors(value)[1]);
         binding.colToolbar.setContentScrim(colBg);
+        //长按事件监控
+        //binding.lookNestScro.setLongClickable(true);
+        binding.showPhoto.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                lookVM.shareDiary(LookDiaryActivity.this);
+                return false;
+            }
+        });
     }
     private void initPhoto(){
         binding.showPhoto.setOnClickListener(this);
@@ -84,6 +103,16 @@ public class LookDiaryActivity extends BaseActivity implements View.OnClickListe
         lookVM.refreshPhoto();
     }
 
+    private float[] getCornerRadii(float leftTop, float rightTop, float leftBottom, float rightBottom){
+        return new float[]{db2px(leftTop), db2px(leftTop),
+        db2px(rightTop), db2px(rightTop),
+        db2px(leftBottom), db2px(leftBottom),
+        db2px(rightBottom), db2px(rightBottom)};
+    }
+    private float db2px(float dpVal){
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                dpVal, getResources().getDisplayMetrics());
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -105,7 +134,6 @@ public class LookDiaryActivity extends BaseActivity implements View.OnClickListe
                 break;
         }
     }
-
     private void startWriteActivity(){
         Bundle bundle = new Bundle();
         bundle.putInt("diaryId",diaryId);

@@ -149,17 +149,14 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <android.support.v7.widget.RecyclerView
-            android:transitionName="sharedView_2"
             android:id="@+id/look_recyclerView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
+            android:transitionName="sharedView_2"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/showPhoto">
-        </android.support.v7.widget.RecyclerView>
+            app:layout_constraintStart_toEndOf="@+id/showPhoto"></android.support.v7.widget.RecyclerView>
         <com.example.a73233.carefree.diary.view.Circular_view
             android:transitionName="sharedView_3"
             android:visibility="@{bean.isShowImgButton? View.VISIBLE : View.GONE}"

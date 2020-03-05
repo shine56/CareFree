@@ -1,5 +1,6 @@
 package com.example.a73233.carefree.util;
 
+import android.app.Activity;
 import android.os.Environment;
 
 import java.io.File;
@@ -8,6 +9,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import io.reactivex.Scheduler;
 
@@ -57,15 +60,25 @@ public class FileUtil {
     /**
      * 创建APP必须文件夹
      */
-    public static void createAppDirectory(){
+    public static void createAppDirectory(Activity activity) {
         String sdPath = Environment.getExternalStorageDirectory().getPath();
         File parentDirectory = new File(sdPath, "CareFree");
-        if(!parentDirectory.exists()){
+        if (!parentDirectory.exists()) {
             parentDirectory.mkdirs();
         }
         File photosDirectory = new File(parentDirectory, "Photos");
-        if(!photosDirectory.exists()){
+        if (!photosDirectory.exists()) {
             photosDirectory.mkdirs();
+        }
+
+        File sdDirectory = activity.getExternalFilesDir(null);
+        File externalFile = new File(sdDirectory, "0.txt");
+        if (!externalFile.exists()){
+            try {
+                externalFile.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

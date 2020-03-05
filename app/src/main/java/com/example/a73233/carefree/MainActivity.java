@@ -33,9 +33,11 @@ import com.example.a73233.carefree.home.view.HomeFragment;
 import com.example.a73233.carefree.databinding.ActivityMainBinding;
 import com.example.a73233.carefree.util.ConstantPool;
 import com.example.a73233.carefree.util.FileUtil;
+import com.example.a73233.carefree.util.PhotoManager;
 
 import org.litepal.LitePal;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -232,7 +234,7 @@ public class MainActivity extends BaseActivity {
     }
     private void initApp(){
         logD("首次启动，初始化app");
-        FileUtil.createAppDirectory();
+        FileUtil.createAppDirectory(this);
         LitePal.deleteAll(Diary_db.class);
         LitePal.deleteAll(Note_db.class);
         LitePal.deleteAll(Users_db.class);

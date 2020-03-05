@@ -24,4 +24,5 @@ public class ConstantPool {
 
 
     public static final int START_BACKUP = 1001;
+    public static final int REQUEST_MEDIA_PROJECTION = 1002;
 }

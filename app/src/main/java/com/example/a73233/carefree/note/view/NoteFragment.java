@@ -54,7 +54,6 @@ public class NoteFragment extends BaseFragment {
         noteVM.refreshAllData(activity);
 
         adapter.setItemClick(new NoteListAdapter.ItemClickImpl(){
-
             @Override
             public void onClick(View view, int id, int position, String text) {
                 switch (view.getId()){
