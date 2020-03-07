@@ -20,4 +20,4 @@
 
 ## DownLoad
 
-![下载APP](https://www.coolapk.com/apk/256025)
+[下载链接](https://www.coolapk.com/apk/256025)
