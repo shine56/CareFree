@@ -1,47 +1,79 @@
 package com.example.a73233.carefree.util;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class EmotionDataUtil {
 
     //传入数值获取对应的颜色
-    public static int[] GetColors(int value){
+    public static int[] GetColors(int value, Context activity){
+        int[] colors = getColorFromPref(activity);
         if(value>15){
-            int[] colors1 = {0XFF3FABD5,0XFF38D5D6};
+            int[] colors1 = {colors[0],colors[1]};
             return colors1;
         }else if(value>-10 && value<=15){
-            int[] colors2 = {0XFF537AE1,0XFF64B0E8};
+            int[] colors2 = {colors[2],colors[3]};
             return colors2;
         }else if(value>-30 && value<=-10){
-            int[] colors3 = {0XFFAC69DB,0XFF9B85FF};
+            int[] colors3 = {colors[4],colors[5]};
             return colors3;
         }else if(value<=-30){
-            int[] colors4 = {0XFF09203F,0XFF2B5876};
+            int[] colors4 = {colors[6],colors[7]};
             return colors4;
         }
-        int[] colors2 = {0XFF537AE1,0XFF64B0E8};
+        int[] colors2 = {colors[0],colors[1]};
         return colors2;
     }
 
-    public static int[] GetColorsByType(int type){
+    public static int[] GetColorsByType(int type,Context context){
+        int[] colors = getColorFromPref(context);
         switch (type){
             case 2:
-                int[] colors1 = {0XFF3FABD5,0XFF38D5D6};
+                int[] colors1 = {colors[0], colors[1]};
                 return colors1;
             case 3:
-                int[] colors2 = {0XFF537AE1,0XFF64B0E8};
+                int[] colors2 = {colors[2], colors[3]};
                 return colors2;
             case 4:
-                int[] colors3 = {0XFFAC69DB,0XFF9B85FF};
+                int[] colors3 = {colors[4], colors[5]};
                 return colors3;
             case 5:
-                int[] colors4 = {0XFF09203F,0XFF2B5876};
+                int[] colors4 = {colors[6], colors[7]};
                 return colors4;
         }
-        int[] colors2 = {0XFF537AE1,0XFF64B0E8};
+        int[] colors2 = {colors[0], colors[1]};
         return colors2;
     }
 
+    private static int[] getColorFromPref(Context context){
+        int[] colors = new int[10];
+
+        SharedPreferences pref = context.getSharedPreferences("setting", MODE_PRIVATE);
+        if(!pref.getBoolean("isOriginColor",true)){
+            colors[0] = pref.getInt("happy_color_start",0XFF3FABD5);
+            colors[1] = pref.getInt("happy_color_end",0XFF38D5D6);
+            colors[2] = pref.getInt("calm_color_start",0XFF537AE1);
+            colors[3] = pref.getInt("calm_color_end",0XFF64B0E8);
+            colors[4] = pref.getInt("sad_color_start",0XFFAC69DB);
+            colors[5] = pref.getInt("sad_color_end",0XFF9B85FF);
+            colors[6] = pref.getInt("repression_color_start",0XFF09203F);
+            colors[7] = pref.getInt("repression_color_end",0XFF2B5876);
+        }else {
+            colors[0] = 0XFF3FABD5;
+            colors[1] = 0XFF38D5D6;
+            colors[2] = 0XFF537AE1;
+            colors[3] = 0XFF64B0E8;
+            colors[4] = 0XFFAC69DB;
+            colors[5] = 0XFF9B85FF;
+            colors[6] = 0XFF09203F;
+            colors[7] = 0XFF2B5876;
+        }
+        return colors;
+    }
 
     /**
      * 根据七天情绪获取建议

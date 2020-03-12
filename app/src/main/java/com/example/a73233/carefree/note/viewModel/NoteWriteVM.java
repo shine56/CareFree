@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 
 import com.example.a73233.carefree.bean.NoteBean;
 import com.example.a73233.carefree.note.model.NoteModel;
+import com.example.a73233.carefree.util.ConstantPool;
 import com.example.a73233.carefree.util.LogUtil;
 
 import java.text.SimpleDateFormat;
@@ -100,12 +101,11 @@ public class NoteWriteVM {
         return bean.rank.get();
     }
     public Boolean isSystemClock(Activity activity){
-        SharedPreferences pref = activity.getSharedPreferences("note_setting",MODE_PRIVATE);
-        if (pref.getString("clock_type","非系统闹钟").equals("系统闹钟")){
+        SharedPreferences pref = activity.getSharedPreferences("setting",MODE_PRIVATE);
+        if (pref.getString("clockType", ConstantPool.NOT_SYSTERM_CLOCK).equals(ConstantPool.SYSTERM_CLOCK)){
             return true;
         }else {
             return false;
         }
     }
-    public void findSuccess(NoteBean bean){}
 }

@@ -1,11 +1,8 @@
 package com.example.a73233.carefree.me.view;
 
-import android.app.ActivityOptions;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
@@ -28,7 +25,6 @@ import com.example.a73233.carefree.baseView.ActivityManager;
 import com.example.a73233.carefree.baseView.BaseActivity;
 import com.example.a73233.carefree.databinding.ActivitySettingBinding;
 import com.example.a73233.carefree.me.viewModel.MeVM;
-import com.example.a73233.carefree.util.ConstantPool;
 import com.example.a73233.carefree.util.LogUtil;
 import com.example.a73233.carefree.util.PhotoManager;
 
@@ -43,7 +39,7 @@ public class SettingActivity extends BaseActivity {
         binding = DataBindingUtil.setContentView(this,R.layout.activity_setting);
         vm = new MeVM(this);
         binding.setSettingActivity(this);
-        binding.setBean(vm.refreshData());
+        binding.setBean(vm.refreshUserBean());
         ReviseStatusBar(TRANSPARENT_BLACK);
     }
 
@@ -58,18 +54,6 @@ public class SettingActivity extends BaseActivity {
             case R.id.setting_words:
                 setWords();
                 break;
-            case R.id.setting_card:
-                setCard();
-                break;
-            case R.id.setting_home_show_note:
-                setHomeShowNote();
-                break;
-            case R.id.setting_rank3_top:
-                setRank3Top();
-                break;
-            case R.id.setting_note_clock_type:
-                setClockType();
-                break;
             case R.id.setting_feed_back:
                 openKuanAddress();
                 break;
@@ -82,6 +66,19 @@ public class SettingActivity extends BaseActivity {
             case R.id.setting_backup:
                 startActivity(BackupActivity.class);
                 break;
+            case R.id.setting_home:
+                startActivity(HomeSettingActivity.class);
+                break;
+            case R.id.setting_lock:
+                startActivity(LockActivity.class);
+                break;
+            case R.id.setting_diary:
+                startActivity(DiarySettingActivity.class);
+                break;
+            case R.id.setting_note:
+                startActivity(NoteSettingActivity.class);
+                break;
+
         }
     }
     private void openKuanAddress(){
@@ -89,78 +86,7 @@ public class SettingActivity extends BaseActivity {
         intent.setData(Uri.parse("https://www.coolapk.com/apk/com.example.a73233.carefree"));
         startActivity(intent);
     }
-    private void setCard(){
-        String[] items = {"显示当前情绪值","显示当前能动值"};
-        AlertDialog alertDialog = new AlertDialog.Builder(this)
-                .setItems(items, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        switch (i){
-                            case 0 :
-                                vm.setCard("显示当前情绪值");
-                                break;
-                            case 1 :
-                                vm.setCard("显示当前能动值");
-                                break;
-                        }
-                    }
-                }).create();
-        alertDialog.show();
-    }
-    private void setHomeShowNote(){
-        String[] items = {"显示任务","不显示任务"};
-        AlertDialog alertDialog = new AlertDialog.Builder(this)
-                .setItems(items, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        switch (i){
-                            case 0 :
-                                vm.setHomeShowNote("显示任务");
-                                break;
-                            case 1 :
-                                vm.setHomeShowNote("不显示任务");
-                                break;
-                        }
-                    }
-                }).create();
-        alertDialog.show();
-    }
-    private void setRank3Top(){
-        String[] items = {"置顶","不置顶"};
-        AlertDialog alertDialog = new AlertDialog.Builder(this)
-                .setItems(items, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        switch (i){
-                            case 0 :
-                                vm.setRank3Top("置顶");
-                                break;
-                            case 1 :
-                                vm.setRank3Top("不置顶");
-                                break;
-                        }
-                    }
-                }).create();
-        alertDialog.show();
-    }
-    private void setClockType(){
-        String[] items = {"系统闹钟","非系统闹钟"};
-        AlertDialog alertDialog = new AlertDialog.Builder(this)
-                .setItems(items, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        switch (i){
-                            case 0 :
-                                vm.setClockType("系统闹钟");
-                                break;
-                            case 1 :
-                                vm.setClockType("非系统闹钟");
-                                break;
-                        }
-                    }
-                }).create();
-        alertDialog.show();
-    }
+
     private void setWords(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_write,null,false);
@@ -243,6 +169,7 @@ public class SettingActivity extends BaseActivity {
                 }).create();
         alertDialog.show();
     }
+
     @BindingAdapter("setting_head_url")
     public static void LoadHeadIma(ImageView imageView, String imgUrl){
         if(imgUrl != null){
@@ -283,7 +210,6 @@ public class SettingActivity extends BaseActivity {
 
     @Override
     public void finish() {
-        vm.saveSetting();
         super.finish();
     }
 

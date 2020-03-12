@@ -1,6 +1,8 @@
 package com.example.a73233.carefree.home.view;
 
+import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,7 +16,10 @@ import com.example.a73233.carefree.databinding.FragmentHomeBinding;
 import com.example.a73233.carefree.home.viewModel.HomeViewModel;
 import com.example.a73233.carefree.note.view.NoteListAdapter;
 import com.example.a73233.carefree.note.view.NoteWriteActivity;
+import com.example.a73233.carefree.util.EmotionDataUtil;
 import com.example.a73233.carefree.util.SpacesItemDecoration;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class HomeFragment extends BaseFragment {
     private FragmentHomeBinding binding;
@@ -94,15 +99,24 @@ public class HomeFragment extends BaseFragment {
     //初始化能动值卡片
     private void initMoodView(){
         int value = viewModel.emotionValue.get();
-        if(value>15){
-            binding.homeMoodView.moodView.setBackgroundResource(R.drawable.mood_view_happy_bg);
-        }else if(value>-10 && value<=15){
-            binding.homeMoodView.moodView.setBackgroundResource(R.drawable.mood_view_calm_bg);
-        }else if(value>-30 && value<=-10){
-            binding.homeMoodView.moodView.setBackgroundResource(R.drawable.mood_view_sad_bg);
-        }else if(value<=-30){
-            binding.homeMoodView.moodView.setBackgroundResource(R.drawable.mood_view_repression_bg);
+
+        if(viewModel.isOriginColor(activity)){
+            if(value>15){
+                binding.homeMoodView.moodView.setBackgroundResource(R.drawable.mood_view_happy_bg);
+            }else if(value>-10 && value<=15){
+                binding.homeMoodView.moodView.setBackgroundResource(R.drawable.mood_view_calm_bg);
+            }else if(value>-30 && value<=-10){
+                binding.homeMoodView.moodView.setBackgroundResource(R.drawable.mood_view_sad_bg);
+            }else if(value<=-30){
+                binding.homeMoodView.moodView.setBackgroundResource(R.drawable.mood_view_repression_bg);
+            }
+        }else {
+            GradientDrawable viewBg = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM
+                    , EmotionDataUtil.GetColors(value,activity));
+            viewBg.setCornerRadius(50);
+            binding.homeMoodView.moodView.setBackground(viewBg);
         }
+
     }
 
 

@@ -133,10 +133,10 @@ public class WriteDiaryActivity extends BaseActivity{
         GradientDrawable parentBackground;
         if(addType == -1){
              parentBackground= new GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP
-                            , EmotionDataUtil.GetColors(writeVM.getValue()));
+                            , EmotionDataUtil.GetColors(writeVM.getValue(), this));
         }else {
             parentBackground = new GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP
-                            , EmotionDataUtil.GetColorsByType(addType));
+                            , EmotionDataUtil.GetColorsByType(addType, this));
         }
 
         binding.activityWriteDiary.setBackground(parentBackground);
@@ -155,7 +155,7 @@ public class WriteDiaryActivity extends BaseActivity{
                 binding.writeAddPhotoLogo.setImageResource(R.mipmap.camera_logo_white);
                 binding.activityWriteDiary.setBackgroundResource(R.color.mainBg);
 
-
+                //修改光标
                 Field f = null;
                 try {
                     f = TextView.class.getDeclaredField("mCursorDrawableRes");
@@ -166,8 +166,6 @@ public class WriteDiaryActivity extends BaseActivity{
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }
-
-
             }
         }
         //初始化图片

@@ -173,36 +173,39 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView21" />
 
-                    <ImageView
+                    <com.example.a73233.carefree.diary.view.Circular_view
+                            app:circularColor="@{45}"
                         android:id="@+id/imageView5"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_marginEnd="8dp"
-                        android:src="@mipmap/happy"
                         app:layout_constraintEnd_toStartOf="@+id/home_happy_e"
-                        app:layout_constraintTop_toTopOf="@+id/home_all_e"></ImageView>
+                        app:layout_constraintTop_toTopOf="@+id/home_all_e"></com.example.a73233.carefree.diary.view.Circular_view>
 
-                    <ImageView
+                    <com.example.a73233.carefree.diary.view.CircularView2
+                            app:circularColor2="@{0}"
                         android:id="@+id/imageView6"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_marginTop="8dp"
-                        android:src="@mipmap/calm"
+
                         app:layout_constraintEnd_toEndOf="@+id/imageView5"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="@+id/imageView5"
-                        app:layout_constraintTop_toBottomOf="@+id/imageView5"></ImageView>
+                        app:layout_constraintTop_toBottomOf="@+id/imageView5"></com.example.a73233.carefree.diary.view.CircularView2>
 
-                    <ImageView
+                    <com.example.a73233.carefree.diary.view.CircularView3
+                            app:circularColor3="@{-12}"
                         android:id="@+id/imageView7"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_marginTop="8dp"
                         android:src="@mipmap/sad"
                         app:layout_constraintStart_toStartOf="@+id/imageView6"
-                        app:layout_constraintTop_toBottomOf="@+id/imageView6"></ImageView>
+                        app:layout_constraintTop_toBottomOf="@+id/imageView6"></com.example.a73233.carefree.diary.view.CircularView3>
 
-                    <ImageView
+                    <com.example.a73233.carefree.diary.view.CircularView4
+                            app:circularColor4="@{-45}"
                         android:id="@+id/imageView8"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
@@ -210,7 +213,7 @@
                         android:src="@mipmap/repression"
                         app:layout_constraintEnd_toEndOf="@+id/imageView7"
                         app:layout_constraintStart_toStartOf="@+id/imageView7"
-                        app:layout_constraintTop_toBottomOf="@+id/imageView7"></ImageView>
+                        app:layout_constraintTop_toBottomOf="@+id/imageView7"></com.example.a73233.carefree.diary.view.CircularView4>
 
                     <TextView
                         android:id="@+id/textView17"

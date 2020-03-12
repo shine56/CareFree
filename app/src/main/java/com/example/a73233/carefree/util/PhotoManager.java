@@ -169,9 +169,9 @@ public class PhotoManager {
             Bitmap newBitmap = Bitmap.createBitmap(bitmap,0,getStatusBarHeight(activity),
                     bitmap.getWidth(), bitmap.getHeight()-getStatusBarHeight(activity));
             try {
-                File sdCardPath = activity.getExternalFilesDir(null);
+                String sdPath = Environment.getExternalStorageDirectory().getPath() +"/CareFree/Screenshot/";
                 String imageName = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + "screenshot.jpg";
-                File file = new File(sdCardPath,imageName);
+                File file = new File(sdPath,imageName);
                 FileOutputStream os = new FileOutputStream(file);
                 newBitmap.compress(Bitmap.CompressFormat.PNG, 100, os);
                 os.flush();

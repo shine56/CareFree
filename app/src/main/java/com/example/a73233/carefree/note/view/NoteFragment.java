@@ -53,22 +53,19 @@ public class NoteFragment extends BaseFragment {
         itemTouchHelper.attachToRecyclerView(binding.noteRecy);
         noteVM.refreshAllData(activity);
 
-        adapter.setItemClick(new NoteListAdapter.ItemClickImpl(){
-            @Override
-            public void onClick(View view, int id, int position, String text) {
-                switch (view.getId()){
-                    case R.id.note_body:
-                        Bundle bundle = new Bundle();
-                        bundle.putInt("noteId",id);
-                        startActivity(NoteWriteActivity.class,bundle);
-                        break;
-                    case R.id.note_remove:
-                        noteVM.abandonData(id, ConstantPool.NOTCOMPLETE);
-                        break;
-                    case R.id.note_list_complete:
-                        noteVM.abandonData(id,ConstantPool.COMPLETE);
-                        break;
-                }
+        adapter.setItemClick((view, id, position, text) -> {
+            switch (view.getId()){
+                case R.id.note_body:
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("noteId",id);
+                    startActivity(NoteWriteActivity.class,bundle);
+                    break;
+                case R.id.note_remove:
+                    noteVM.abandonData(id, ConstantPool.NOTCOMPLETE);
+                    break;
+                case R.id.note_list_complete:
+                    noteVM.abandonData(id,ConstantPool.COMPLETE);
+                    break;
             }
         });
     }

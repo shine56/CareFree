@@ -10,6 +10,7 @@ import com.example.a73233.carefree.bean.Note_db;
 import com.example.a73233.carefree.bean.UserBean;
 import com.example.a73233.carefree.me.model.MeModel;
 import com.example.a73233.carefree.me.view.SettingActivity;
+import com.example.a73233.carefree.util.ConstantPool;
 import com.example.a73233.carefree.util.DataBackup;
 import com.example.a73233.carefree.util.EmotionDataUtil;
 import com.example.a73233.carefree.util.LogUtil;
@@ -31,17 +32,21 @@ public class MeVM {
         this.activity = activity;
         model = new MeModel();
     }
-    public UserBean refreshData(){
+
+    /**
+     * 刷新UserBean
+     * @return
+     */
+    public UserBean refreshUserBean(){
         bean = model.getUserBean();
-        //初始化NoteSetting
-        SharedPreferences pref = activity.getSharedPreferences("note_setting",MODE_PRIVATE);
-        setClockType(pref.getString("clock_type","系统闹钟"));
-        setHomeShowNote(pref.getString("home_show_note","显示任务"));
-        setRank3Top(pref.getString("rank3_top","不置顶"));
-        setCard(pref.getString("home_show_emotion_value","显示当前情绪值"));
         //获取今天能动值
         if(isShowEmotionValue()){
-            bean.energyValue.set(model.findLastData().getEmotionValue());
+            Diary_db diaryDb = model.findLastData();
+            if(diaryDb == null){
+                bean.energyValue.set(0);
+            }else {
+                bean.energyValue.set(diaryDb.getEmotionValue());
+            }
         }else {
             Date date = new Date();
             String day = new SimpleDateFormat("dd").format(date);
@@ -58,29 +63,23 @@ public class MeVM {
             }
             bean.energyValue.set(energy);
         }
-
         return bean;
     }
 
-    public void saveSetting(){
-        SharedPreferences.Editor editor = activity.getSharedPreferences("note_setting",MODE_PRIVATE).edit();
-        editor.putString("clock_type",bean.clockType.get());
-        editor.putString("home_show_note",bean.homeShowNote.get());
-        editor.putString("rank3_top",bean.rank3Top.get());
-        editor.putString("home_show_emotion_value",bean.card.get());
-        editor.apply();
-    }
-
+    /**
+     * 设置User 头像、昵称、签名
+     * @param url
+     */
     public void setImgUrl(String url){
         bean.userHeadIma.set(url);
         model.saveUserdb(bean);
     }
-    public String getName(){
-        return bean.userName.get();
-    }
     public void setName(String name){
         bean.userName.set(name);
         model.saveUserdb(bean);
+    }
+    public String getName(){
+        return bean.userName.get();
     }
     public String getWords(){
         return bean.userWords.get();
@@ -90,33 +89,12 @@ public class MeVM {
         model.saveUserdb(bean);
     }
 
-    public void setClockType(String clockType) {
-        bean.clockType.set(clockType);
-    }
-    public void setRank3Top(String rank3Top) {
-        bean.rank3Top.set(rank3Top);
-    }
-    public void setHomeShowNote(String homeShowNote) {
-        bean.homeShowNote.set(homeShowNote);
-    }
-    public void setCard(String text){
-        bean.card.set(text);
-    }
 
-    public Boolean isRank3Top(){
-        if(bean.rank3Top.get().equals("置顶")){
-            return true;
-        }else {
-            return false;
-        }
-    }
-    public Boolean isHomeShowNote(){
-        if(bean.homeShowNote.get().equals("显示任务")){
-            return true;
-        }else {
-            return false;
-        }
-    }
+    /**
+     * 设置MeFragment的卡片
+     * @param max
+     * @return
+     */
     public int getGraphHeight(int max){
         if(bean.energyValue.get() == 0){
             return 1;
@@ -127,13 +105,44 @@ public class MeVM {
     public int getValue(){
         return bean.energyValue.get();
     }
-    
+
+    /**
+     * 获取用户对首页卡片是否显示的是当前情绪值
+     * @return
+     */
     public Boolean isShowEmotionValue(){
-        SharedPreferences pref = activity.getSharedPreferences("note_setting",MODE_PRIVATE);
-        if (pref.getString("home_show_emotion_value","显示当前情绪值").equals("显示当前情绪值")){
+        SharedPreferences pref = activity.getSharedPreferences("setting",MODE_PRIVATE);
+        if (pref.getString("cardShow", ConstantPool.CARD_SHOW_EMOTION).equals(ConstantPool.CARD_SHOW_EMOTION)){
             return true;
         }else {
             return false;
         }
+    }
+
+    public Boolean isHomeShowNote(){
+        SharedPreferences pref = activity.getSharedPreferences("setting",MODE_PRIVATE);
+        if (pref.getString("homeShowNote", ConstantPool.NOT_HOME_SHOW_NOTE).equals(ConstantPool.HOME_SHOW_NOTE)){
+            return true;
+        }else {
+            return false;
+        }
+    }
+    public Boolean isTaskTop(){
+        SharedPreferences pref = activity.getSharedPreferences("setting",MODE_PRIVATE);
+        if (pref.getString("taskIsTop", ConstantPool.TASK_IS_NOT_TOP).equals(ConstantPool.TASK_IS_TOP)){
+            return true;
+        }else {
+            return false;
+        }
+    }
+    public void setTaskIsTop(String str){
+        SharedPreferences.Editor editor = activity.getSharedPreferences("setting",MODE_PRIVATE).edit();
+        editor.putString("taskIsTop",str);
+        editor.apply();
+    }
+    public void setHomeShowNote(String str){
+        SharedPreferences.Editor editor = activity.getSharedPreferences("setting",MODE_PRIVATE).edit();
+        editor.putString("homeShowNote",str);
+        editor.apply();
     }
 }

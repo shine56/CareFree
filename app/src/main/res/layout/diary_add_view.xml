@@ -93,47 +93,47 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/add_day" />
 
-        <ImageView
+        <com.example.a73233.carefree.diary.view.Circular_view
             android:onClick="@{diaryFragment.onClick}"
             android:id="@+id/add_happy"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/happy"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             app:layout_constraintBottom_toBottomOf="@+id/add_ai"
             app:layout_constraintEnd_toStartOf="@+id/add_calm"
             app:layout_constraintStart_toEndOf="@+id/add_ai"
-            app:layout_constraintTop_toTopOf="@+id/add_ai" />
+            app:layout_constraintTop_toTopOf="@+id/add_ai"
+            app:circularColor="@{bean.diaryEmotionValue+45}"/>
 
-        <ImageView
+        <com.example.a73233.carefree.diary.view.CircularView2
+                app:circularColor2="@{bean.diaryEmotionValue}"
             android:onClick="@{diaryFragment.onClick}"
             android:id="@+id/add_calm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/calm"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
             app:layout_constraintBottom_toBottomOf="@+id/add_happy"
             app:layout_constraintEnd_toStartOf="@+id/add_repression"
             app:layout_constraintStart_toEndOf="@+id/add_ai"
             app:layout_constraintTop_toTopOf="@+id/add_happy"
             app:layout_constraintVertical_bias="0.0" />
 
-        <ImageView
+        <com.example.a73233.carefree.diary.view.CircularView3
+                app:circularColor3="@{bean.diaryEmotionValue-12}"
             android:onClick="@{diaryFragment.onClick}"
             android:id="@+id/add_sad"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/sad"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
             app:layout_constraintBottom_toBottomOf="@+id/add_calm"
             app:layout_constraintEnd_toStartOf="@+id/add_repression"
             app:layout_constraintStart_toEndOf="@+id/add_calm"
             app:layout_constraintTop_toTopOf="@+id/add_calm" />
 
-        <ImageView
+        <com.example.a73233.carefree.diary.view.CircularView4
+                app:circularColor4="@{bean.diaryEmotionValue-45}"
             android:onClick="@{diaryFragment.onClick}"
             android:id="@+id/add_repression"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
             android:layout_marginEnd="32dp"
-            android:src="@mipmap/repression"
             app:layout_constraintBottom_toBottomOf="@+id/add_sad"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/add_sad" />

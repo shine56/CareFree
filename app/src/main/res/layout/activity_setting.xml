@@ -210,23 +210,129 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/setting_about_bg"
+                    android:id="@+id/setting_main"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="32dp"
                     android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="64dp"
                     android:background="@drawable/note_list_bg_0"
                     android:orientation="vertical"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/setting_user_bg">
+
+                    <android.support.constraint.ConstraintLayout
+                        android:id="@+id/setting_home"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="4dp"
+                        android:onClick="@{settingActivity.onClick}">
+
+                        <TextView
+                            android:id="@+id/textView22"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="16dp"
+                            android:gravity="center"
+                            android:text="首页"
+                            android:textColor="@color/black"
+                            android:textSize="16dp"
+                            app:layout_constraintStart_toStartOf="parent"></TextView>
+
+
+                        <ImageView
+                            android:id="@+id/imageView23"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginEnd="16dp"
+                            android:src="@mipmap/next_gray"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                        </ImageView>
+                    </android.support.constraint.ConstraintLayout>
+                    <android.support.constraint.ConstraintLayout
+                        android:id="@+id/setting_diary"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="16dp"
+                        android:onClick="@{settingActivity.onClick}">
+
+                        <TextView
+                            android:id="@+id/textView43"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="16dp"
+                            android:gravity="center"
+                            android:text="日记"
+                            android:textColor="@color/black"
+                            android:textSize="16dp"
+                            app:layout_constraintStart_toStartOf="parent"></TextView>
+
+                        <ImageView
+                            android:id="@+id/imageView44"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginEnd="16dp"
+                            android:src="@mipmap/next_gray"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                        </ImageView>
+                    </android.support.constraint.ConstraintLayout>
+                    <android.support.constraint.ConstraintLayout
+                        android:id="@+id/setting_note"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="4dp"
+                        android:onClick="@{settingActivity.onClick}">
+
+                        <TextView
+                            android:id="@+id/textView23"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="16dp"
+                            android:gravity="center"
+                            android:text="便贴"
+                            android:textColor="@color/black"
+                            android:textSize="16dp"
+                            app:layout_constraintStart_toStartOf="parent"></TextView>
+
+                        <ImageView
+                            android:id="@+id/imageView24"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginEnd="16dp"
+                            android:src="@mipmap/next_gray"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                        </ImageView>
+                    </android.support.constraint.ConstraintLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/setting_safe_bg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/note_list_bg_0"
+                    android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/setting_note_bg">
+                    app:layout_constraintTop_toBottomOf="@+id/setting_main">
 
                     <android.support.constraint.ConstraintLayout
-                        android:id="@+id/setting_backup"
+                        android:id="@+id/setting_lock"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginTop="4dp"
@@ -238,7 +344,7 @@
                             android:layout_height="match_parent"
                             android:layout_marginStart="16dp"
                             android:gravity="center"
-                            android:text="数据备份"
+                            android:text="安全锁"
                             android:textColor="@color/black"
                             android:textSize="16dp"
                             app:layout_constraintStart_toStartOf="parent"></TextView>
@@ -255,10 +361,86 @@
                     </android.support.constraint.ConstraintLayout>
 
                     <android.support.constraint.ConstraintLayout
+                        android:id="@+id/setting_backup"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="4dp"
+                        android:onClick="@{settingActivity.onClick}">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="16dp"
+                            android:gravity="center"
+                            android:text="数据备份"
+                            android:textColor="@color/black"
+                            android:textSize="16dp"
+                            app:layout_constraintStart_toStartOf="parent"></TextView>
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginEnd="16dp"
+                            android:src="@mipmap/next_gray"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                        </ImageView>
+                    </android.support.constraint.ConstraintLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/setting_about_bg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="64dp"
+                    android:background="@drawable/note_list_bg_0"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/setting_safe_bg">
+
+                    <android.support.constraint.ConstraintLayout
+                            android:id="@+id/setting_about"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_marginTop="4dp"
+                            android:onClick="@{settingActivity.onClick}">
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginStart="16dp"
+                                android:gravity="center"
+                                android:text="关于"
+                                android:textColor="@color/black"
+                                android:textSize="16dp"
+                                app:layout_constraintStart_toStartOf="parent"></TextView>
+
+
+                        <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginEnd="16dp"
+                                android:src="@mipmap/next_gray"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                        </ImageView>
+                    </android.support.constraint.ConstraintLayout>
+                    <android.support.constraint.ConstraintLayout
                         android:id="@+id/setting_feed_back"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:layout_marginTop="24dp"
+                        android:layout_marginTop="16dp"
                         android:layout_marginBottom="4dp"
                         android:onClick="@{settingActivity.onClick}">
 
@@ -282,248 +464,6 @@
 
                         </ImageView>
                     </android.support.constraint.ConstraintLayout>
-
-                    <android.support.constraint.ConstraintLayout
-                        android:id="@+id/setting_about"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginTop="24dp"
-                        android:layout_marginBottom="4dp"
-                        android:onClick="@{settingActivity.onClick}">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginStart="16dp"
-                            android:gravity="center"
-                            android:text="关于"
-                            android:textColor="@color/black"
-                            android:textSize="16dp"
-                            app:layout_constraintStart_toStartOf="parent"></TextView>
-
-
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_marginEnd="16dp"
-                            android:src="@mipmap/next_gray"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent">
-
-                        </ImageView>
-                    </android.support.constraint.ConstraintLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/setting_note_bg"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="32dp"
-                    android:layout_marginEnd="16dp"
-                    android:background="@drawable/note_list_bg_0"
-                    android:orientation="vertical"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/setting_user_bg">
-
-                    <android.support.constraint.ConstraintLayout
-                        android:id="@+id/setting_card"
-
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="4dp"
-                        android:onClick="@{settingActivity.onClick}">
-
-                        <TextView
-                            android:id="@+id/textView22"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginStart="16dp"
-                            android:gravity="center"
-                            android:text="卡片"
-                            android:textColor="@color/black"
-                            android:textSize="16dp"
-                            app:layout_constraintStart_toStartOf="parent"></TextView>
-
-                        <TextView
-                            android:id="@+id/setting_card_text"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginEnd="8dp"
-                            android:gravity="right"
-                            android:maxLines="1"
-                            android:text="@{bean.card}"
-                            android:textColor="@color/gray"
-                            android:textSize="12dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/imageView23"
-                            app:layout_constraintStart_toEndOf="@+id/textView22"
-                            app:layout_constraintTop_toTopOf="parent"></TextView>
-
-                        <ImageView
-                            android:id="@+id/imageView23"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_marginEnd="16dp"
-                            android:src="@mipmap/next_gray"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent">
-
-                        </ImageView>
-                    </android.support.constraint.ConstraintLayout>
-                    <android.support.constraint.ConstraintLayout
-                        android:id="@+id/setting_home_show_note"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="4dp"
-                        android:onClick="@{settingActivity.onClick}">
-
-                        <TextView
-                            android:id="@+id/textView43"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginStart="16dp"
-                            android:gravity="center"
-                            android:text="首页"
-                            android:textColor="@color/black"
-                            android:textSize="16dp"
-                            app:layout_constraintStart_toStartOf="parent"></TextView>
-
-                        <TextView
-                            android:id="@+id/setting_home_show_note_text"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="48dp"
-                            android:layout_marginEnd="8dp"
-                            android:gravity="right"
-                            android:text="@{bean.homeShowNote}"
-                            android:textColor="@color/gray"
-                            android:textSize="12dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/imageView44"
-                            app:layout_constraintStart_toEndOf="@+id/textView43"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.39"></TextView>
-
-                        <ImageView
-                            android:id="@+id/imageView44"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_marginEnd="16dp"
-                            android:src="@mipmap/next_gray"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent">
-
-                        </ImageView>
-                    </android.support.constraint.ConstraintLayout>
-
-                    <android.support.constraint.ConstraintLayout
-                        android:id="@+id/setting_rank3_top"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="4dp"
-                        android:onClick="@{settingActivity.onClick}">
-
-                        <TextView
-                            android:id="@+id/textView23"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginStart="16dp"
-                            android:gravity="center"
-                            android:text="任务"
-                            android:textColor="@color/black"
-                            android:textSize="16dp"
-                            app:layout_constraintStart_toStartOf="parent"></TextView>
-
-                        <TextView
-                            android:id="@+id/setting_rank3_top_text"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="48dp"
-                            android:layout_marginEnd="8dp"
-                            android:gravity="right"
-                            android:text="@{bean.rank3Top}"
-
-                            android:textColor="@color/gray"
-                            android:textSize="12dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/imageView24"
-                            app:layout_constraintStart_toEndOf="@+id/textView23"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.39"></TextView>
-
-                        <ImageView
-                            android:id="@+id/imageView24"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_marginEnd="16dp"
-                            android:src="@mipmap/next_gray"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent">
-
-                        </ImageView>
-                    </android.support.constraint.ConstraintLayout>
-
-                    <android.support.constraint.ConstraintLayout
-                        android:id="@+id/setting_note_clock_type"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="4dp"
-                        android:onClick="@{settingActivity.onClick}">
-
-                        <TextView
-                            android:id="@+id/textView24"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginStart="16dp"
-                            android:gravity="center"
-                            android:text="闹钟"
-                            android:textColor="@color/black"
-                            android:textSize="16dp"
-                            app:layout_constraintStart_toStartOf="parent"></TextView>
-
-                        <TextView
-                            android:id="@+id/setting_note_clock_text"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="48dp"
-                            android:layout_marginEnd="8dp"
-                            android:gravity="right"
-                            android:text="@{bean.clockType}"
-                            android:textColor="@color/gray"
-                            android:textSize="12dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/imageView25"
-                            app:layout_constraintStart_toEndOf="@+id/textView24"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.39"></TextView>
-
-                        <ImageView
-                            android:id="@+id/imageView25"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_marginEnd="16dp"
-                            android:src="@mipmap/next_gray"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent">
-
-                        </ImageView>
-                    </android.support.constraint.ConstraintLayout>
-
-
                 </LinearLayout>
             </android.support.constraint.ConstraintLayout>
         </android.support.v4.widget.NestedScrollView>

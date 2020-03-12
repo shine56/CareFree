@@ -59,9 +59,21 @@ public class DiaryFragment extends BaseFragment{
     @Override
     public void onResume() {
         super.onResume();
+        initAddCard();
         binding.diaryRecycleView.setAdapter(adapter);
         diaryVM.refreshDiaryList();
     }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if(!hidden){
+            initAddCard();
+            binding.diaryRecycleView.setAdapter(adapter);
+            diaryVM.refreshDiaryList();
+        }
+    }
+
     private void initAddCard(){
         binding.setBean(diaryVM.refreshBeanDate());
     }

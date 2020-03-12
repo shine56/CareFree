@@ -1,6 +1,7 @@
 package com.example.a73233.carefree.home.viewModel;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
@@ -151,7 +152,7 @@ public class HomeViewModel{
 
         //初始化颜色
         for(i=6; i>-1; i--){
-            DayColor[i] = EmotionDataUtil.GetColors(DayValue[i])[1];
+            DayColor[i] = EmotionDataUtil.GetColors(DayValue[i], activity)[1];
         }
         dayValues.set(DayValue);
         dayNums.set(DayNum);
@@ -215,16 +216,22 @@ public class HomeViewModel{
 
         energyS.set(result);
         energySum.set(sum);
+        //初始化卡片值
         if(isShowEmotionValue()){
-            emotionValue.set(model.findLastData().getEmotionValue());
+            Diary_db diaryDb = model.findLastData();
+            if(diaryDb == null){
+                emotionValue.set(0);
+            }else {
+                emotionValue.set(diaryDb.getEmotionValue());
+            }
         }else {
             emotionValue.set(sum_2);
         }
-        moodViewPointColor.set(EmotionDataUtil.GetColors(emotionValue.get())[0]);
+        moodViewPointColor.set(EmotionDataUtil.GetColors(emotionValue.get(),activity)[0]);
     }
     public Boolean isShowNote(){
-        SharedPreferences pref = activity.getSharedPreferences("note_setting",MODE_PRIVATE);
-        if (pref.getString("home_show_note","显示任务").equals("显示任务")){
+        SharedPreferences pref = activity.getSharedPreferences("setting",MODE_PRIVATE);
+        if (pref.getString("homeShowNote",ConstantPool.HOME_SHOW_NOTE).equals(ConstantPool.HOME_SHOW_NOTE)){
             return true;
         }else {
             return false;
@@ -232,11 +239,15 @@ public class HomeViewModel{
     }
 
     public Boolean isShowEmotionValue(){
-        SharedPreferences pref = activity.getSharedPreferences("note_setting",MODE_PRIVATE);
-        if (pref.getString("home_show_emotion_value","显示当前情绪值").equals("显示当前情绪值")){
+        SharedPreferences pref = activity.getSharedPreferences("setting",MODE_PRIVATE);
+        if (pref.getString("cardShow",ConstantPool.CARD_SHOW_EMOTION).equals(ConstantPool.CARD_SHOW_EMOTION)){
             return true;
         }else {
             return false;
         }
+    }
+    public Boolean isOriginColor(Context context){
+        SharedPreferences pref = context.getSharedPreferences("setting", MODE_PRIVATE);
+        return pref.getBoolean("isOriginColor",true);
     }
 }

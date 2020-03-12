@@ -9,7 +9,6 @@ import com.example.a73233.carefree.util.FileUtil;
 
 import org.litepal.LitePal;
 
-import java.io.File;
 import java.util.List;
 
 public class MeModel {
@@ -100,6 +99,10 @@ public class MeModel {
             LitePal.delete(Note_db.class, id);
         }
     }
+
+    /**
+     * 删除所有数据
+     */
     public void deleteAllData(){
         List<Diary_db> diaryDbs = LitePal.where("isAbandon like ?",""+ConstantPool.ISABANDON).find(Diary_db.class);
         for (Diary_db db : diaryDbs){
@@ -115,7 +118,10 @@ public class MeModel {
     public Diary_db findLastData(){
         List<Diary_db> diaryDbs = LitePal.where("isAbandon like ?"
                 ,ConstantPool.NOT_ABANDON+"").find(Diary_db.class);
-        return diaryDbs.get(diaryDbs.size()-1);
+        if(diaryDbs.size() > 0){
+            return diaryDbs.get(diaryDbs.size()-1);
+        }else {
+            return null;
+        }
     }
-
 }

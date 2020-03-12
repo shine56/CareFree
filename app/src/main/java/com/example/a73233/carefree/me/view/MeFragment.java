@@ -17,6 +17,7 @@ import com.example.a73233.carefree.baseView.BaseFragment;
 import com.example.a73233.carefree.R;
 import com.example.a73233.carefree.databinding.FragmentMeBinding;
 import com.example.a73233.carefree.me.viewModel.MeVM;
+import com.example.a73233.carefree.util.ConstantPool;
 import com.example.a73233.carefree.util.EmotionDataUtil;
 import com.example.a73233.carefree.util.GlideCircleBorderTransform;
 import com.example.a73233.carefree.util.LogUtil;
@@ -35,14 +36,14 @@ public class MeFragment extends BaseFragment {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_me,container,false);
         activity = getActivity();
         meVM = new MeVM(activity);
-        binding.setBean(meVM.refreshData());
+        binding.setBean(meVM.refreshUserBean());
         return binding.getRoot();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        binding.setBean(meVM.refreshData());
+        binding.setBean(meVM.refreshUserBean());
         initView();
     }
 
@@ -51,7 +52,7 @@ public class MeFragment extends BaseFragment {
         super.onHiddenChanged(hidden);
         if(!hidden){
             initView();
-            binding.setBean(meVM.refreshData());
+            binding.setBean(meVM.refreshUserBean());
         }
     }
 
@@ -69,63 +70,45 @@ public class MeFragment extends BaseFragment {
         binding.meValueGraph.setLayoutParams(layoutParams);
         //卡片背景
         GradientDrawable viewBg = new GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP
-                , EmotionDataUtil.GetColors(meVM.getValue()));
+                , EmotionDataUtil.GetColors(meVM.getValue(),activity));
         viewBg.setCornerRadius(50);
         binding.meValueBg.setBackground(viewBg);
 
-        //点击监控
-        binding.meAbandonBg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(AbandonActivity.class);
-            }
-        });
-        binding.meSettingBg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(SettingActivity.class);
-            }
-        });
-
-
+        //初始化设置
         if(meVM.isHomeShowNote()){
             binding.meHomeShowNote.setImageResource(R.mipmap.is_choose);
         }else {
             binding.meHomeShowNote.setImageResource(R.mipmap.is_not_choose);
         }
-        if(meVM.isRank3Top()){
+        if(meVM.isTaskTop()){
             binding.meRank3Yop.setImageResource(R.mipmap.is_choose);
         }else {
             binding.meRank3Yop.setImageResource(R.mipmap.is_not_choose);
         }
-        binding.meRank3Yop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(meVM.isRank3Top()){
-                    binding.meRank3Yop.setImageResource(R.mipmap.is_not_choose);
-                    meVM.setRank3Top("不置顶");
-                    meVM.saveSetting();
-                }else {
-                    binding.meRank3Yop.setImageResource(R.mipmap.is_choose);
-                    meVM.setRank3Top("置顶");
-                    meVM.saveSetting();
-                }
+
+        //点击监控
+        binding.meRank3Yop.setOnClickListener(view -> {
+            if(meVM.isTaskTop()){
+                binding.meRank3Yop.setImageResource(R.mipmap.is_not_choose);
+                meVM.setTaskIsTop(ConstantPool.TASK_IS_NOT_TOP);
+            }else {
+                binding.meRank3Yop.setImageResource(R.mipmap.is_choose);
+                meVM.setTaskIsTop(ConstantPool.TASK_IS_TOP);
             }
         });
-        binding.meHomeShowNote.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(meVM.isHomeShowNote()){
-                    binding.meHomeShowNote.setImageResource(R.mipmap.is_not_choose);
-                    meVM.setHomeShowNote("不显示任务");
-                    meVM.saveSetting();
-                }else {
-                    binding.meHomeShowNote.setImageResource(R.mipmap.is_choose);
-                    meVM.setHomeShowNote("显示任务");
-                    meVM.saveSetting();
-                }
+        binding.meHomeShowNote.setOnClickListener(view -> {
+            if(meVM.isHomeShowNote()){
+                binding.meHomeShowNote.setImageResource(R.mipmap.is_not_choose);
+                meVM.setHomeShowNote(ConstantPool.NOT_HOME_SHOW_NOTE);
+            }else {
+                binding.meHomeShowNote.setImageResource(R.mipmap.is_choose);
+                meVM.setHomeShowNote(ConstantPool.HOME_SHOW_NOTE);
             }
         });
+
+
+        binding.meAbandonBg.setOnClickListener(view -> startActivity(AbandonActivity.class));
+        binding.meSettingBg.setOnClickListener(view -> startActivity(SettingActivity.class));
     }
     @BindingAdapter("user_head_url")
     public static void LoadHeadIma(ImageView imageView, String imgUrl){

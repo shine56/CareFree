@@ -23,11 +23,6 @@ import com.example.a73233.carefree.util.EmotionDataUtil;
 import com.example.a73233.carefree.util.PhotoManager;
 import com.example.a73233.carefree.util.SpacesItemDecoration;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 
 public class LookDiaryActivity extends BaseActivity implements View.OnClickListener {
     private ImageView toolbarLeft;
@@ -70,19 +65,21 @@ public class LookDiaryActivity extends BaseActivity implements View.OnClickListe
         binding.lookRecyclerView.setBackground(recycleBg);
         //标题栏背景
         GradientDrawable bgViewBg = new GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP
-                , EmotionDataUtil.GetColors(value));
+                , EmotionDataUtil.GetColors(value, this));
         bgViewBg.setCornerRadii(getCornerRadii(0f, 0f, 24f, 24f));
         //bgViewBg.setCornerRadius(50);
         binding.bgView.setBackground(bgViewBg);
         //emotionValueBg
         GradientDrawable emotionValueBg = new GradientDrawable();
         emotionValueBg.setCornerRadius(50);
-        emotionValueBg.setColor(EmotionDataUtil.GetColors(value)[1]);
+        emotionValueBg.setColor(EmotionDataUtil.GetColors(value, this)[1]);
         binding.lookEmotionValue.setBackground(emotionValueBg);
         //折叠后背景
         GradientDrawable colBg = new GradientDrawable();
-        colBg.setColor(EmotionDataUtil.GetColors(value)[1]);
+        colBg.setColor(EmotionDataUtil.GetColors(value, this)[1]);
         binding.colToolbar.setContentScrim(colBg);
+        //字号
+        //binding.lookDiaryText.setTextSize(lookVM.getDiaryTextSize(this));
         //长按事件监控
         //binding.lookNestScro.setLongClickable(true);
         binding.showPhoto.setOnLongClickListener(new View.OnLongClickListener() {

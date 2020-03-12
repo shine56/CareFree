@@ -1,36 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.a73233.carefree">
+        package="com.example.a73233.carefree">
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
 
     <application
-        android:name="org.litepal.LitePalApplication"
-        android:allowBackup="true"
-        android:icon="@mipmap/icon"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".me.view.BackupActivity"></activity>
+            android:name="org.litepal.LitePalApplication"
+            android:allowBackup="true"
+            android:icon="@mipmap/icon"
+            android:label="@string/app_name"
+            android:roundIcon="@mipmap/ic_launcher_round"
+            android:supportsRtl="true"
+            android:theme="@style/AppTheme">
+        <activity android:name=".me.view.NoteSettingActivity"></activity>
+        <activity android:name=".me.view.DiarySettingActivity" />
+        <activity android:name=".me.view.LockActivity" />
+        <activity android:name=".me.view.HomeSettingActivity" />
+        <activity android:name=".me.view.BackupActivity" />
         <activity android:name=".me.view.AboutActivity" />
         <activity android:name=".me.view.FeedBackActivity" />
         <activity android:name=".me.view.SettingActivity" />
         <activity android:name=".me.view.AbandonActivity" />
 
         <service
-            android:name=".note.view.ClockService"
-            android:enabled="true"
-            android:exported="true" />
+                android:name=".note.view.ClockService"
+                android:enabled="true"
+                android:exported="true" />
 
         <receiver
-            android:name=".note.view.ClockReceiver"
-            android:enabled="true"
-            android:exported="true"
-            android:process=":remote" />
+                android:name=".note.view.ClockReceiver"
+                android:enabled="true"
+                android:exported="true"
+                android:process=":remote" />
 
         <activity android:name=".note.view.NoteWriteActivity" />
         <activity android:name=".diary.view.WriteDiaryActivity" />
@@ -45,13 +50,13 @@
         </activity>
 
         <provider
-            android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.example.a73233.carefree.util.fileprovider"
-            android:exported="false"
-            android:grantUriPermissions="true">
+                android:name="android.support.v4.content.FileProvider"
+                android:authorities="com.example.a73233.carefree.util.fileprovider"
+                android:exported="false"
+                android:grantUriPermissions="true">
             <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
+                    android:name="android.support.FILE_PROVIDER_PATHS"
+                    android:resource="@xml/file_paths" />
         </provider>
     </application>
 

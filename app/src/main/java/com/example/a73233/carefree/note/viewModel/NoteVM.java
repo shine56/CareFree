@@ -31,8 +31,8 @@ public class NoteVM implements NoteVmImpl{
         }
     }
     public Boolean isRankTop(Activity activity){
-        SharedPreferences pref = activity.getSharedPreferences("note_setting",MODE_PRIVATE);
-        if (pref.getString("rank3_top","不置顶").equals("置顶")){
+        SharedPreferences pref = activity.getSharedPreferences("setting",MODE_PRIVATE);
+        if (pref.getString("taskIsTop",ConstantPool.TASK_IS_NOT_TOP).equals(ConstantPool.TASK_IS_TOP)){
             return true;
         }else {
             return false;

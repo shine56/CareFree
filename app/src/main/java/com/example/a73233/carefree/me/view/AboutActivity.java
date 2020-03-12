@@ -56,7 +56,7 @@ public class AboutActivity extends BaseActivity {
         showMyDialog("用户协议说明", agreement);
     }
     private void showContactWay(){
-        String text = "E-mail：732337565@qq.com\nQQ: 732337565\nGithub: https://github.com/shine56" ;
+        String text = "QQ交流群: 727508907\nGithub: https://github.com/shine56" ;
         showMyDialog("联系方式",text);
     }
     private void openSourceAddress(){

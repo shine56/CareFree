@@ -3,6 +3,7 @@ package com.example.a73233.carefree.diary.viewModel;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
@@ -78,6 +79,11 @@ public class LookVM{
     public int getValue(){
         return  bean.diaryEmotionValue.get();
     }
+
+    /**
+     * 截图分享
+     * @param activity
+     */
     public void shareDiary(LookDiaryActivity activity){
         String imgPath = PhotoManager.screenshot(activity);
         if(imgPath != null){
@@ -101,5 +107,10 @@ public class LookVM{
 //        shareIntent.setType("image/*");
 //        activity.startActivity(Intent.createChooser(shareIntent, "Share to..."));
 //        activity.showToast("你触发了长按分享的菜单的彩蛋(´⊙ω⊙`)！");
+    }
+
+    public int getDiaryTextSize(Activity activity){
+        SharedPreferences pref = activity.getSharedPreferences("setting",Context.MODE_PRIVATE);
+        return pref.getInt("diaryTextSize",18);
     }
 }

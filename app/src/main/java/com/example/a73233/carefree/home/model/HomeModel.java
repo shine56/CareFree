@@ -48,6 +48,11 @@ public class HomeModel {
     public Diary_db findLastData(){
         List<Diary_db> diaryDbs = LitePal.where("isAbandon like ?"
                 ,ConstantPool.NOT_ABANDON+"").find(Diary_db.class);
-        return diaryDbs.get(diaryDbs.size()-1);
+        if(diaryDbs.size() > 0){
+            return diaryDbs.get(diaryDbs.size()-1);
+        }else {
+            return null;
+        }
+
     }
 }

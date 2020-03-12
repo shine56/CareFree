@@ -7,6 +7,7 @@
 
 package com.example.a73233.carefree;
 import android.Manifest;
+import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -18,14 +19,24 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
+import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
+import android.support.v4.os.CancellationSignal;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.a73233.carefree.baseView.BaseActivity;
+import com.example.a73233.carefree.baseView.FingerprintImpl;
 import com.example.a73233.carefree.bean.Diary_db;
 import com.example.a73233.carefree.bean.Note_db;
 import com.example.a73233.carefree.bean.Users_db;
+import com.example.a73233.carefree.databinding.DialogChoosePhotoBinding;
 import com.example.a73233.carefree.note.view.NoteFragment;
 import com.example.a73233.carefree.me.view.MeFragment;
 import com.example.a73233.carefree.diary.view.DiaryFragment;
@@ -33,17 +44,18 @@ import com.example.a73233.carefree.home.view.HomeFragment;
 import com.example.a73233.carefree.databinding.ActivityMainBinding;
 import com.example.a73233.carefree.util.ConstantPool;
 import com.example.a73233.carefree.util.FileUtil;
-import com.example.a73233.carefree.util.PhotoManager;
+import com.example.a73233.carefree.util.FingerDiscentListener;
 
 import org.litepal.LitePal;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements FingerprintImpl {
+    private  Dialog dialog;
+
     private static final int HomePage = 1;
     private static final int DiaryPage = 2;
     private static final int NotePage = 3;
@@ -58,17 +70,37 @@ public class MainActivity extends BaseActivity {
     private int FragmentID = 1;
     private Boolean isFragmentCreate = false;
 
+    private FingerprintManagerCompat fingerprintManagerCompat;
+    //用于取消指纹识别器监听的对象
+    private CancellationSignal cancellationSignal;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
         binding.setMainActivity(this);
+
+        SharedPreferences pref = getSharedPreferences("setting",MODE_PRIVATE);
         //判断是否第一次安装启动app
-        SharedPreferences pref = getSharedPreferences("appSetting",MODE_PRIVATE);
         if(pref.getBoolean("isFirstStartApp",true)){
             initApp();
+            initView();
+        }else {
+            if(pref.getString("lock","关").equals("开")){
+                fingerprintManagerCompat = FingerprintManagerCompat.from(this);
+                if(fingerprintManagerCompat.hasEnrolledFingerprints()){
+                    cancellationSignal = new CancellationSignal();
+                    fingerprintManagerCompat.authenticate(null, 0, cancellationSignal,
+                            new FingerDiscentListener(cancellationSignal,this), null);
+                    showFigerPrintDiglog();
+                }else {
+                    showToast("手机未录入指纹，指纹锁暂时失效");
+                    initView();
+                }
+            }else {
+                initView();
+            }
         }
-        initView();
     }
     public void onClick(View view) {
         switch (view.getId()){
@@ -127,7 +159,7 @@ public class MainActivity extends BaseActivity {
                 FragmentID = DiaryPage;
 
                 if(!isFragmentCreate){
-                    creatFragment();
+                    createFragment();
                     isFragmentCreate = true;
                 }
                 FragmentManager fragmentManager2 = getSupportFragmentManager();
@@ -143,7 +175,7 @@ public class MainActivity extends BaseActivity {
                 FragmentID = NotePage;
 
                 if(!isFragmentCreate){
-                    creatFragment();
+                    createFragment();
                     isFragmentCreate = true;
                 }
                 FragmentManager fragmentManager3 = getSupportFragmentManager();
@@ -159,7 +191,7 @@ public class MainActivity extends BaseActivity {
                 FragmentID = MePage;
 
                 if(!isFragmentCreate){
-                    creatFragment();
+                    createFragment();
                     isFragmentCreate = true;
                 }
                 FragmentManager fragmentManager4 = getSupportFragmentManager();
@@ -172,7 +204,7 @@ public class MainActivity extends BaseActivity {
                 break;
         }
     }
-    private void creatFragment(){
+    private void createFragment(){
         diaryFragment = new DiaryFragment();
         noteFragment = new NoteFragment();
         meFragment = new MeFragment();
@@ -206,9 +238,8 @@ public class MainActivity extends BaseActivity {
                 }
                 break;
         }*/
-
     }
-    private void  initView(){
+    private void initView(){
         ReviseStatusBar(TRANSPARENT_BLACK);
         //初始化底部导航栏
         binding.homeLogo.setImageResource(R.mipmap.home_click);
@@ -242,7 +273,7 @@ public class MainActivity extends BaseActivity {
         initDiaryDb();
         initNoteDb();
         initMeDb();
-        SharedPreferences.Editor editor = getSharedPreferences("appSetting",MODE_PRIVATE).edit();
+        SharedPreferences.Editor editor = getSharedPreferences("setting",MODE_PRIVATE).edit();
         editor.putBoolean("isFirstStartApp",false);
         editor.apply();
     }
@@ -316,5 +347,41 @@ public class MainActivity extends BaseActivity {
             }
             db.save();
         }
+    }
+    private void showFigerPrintDiglog(){
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_figerprint,null,false);
+        dialog = new Dialog(this,R.style.ActionSheetDialogStyle);
+        dialog.setContentView(view);
+        //获取当前Activity所在的窗体
+        Window dialogWindow = dialog.getWindow();
+        //设置Dialog从窗体底部弹出
+        dialogWindow.setGravity(Gravity.BOTTOM);
+        //获得窗体的属性
+        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+        //宽度填满
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = (int)(this.getWindowManager().getDefaultDisplay().getHeight() *0.4);
+        //将属性设置给窗体
+        dialogWindow.setAttributes(lp);
+        //不可被取消
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(false);
+        //点击监控
+        TextView textView = view.findViewById(R.id.dialog_fingerprint_cancel);
+        textView.setOnClickListener(view1 -> {
+            cancellationSignal.cancel();
+            dialog.dismiss();
+            finish();
+        });
+        dialog.show();
+    }
+    public void verifySuccess(){
+        initView();
+        dialog.dismiss();
+    }
+    public void verifyFaile(){
+        showToast("验证失败");
+        dialog.dismiss();
+        finish();
     }
 }

@@ -24,352 +24,367 @@
             app:layout_constraintTop_toTopOf="parent">
 
 
-            <ImageView
-                android:onClick="@{backupActivity.onClick}"
-                android:layout_marginLeft="16dp"
+        <ImageView
                 android:id="@+id/backup_toolbar_left"
                 android:layout_width="22dp"
                 android:layout_height="22dp"
+                android:layout_marginLeft="16dp"
+                android:onClick="@{backupActivity.onClick}"
                 android:src="@mipmap/back_black"></ImageView>
 
-            <TextView
-                android:layout_gravity="center"
+        <TextView
                 android:id="@+id/backup_toolbar_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:text="备份"
                 android:textColor="@color/black"
-                android:textStyle="bold"
-                android:textSize="20dp"></TextView>
-        </FrameLayout>
+                android:textSize="20dp"
+                android:textStyle="bold"></TextView>
+    </FrameLayout>
 
-        <LinearLayout
-            android:id="@+id/backup_cloud_bg"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="16dp"
-            android:background="@drawable/note_list_bg_0"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/backup_toolbar">
-
-            <android.support.constraint.ConstraintLayout
+        <android.support.v4.widget.NestedScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/backup_toolbar">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:text="网盘备份"
-                    android:textColor="@color/mainBg2"
-                    android:textSize="15dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"></TextView>
+           <android.support.constraint.ConstraintLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/backup_how_user"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="24dp"
-                    android:onClick="@{backupActivity.onClick}"
-                    android:text="使用方法"
-                    android:textColor="@color/gray"
-                    android:textSize="13dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"></TextView>
+               <LinearLayout
+                       android:id="@+id/backup_cloud_bg"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:layout_marginStart="16dp"
+                       android:layout_marginTop="32dp"
+                       android:layout_marginEnd="16dp"
+                       android:background="@drawable/note_list_bg_0"
+                       android:orientation="vertical"
+                       app:layout_constraintEnd_toEndOf="parent"
+                       app:layout_constraintStart_toStartOf="parent"
+                       app:layout_constraintTop_toTopOf="parent">
 
-            </android.support.constraint.ConstraintLayout>
+                   <android.support.constraint.ConstraintLayout
+                           android:layout_width="match_parent"
+                           android:layout_height="match_parent">
 
-            <android.support.constraint.ConstraintLayout
-                android:id="@+id/backup_name"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="4dp"
-                android:onClick="@{backupActivity.onClick}">
+                       <TextView
+                               android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               android:layout_marginStart="8dp"
+                               android:layout_marginTop="8dp"
+                               android:text="网盘备份"
+                               android:textColor="@color/mainBg2"
+                               android:textSize="15dp"
+                               app:layout_constraintStart_toStartOf="parent"
+                               app:layout_constraintTop_toTopOf="parent"></TextView>
 
-                <TextView
-                    android:id="@+id/textVie9"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="16dp"
-                    android:gravity="center"
-                    android:text="账号"
-                    android:textColor="@color/black"
-                    android:textSize="16dp"
-                    app:layout_constraintStart_toStartOf="parent"></TextView>
+                       <TextView
+                               android:id="@+id/backup_how_user"
+                               android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               android:layout_marginTop="8dp"
+                               android:layout_marginEnd="24dp"
+                               android:onClick="@{backupActivity.onClick}"
+                               android:text="使用方法"
+                               android:textColor="@color/gray"
+                               android:textSize="13dp"
+                               app:layout_constraintEnd_toEndOf="parent"
+                               app:layout_constraintTop_toTopOf="parent"></TextView>
 
-                <TextView
-                    android:id="@+id/backup_name_text"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="96dp"
-                    android:layout_marginEnd="8dp"
-                    android:gravity="right"
-                    android:text="未设置"
-                    android:maxLines="1"
-                    android:textColor="@color/gray"
-                    android:textSize="12dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/imageView04"
-                    app:layout_constraintStart_toEndOf="@+id/textVie9"
-                    app:layout_constraintTop_toTopOf="parent"></TextView>
+                   </android.support.constraint.ConstraintLayout>
 
-                <ImageView
-                    android:id="@+id/imageView04"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginEnd="16dp"
-                    android:src="@mipmap/next_gray"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"></ImageView>
+                   <android.support.constraint.ConstraintLayout
+                           android:id="@+id/backup_name"
+                           android:layout_width="match_parent"
+                           android:layout_height="50dp"
+                           android:layout_marginTop="16dp"
+                           android:layout_marginBottom="4dp"
+                           android:onClick="@{backupActivity.onClick}">
 
-            </android.support.constraint.ConstraintLayout>
+                       <TextView
+                               android:id="@+id/textVie9"
+                               android:layout_width="wrap_content"
+                               android:layout_height="match_parent"
+                               android:layout_marginStart="16dp"
+                               android:gravity="center"
+                               android:text="账号"
+                               android:textColor="@color/black"
+                               android:textSize="16dp"
+                               app:layout_constraintStart_toStartOf="parent"></TextView>
 
-            <android.support.constraint.ConstraintLayout
-                android:id="@+id/backup_pas"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="16dp"
-                android:onClick="@{backupActivity.onClick}">
+                       <TextView
+                               android:id="@+id/backup_name_text"
+                               android:layout_width="0dp"
+                               android:layout_height="wrap_content"
+                               android:layout_marginStart="96dp"
+                               android:layout_marginEnd="8dp"
+                               android:gravity="right"
+                               android:maxLines="1"
+                               android:text="未设置"
+                               android:textColor="@color/gray"
+                               android:textSize="12dp"
+                               app:layout_constraintBottom_toBottomOf="parent"
+                               app:layout_constraintEnd_toStartOf="@+id/imageView04"
+                               app:layout_constraintStart_toEndOf="@+id/textVie9"
+                               app:layout_constraintTop_toTopOf="parent"></TextView>
 
-                <TextView
-                    android:id="@+id/textView09"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="16dp"
-                    android:gravity="center"
-                    android:text="密码"
-                    android:textColor="@color/black"
-                    android:textSize="16dp"
-                    app:layout_constraintStart_toStartOf="parent"></TextView>
+                       <ImageView
+                               android:id="@+id/imageView04"
+                               android:layout_width="20dp"
+                               android:layout_height="20dp"
+                               android:layout_marginEnd="16dp"
+                               android:src="@mipmap/next_gray"
+                               app:layout_constraintBottom_toBottomOf="parent"
+                               app:layout_constraintEnd_toEndOf="parent"
+                               app:layout_constraintTop_toTopOf="parent"></ImageView>
 
-                <TextView
-                    android:id="@+id/backup_pas_text"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="96dp"
-                    android:layout_marginEnd="8dp"
-                    android:gravity="right"
-                    android:inputType="textPassword"
-                    android:text="未设置"
-                    android:maxLines="1"
-                    android:textColor="@color/gray"
-                    android:textSize="12dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/imageView004"
-                    app:layout_constraintStart_toEndOf="@+id/textView09"
-                    app:layout_constraintTop_toTopOf="parent"></TextView>
+                   </android.support.constraint.ConstraintLayout>
 
-                <ImageView
-                    android:id="@+id/imageView004"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginEnd="16dp"
-                    android:src="@mipmap/next_gray"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"></ImageView>
+                   <android.support.constraint.ConstraintLayout
+                           android:id="@+id/backup_pas"
+                           android:layout_width="match_parent"
+                           android:layout_height="50dp"
+                           android:layout_marginTop="16dp"
+                           android:onClick="@{backupActivity.onClick}">
 
-            </android.support.constraint.ConstraintLayout>
+                       <TextView
+                               android:id="@+id/textView09"
+                               android:layout_width="wrap_content"
+                               android:layout_height="match_parent"
+                               android:layout_marginStart="16dp"
+                               android:gravity="center"
+                               android:text="密码"
+                               android:textColor="@color/black"
+                               android:textSize="16dp"
+                               app:layout_constraintStart_toStartOf="parent"></TextView>
 
-            <android.support.constraint.ConstraintLayout
-                android:id="@+id/backup_url"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="4dp"
-                android:onClick="@{backupActivity.onClick}">
+                       <TextView
+                               android:id="@+id/backup_pas_text"
+                               android:layout_width="0dp"
+                               android:layout_height="wrap_content"
+                               android:layout_marginStart="96dp"
+                               android:layout_marginEnd="8dp"
+                               android:gravity="right"
+                               android:inputType="textPassword"
+                               android:maxLines="1"
+                               android:text="未设置"
+                               android:textColor="@color/gray"
+                               android:textSize="12dp"
+                               app:layout_constraintBottom_toBottomOf="parent"
+                               app:layout_constraintEnd_toStartOf="@+id/imageView004"
+                               app:layout_constraintStart_toEndOf="@+id/textView09"
+                               app:layout_constraintTop_toTopOf="parent"></TextView>
 
-                <TextView
-                    android:id="@+id/textView009"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="16dp"
-                    android:gravity="center"
-                    android:text="服务器地址"
-                    android:textColor="@color/black"
-                    android:textSize="16dp"
-                    app:layout_constraintStart_toStartOf="parent"></TextView>
+                       <ImageView
+                               android:id="@+id/imageView004"
+                               android:layout_width="20dp"
+                               android:layout_height="20dp"
+                               android:layout_marginEnd="16dp"
+                               android:src="@mipmap/next_gray"
+                               app:layout_constraintBottom_toBottomOf="parent"
+                               app:layout_constraintEnd_toEndOf="parent"
+                               app:layout_constraintTop_toTopOf="parent"></ImageView>
 
-                <TextView
-                    android:id="@+id/backup_url_text"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="64dp"
-                    android:layout_marginEnd="8dp"
-                    android:gravity="right"
-                    android:maxLines="1"
-                    android:text="未设置"
-                    android:textColor="@color/gray"
-                    android:textSize="12dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/imageView0004"
-                    app:layout_constraintStart_toEndOf="@+id/textView009"
-                    app:layout_constraintTop_toTopOf="parent"></TextView>
+                   </android.support.constraint.ConstraintLayout>
 
-                <ImageView
-                    android:id="@+id/imageView0004"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginEnd="16dp"
-                    android:src="@mipmap/next_gray"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"></ImageView>
+                   <android.support.constraint.ConstraintLayout
+                           android:id="@+id/backup_url"
+                           android:layout_width="match_parent"
+                           android:layout_height="50dp"
+                           android:layout_marginTop="16dp"
+                           android:layout_marginBottom="4dp"
+                           android:onClick="@{backupActivity.onClick}">
 
-            </android.support.constraint.ConstraintLayout>
+                       <TextView
+                               android:id="@+id/textView009"
+                               android:layout_width="wrap_content"
+                               android:layout_height="match_parent"
+                               android:layout_marginStart="16dp"
+                               android:gravity="center"
+                               android:text="服务器地址"
+                               android:textColor="@color/black"
+                               android:textSize="16dp"
+                               app:layout_constraintStart_toStartOf="parent"></TextView>
 
-            <android.support.constraint.ConstraintLayout
-                android:id="@+id/backup_put"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="4dp"
-                android:onClick="@{backupActivity.onClick}">
+                       <TextView
+                               android:id="@+id/backup_url_text"
+                               android:layout_width="0dp"
+                               android:layout_height="wrap_content"
+                               android:layout_marginStart="64dp"
+                               android:layout_marginEnd="8dp"
+                               android:gravity="right"
+                               android:maxLines="1"
+                               android:text="未设置"
+                               android:textColor="@color/gray"
+                               android:textSize="12dp"
+                               app:layout_constraintBottom_toBottomOf="parent"
+                               app:layout_constraintEnd_toStartOf="@+id/imageView0004"
+                               app:layout_constraintStart_toEndOf="@+id/textView009"
+                               app:layout_constraintTop_toTopOf="parent"></TextView>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="16dp"
-                    android:gravity="center"
-                    android:text="开始备份"
-                    android:textColor="@color/black"
-                    android:textSize="16dp"
-                    app:layout_constraintStart_toStartOf="parent"></TextView>
+                       <ImageView
+                               android:id="@+id/imageView0004"
+                               android:layout_width="20dp"
+                               android:layout_height="20dp"
+                               android:layout_marginEnd="16dp"
+                               android:src="@mipmap/next_gray"
+                               app:layout_constraintBottom_toBottomOf="parent"
+                               app:layout_constraintEnd_toEndOf="parent"
+                               app:layout_constraintTop_toTopOf="parent"></ImageView>
 
+                   </android.support.constraint.ConstraintLayout>
 
-                <ImageView
-                    android:id="@+id/imageView00004"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginEnd="16dp"
-                    android:src="@mipmap/next_gray"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"></ImageView>
-            </android.support.constraint.ConstraintLayout>
+                   <android.support.constraint.ConstraintLayout
+                           android:id="@+id/backup_put"
+                           android:layout_width="match_parent"
+                           android:layout_height="50dp"
+                           android:layout_marginTop="16dp"
+                           android:layout_marginBottom="4dp"
+                           android:onClick="@{backupActivity.onClick}">
 
-            <android.support.constraint.ConstraintLayout
-                android:id="@+id/backup_get"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="4dp"
-                android:onClick="@{backupActivity.onClick}">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="16dp"
-                    android:gravity="center"
-                    android:text="恢复备份"
-                    android:textColor="@color/black"
-                    android:textSize="16dp"
-                    app:layout_constraintStart_toStartOf="parent"></TextView>
+                       <TextView
+                               android:layout_width="wrap_content"
+                               android:layout_height="match_parent"
+                               android:layout_marginStart="16dp"
+                               android:gravity="center"
+                               android:text="开始备份"
+                               android:textColor="@color/black"
+                               android:textSize="16dp"
+                               app:layout_constraintStart_toStartOf="parent"></TextView>
 
 
-                <ImageView
-                    android:id="@+id/imageView014"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginEnd="16dp"
-                    android:src="@mipmap/next_gray"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"></ImageView>
-            </android.support.constraint.ConstraintLayout>
+                       <ImageView
+                               android:id="@+id/imageView00004"
+                               android:layout_width="20dp"
+                               android:layout_height="20dp"
+                               android:layout_marginEnd="16dp"
+                               android:src="@mipmap/next_gray"
+                               app:layout_constraintBottom_toBottomOf="parent"
+                               app:layout_constraintEnd_toEndOf="parent"
+                               app:layout_constraintTop_toTopOf="parent"></ImageView>
+                   </android.support.constraint.ConstraintLayout>
 
-        </LinearLayout>
+                   <android.support.constraint.ConstraintLayout
+                           android:id="@+id/backup_get"
+                           android:layout_width="match_parent"
+                           android:layout_height="50dp"
+                           android:layout_marginTop="16dp"
+                           android:layout_marginBottom="4dp"
+                           android:onClick="@{backupActivity.onClick}">
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:id="@+id/backup_local_bg"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:background="@drawable/note_list_bg_0"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/backup_cloud_bg">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:text="本地备份"
-                android:textColor="@color/mainBg2"
-                android:textSize="15dp"></TextView>
-
-            <android.support.constraint.ConstraintLayout
-                android:onClick="@{backupActivity.onClick}"
-                android:id="@+id/backup_local_put"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="4dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="16dp"
-                    android:gravity="center"
-                    android:text="备份"
-                    android:textColor="@color/black"
-                    android:textSize="16dp"
-                    app:layout_constraintStart_toStartOf="parent"></TextView>
-
-                <ImageView
-                    android:id="@+id/imageView0114"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginEnd="16dp"
-                    android:src="@mipmap/next_gray"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"></ImageView>
-            </android.support.constraint.ConstraintLayout>
-
-            <android.support.constraint.ConstraintLayout
-                android:onClick="@{backupActivity.onClick}"
-                android:id="@+id/backup_local_get"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="4dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="16dp"
-                    android:gravity="center"
-                    android:text="恢复"
-                    android:textColor="@color/black"
-                    android:textSize="16dp"
-                    app:layout_constraintStart_toStartOf="parent"></TextView>
+                       <TextView
+                               android:layout_width="wrap_content"
+                               android:layout_height="match_parent"
+                               android:layout_marginStart="16dp"
+                               android:gravity="center"
+                               android:text="恢复备份"
+                               android:textColor="@color/black"
+                               android:textSize="16dp"
+                               app:layout_constraintStart_toStartOf="parent"></TextView>
 
 
-                <ImageView
-                    android:id="@+id/imageView01114"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginEnd="16dp"
-                    android:src="@mipmap/next_gray"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"></ImageView>
-            </android.support.constraint.ConstraintLayout>
+                       <ImageView
+                               android:id="@+id/imageView014"
+                               android:layout_width="20dp"
+                               android:layout_height="20dp"
+                               android:layout_marginEnd="16dp"
+                               android:src="@mipmap/next_gray"
+                               app:layout_constraintBottom_toBottomOf="parent"
+                               app:layout_constraintEnd_toEndOf="parent"
+                               app:layout_constraintTop_toTopOf="parent"></ImageView>
+                   </android.support.constraint.ConstraintLayout>
 
-        </LinearLayout>
+               </LinearLayout>
+
+               <LinearLayout
+                       android:id="@+id/backup_local_bg"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:layout_marginStart="16dp"
+                       android:layout_marginTop="16dp"
+                       android:layout_marginEnd="16dp"
+                       android:background="@drawable/note_list_bg_0"
+                       android:orientation="vertical"
+                       app:layout_constraintEnd_toEndOf="parent"
+                       app:layout_constraintStart_toStartOf="parent"
+                       app:layout_constraintTop_toBottomOf="@+id/backup_cloud_bg">
+
+                   <TextView
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_marginLeft="8dp"
+                           android:layout_marginTop="8dp"
+                           android:text="本地备份"
+                           android:textColor="@color/mainBg2"
+                           android:textSize="15dp"></TextView>
+
+                   <android.support.constraint.ConstraintLayout
+                           android:id="@+id/backup_local_put"
+                           android:layout_width="match_parent"
+                           android:layout_height="50dp"
+                           android:layout_marginTop="16dp"
+                           android:layout_marginBottom="4dp"
+                           android:onClick="@{backupActivity.onClick}">
+
+                       <TextView
+                               android:layout_width="wrap_content"
+                               android:layout_height="match_parent"
+                               android:layout_marginStart="16dp"
+                               android:gravity="center"
+                               android:text="备份"
+                               android:textColor="@color/black"
+                               android:textSize="16dp"
+                               app:layout_constraintStart_toStartOf="parent"></TextView>
+
+                       <ImageView
+                               android:id="@+id/imageView0114"
+                               android:layout_width="20dp"
+                               android:layout_height="20dp"
+                               android:layout_marginEnd="16dp"
+                               android:src="@mipmap/next_gray"
+                               app:layout_constraintBottom_toBottomOf="parent"
+                               app:layout_constraintEnd_toEndOf="parent"
+                               app:layout_constraintTop_toTopOf="parent"></ImageView>
+                   </android.support.constraint.ConstraintLayout>
+
+                   <android.support.constraint.ConstraintLayout
+                           android:id="@+id/backup_local_get"
+                           android:layout_width="match_parent"
+                           android:layout_height="50dp"
+                           android:layout_marginTop="16dp"
+                           android:layout_marginBottom="4dp"
+                           android:onClick="@{backupActivity.onClick}">
+
+                       <TextView
+                               android:layout_width="wrap_content"
+                               android:layout_height="match_parent"
+                               android:layout_marginStart="16dp"
+                               android:gravity="center"
+                               android:text="恢复"
+                               android:textColor="@color/black"
+                               android:textSize="16dp"
+                               app:layout_constraintStart_toStartOf="parent"></TextView>
+
+
+                       <ImageView
+                               android:id="@+id/imageView01114"
+                               android:layout_width="20dp"
+                               android:layout_height="20dp"
+                               android:layout_marginEnd="16dp"
+                               android:src="@mipmap/next_gray"
+                               app:layout_constraintBottom_toBottomOf="parent"
+                               app:layout_constraintEnd_toEndOf="parent"
+                               app:layout_constraintTop_toTopOf="parent"></ImageView>
+                   </android.support.constraint.ConstraintLayout>
+
+               </LinearLayout>
+           </android.support.constraint.ConstraintLayout>
+        </android.support.v4.widget.NestedScrollView>
+
     </android.support.constraint.ConstraintLayout>
 </layout>

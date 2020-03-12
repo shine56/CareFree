@@ -70,6 +70,10 @@ public class FileUtil {
         if (!photosDirectory.exists()) {
             photosDirectory.mkdirs();
         }
+        File screenshotDirectory = new File(parentDirectory, "Screenshot");
+        if (!screenshotDirectory.exists()) {
+            screenshotDirectory.mkdirs();
+        }
 
         File sdDirectory = activity.getExternalFilesDir(null);
         File externalFile = new File(sdDirectory, "0.txt");

@@ -12,24 +12,24 @@ import android.view.View;
 import com.example.a73233.carefree.util.EmotionDataUtil;
 import com.example.a73233.carefree.util.LogUtil;
 
-public class Circular_view extends View {
+public class CircularView4 extends View {
     private static Paint bigCirPaint;
     private static Paint smallCirPaint;
     private static Context context;
-    public Circular_view(Context context) {
+    public CircularView4(Context context) {
         super(context);
         this.context = context;
         init();
     }
 
-    public Circular_view(Context context, @Nullable AttributeSet attrs) {
+    public CircularView4(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
         init();
     }
 
-    @BindingAdapter("circularColor")
-    public static void loadCircularColor(Circular_view view,int circularColor){
+    @BindingAdapter("circularColor4")
+    public static void loadCircularColor4(CircularView4 view4,int circularColor){
         LogUtil.LogD("圆环值："+circularColor);
         bigCirPaint.setColor(EmotionDataUtil.GetColors(circularColor,context)[1]);
     }

@@ -49,6 +49,7 @@ public class DiaryVM implements DiaryVMImpl {
         bean.day.set(day);
         bean.yearAndMonth.set(yearAndMonth);
         bean.week.set(week);
+        bean.diaryEmotionValue.set(0);
         return bean;
     }
 
