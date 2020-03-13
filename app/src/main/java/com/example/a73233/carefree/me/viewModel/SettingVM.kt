@@ -145,6 +145,7 @@ class SettingVM {
             colors[1] = getColor(i+1).toLong(16).toInt()
         }
         var parentBackground = GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP,colors)
+        parentBackground.cornerRadius = 30f
         con.background = parentBackground
     }
     private fun getColor(i : Int): String{

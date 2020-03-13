@@ -60,7 +60,7 @@ class LockActivity : BaseActivity() ,FingerprintImpl{
         lock = findViewById(R.id.fingerprint_lock)
         lock.setOnClickListener {setLock()}
 
-        back = findViewById(R.id.home_setting_toolbar_left)
+        back = findViewById(R.id.lock_toolbar_left)
         back.setOnClickListener{finish()}
 
     }

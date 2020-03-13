@@ -125,6 +125,7 @@
         <android.support.v4.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/diary_setting_bg">
 
@@ -134,8 +135,8 @@
 
                 <android.support.constraint.ConstraintLayout
                         android:id="@+id/setting_happy_bg"
-                        android:layout_width="150dp"
-                        android:layout_height="200dp"
+                        android:layout_width="135dp"
+                        android:layout_height="188dp"
                         android:layout_marginTop="24dp"
                         android:layout_marginEnd="24dp"
                         android:background="@drawable/mood_view_happy_bg"
@@ -143,23 +144,23 @@
                         app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:layout_marginTop="16dp"
                             android:layout_marginEnd="8dp"
-                            android:text="开心的时候\n\n颜色码:16进制颜色码\n\n渐变方向:由下至上"
+                            android:text="开心的颜色\n\n颜色码:16进制颜色码\n\n渐变方向:由下至上"
                             android:textColor="@color/white"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"></TextView>
                 </android.support.constraint.ConstraintLayout>
+
                 <android.support.constraint.ConstraintLayout
                         android:id="@+id/constraintLayout"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
                         app:layout_constraintBottom_toBottomOf="@+id/setting_happy_bg"
                         app:layout_constraintEnd_toStartOf="@+id/setting_happy_bg"
                         app:layout_constraintStart_toStartOf="parent"
@@ -176,10 +177,12 @@
                             app:layout_constraintTop_toTopOf="@+id/setting_happy_start_edit"></TextView>
 
                     <EditText
+                            android:maxLength="8"
                             android:id="@+id/setting_happy_start_edit"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
+                            android:layout_marginEnd="8dp"
                             android:hint="FF3FABD5"
                             android:text="@{bean.colors[0]}"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -197,21 +200,23 @@
                             app:layout_constraintTop_toTopOf="@+id/setting_happy_end_edit"></TextView>
 
                     <EditText
-                            android:text="@{bean.colors[1]}"
+                            android:maxLength="8"
                             android:id="@+id/setting_happy_end_edit"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
+                            android:layout_marginEnd="8dp"
                             android:hint="FF38D5D6"
+                            android:text="@{bean.colors[1]}"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/textView25"
+                            app:layout_constraintStart_toEndOf="@+id/textViewd25"
                             app:layout_constraintTop_toBottomOf="@+id/setting_happy_start_edit"></EditText>
                 </android.support.constraint.ConstraintLayout>
 
                 <android.support.constraint.ConstraintLayout
                         android:id="@+id/setting_calm_bg"
-                        android:layout_width="150dp"
-                        android:layout_height="200dp"
+                        android:layout_width="135dp"
+                        android:layout_height="188dp"
                         android:layout_marginTop="24dp"
                         android:layout_marginEnd="24dp"
                         android:background="@drawable/mood_view_happy_bg"
@@ -219,22 +224,22 @@
                         app:layout_constraintTop_toBottomOf="@+id/setting_happy_bg">
 
                     <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:layout_marginTop="16dp"
                             android:layout_marginEnd="8dp"
-                            android:text="坦然的时候\n\n颜色码:16进制颜色码\n\n渐变方向:由下至上"
+                            android:text="坦然的颜色\n\n颜色码:16进制颜色码\n\n渐变方向:由下至上"
                             android:textColor="@color/white"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"></TextView>
                 </android.support.constraint.ConstraintLayout>
+
                 <android.support.constraint.ConstraintLayout
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
                         app:layout_constraintBottom_toBottomOf="@+id/setting_calm_bg"
                         app:layout_constraintEnd_toStartOf="@+id/setting_happy_bg"
                         app:layout_constraintStart_toStartOf="parent"
@@ -251,12 +256,13 @@
                             app:layout_constraintTop_toTopOf="@+id/setting_calm_start_edit"></TextView>
 
                     <EditText
-                            android:text="@{bean.colors[2]}"
+                            android:maxLength="8"
                             android:id="@+id/setting_calm_start_edit"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
                             android:hint="3FABD5"
+                            android:text="@{bean.colors[2]}"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/textView255"
                             app:layout_constraintTop_toTopOf="parent"></EditText>
@@ -272,12 +278,13 @@
                             app:layout_constraintTop_toTopOf="@+id/setting_calm_end_edit"></TextView>
 
                     <EditText
-                            android:text="@{bean.colors[3]}"
+                            android:maxLength="8"
                             android:id="@+id/setting_calm_end_edit"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
                             android:hint="38D5D6"
+                            android:text="@{bean.colors[3]}"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/textView255"
                             app:layout_constraintTop_toBottomOf="@+id/setting_calm_start_edit"></EditText>
@@ -285,8 +292,8 @@
 
                 <android.support.constraint.ConstraintLayout
                         android:id="@+id/setting_sad_bg"
-                        android:layout_width="150dp"
-                        android:layout_height="200dp"
+                        android:layout_width="135dp"
+                        android:layout_height="188dp"
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="24dp"
                         android:background="@drawable/mood_view_happy_bg"
@@ -294,12 +301,12 @@
                         app:layout_constraintTop_toBottomOf="@id/setting_calm_bg">
 
                     <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:layout_marginTop="16dp"
                             android:layout_marginEnd="8dp"
-                            android:text="忧伤的时候\n\n颜色码:16进制颜色码\n\n渐变方向:由下至上"
+                            android:text="忧伤的颜色\n\n颜色码:16进制颜色码\n\n渐变方向:由下至上"
                             android:textColor="@color/white"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -310,7 +317,6 @@
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
                         app:layout_constraintBottom_toBottomOf="@+id/setting_sad_bg"
                         app:layout_constraintEnd_toStartOf="@+id/setting_happy_bg"
                         app:layout_constraintStart_toStartOf="parent"
@@ -327,12 +333,13 @@
                             app:layout_constraintTop_toTopOf="@+id/setting_sad_start_edit"></TextView>
 
                     <EditText
-                            android:text="@{bean.colors[4]}"
+                            android:maxLength="8"
                             android:id="@+id/setting_sad_start_edit"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
                             android:hint="3FABD5"
+                            android:text="@{bean.colors[4]}"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/textView2555"
                             app:layout_constraintTop_toTopOf="parent"></EditText>
@@ -348,12 +355,13 @@
                             app:layout_constraintTop_toTopOf="@+id/setting_sad_end_edit"></TextView>
 
                     <EditText
-                            android:text="@{bean.colors[5]}"
+                            android:maxLength="8"
                             android:id="@+id/setting_sad_end_edit"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
                             android:hint="38D5D6"
+                            android:text="@{bean.colors[5]}"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/textView2555"
                             app:layout_constraintTop_toBottomOf="@+id/setting_sad_start_edit"></EditText>
@@ -361,8 +369,8 @@
 
                 <android.support.constraint.ConstraintLayout
                         android:id="@+id/setting_repression_bg"
-                        android:layout_width="150dp"
-                        android:layout_height="200dp"
+                        android:layout_width="135dp"
+                        android:layout_height="188dp"
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="24dp"
                         android:layout_marginBottom="80dp"
@@ -372,12 +380,12 @@
                         app:layout_constraintTop_toBottomOf="@id/setting_sad_bg">
 
                     <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:layout_marginTop="16dp"
                             android:layout_marginEnd="8dp"
-                            android:text="难过的时候\n\n颜色码:16进制颜色码\n\n渐变方向:由下至上"
+                            android:text="难过的颜色\n\n颜色码:16进制颜色码\n\n渐变方向:由下至上"
                             android:textColor="@color/white"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -388,7 +396,6 @@
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
                         app:layout_constraintBottom_toBottomOf="@+id/setting_repression_bg"
                         app:layout_constraintEnd_toStartOf="@+id/setting_repression_bg"
                         app:layout_constraintStart_toStartOf="parent"
@@ -405,12 +412,13 @@
                             app:layout_constraintTop_toTopOf="@+id/setting_repression_start_edit"></TextView>
 
                     <EditText
-                            android:text="@{bean.colors[6]}"
+                            android:maxLength="8"
                             android:id="@+id/setting_repression_start_edit"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
                             android:hint="3FABD5"
+                            android:text="@{bean.colors[6]}"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/textView256"
                             app:layout_constraintTop_toTopOf="parent"></EditText>
@@ -426,12 +434,13 @@
                             app:layout_constraintTop_toTopOf="@+id/setting_repression_end_edit"></TextView>
 
                     <EditText
-                            android:text="@{bean.colors[7]}"
+                            android:maxLength="8"
                             android:id="@+id/setting_repression_end_edit"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
                             android:hint="38D5D6"
+                            android:text="@{bean.colors[7]}"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/textView256"
                             app:layout_constraintTop_toBottomOf="@+id/setting_repression_start_edit"></EditText>

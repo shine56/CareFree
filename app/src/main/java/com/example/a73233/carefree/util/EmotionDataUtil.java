@@ -124,7 +124,7 @@ public class EmotionDataUtil {
         }else if(averageValue>15 && averageValue<=50){
             suggestion = "最近情绪还是积极的哟";
         }else if(averageValue>-10 && averageValue<=15){
-            suggestion = "一片飘叶，伴着微风落入水池，泛起点点涟漪，归于平静。";
+            suggestion = "一片飘叶，伴着微风落入水池，泛起点点涟漪。";
         }else if(averageValue>-30 && averageValue<=-10){
             suggestion = "有什么可忧伤的呢，要加油呀！";
         }else if(averageValue>=-50 && averageValue<=-30){
