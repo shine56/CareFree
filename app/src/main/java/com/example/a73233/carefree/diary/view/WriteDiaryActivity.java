@@ -1,12 +1,17 @@
 package com.example.a73233.carefree.diary.view;
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.Editable;
 import android.text.Selection;
@@ -25,6 +30,7 @@ import com.example.a73233.carefree.databinding.ActivityWriteDiaryBinding;
 import com.example.a73233.carefree.databinding.DialogChoosePhotoBinding;
 import com.example.a73233.carefree.diary.viewModel.WriteVM;
 import com.example.a73233.carefree.util.EmotionDataUtil;
+import com.example.a73233.carefree.util.LogUtil;
 import com.example.a73233.carefree.util.PhotoManager;
 import com.example.a73233.carefree.util.SpacesItemDecoration;
 
@@ -68,14 +74,18 @@ public class WriteDiaryActivity extends BaseActivity{
                 writeVM.saveDiary(addType,diaryId);
                 break;
             case R.id.take_photo:
-                imagePath = PhotoManager.TakePhoto(WriteDiaryActivity.this);
-                dialog.hide();
+                if(getCameraPermission()){
+                    imagePath = PhotoManager.TakePhoto(WriteDiaryActivity.this);
+                    dialog.hide();
+                }
                 break;
             case R.id.choose_photo:
-                Intent intentAlbum = new Intent(Intent.ACTION_GET_CONTENT);
-                intentAlbum.setType("image/*");
-                startActivityForResult(intentAlbum,CHOOSE_PHOTO);
-                dialog.hide();
+                if(getWritePermission()){
+                    Intent intentAlbum = new Intent(Intent.ACTION_GET_CONTENT);
+                    intentAlbum.setType("image/*");
+                    startActivityForResult(intentAlbum,CHOOSE_PHOTO);
+                    dialog.hide();
+                }
                 break;
             case R.id.cancel_add_photo:
                 dialog.hide();
@@ -218,5 +228,57 @@ public class WriteDiaryActivity extends BaseActivity{
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
         //将属性设置给窗体
         dialogWindow.setAttributes(lp);
+    }
+    private Boolean getWritePermission(){
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED){
+            LogUtil.LogD("开始动态申请write权限");
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
+            return false;
+        }else {
+            return true;
+        }
+    }
+    private Boolean getCameraPermission(){
+        if(ContextCompat.checkSelfPermission(this,Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED){
+            LogUtil.LogD("开始动态申请相机权限");
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.CAMERA},2);
+            return false;
+        }else {
+            return true;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode){
+            case 2:
+                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    LogUtil.LogD("获取"+permissions[0]+"权限成功");
+                    imagePath = PhotoManager.TakePhoto(WriteDiaryActivity.this);
+                    dialog.hide();
+                }else {
+                    LogUtil.LogD("获取"+permissions[0]+"权限失败");
+                    showToast("没有权限无法正常使用相机哟");
+                }
+                break;
+            case 1:
+                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    LogUtil.LogD("获取"+permissions[0]+"权限成功");
+                    Intent intentAlbum = new Intent(Intent.ACTION_GET_CONTENT);
+                    intentAlbum.setType("image/*");
+                    startActivityForResult(intentAlbum,CHOOSE_PHOTO);
+                    dialog.hide();
+                }else {
+                    LogUtil.LogD("获取"+permissions[0]+"权限失败");
+                    showToast("没有权限无法正常使用相册照片哟");
+                }
+                break;
+        }
+
     }
 }

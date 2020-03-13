@@ -21,7 +21,6 @@ import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
 import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
 import android.support.v4.os.CancellationSignal;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -36,7 +35,6 @@ import com.example.a73233.carefree.baseView.FingerprintImpl;
 import com.example.a73233.carefree.bean.Diary_db;
 import com.example.a73233.carefree.bean.Note_db;
 import com.example.a73233.carefree.bean.Users_db;
-import com.example.a73233.carefree.databinding.DialogChoosePhotoBinding;
 import com.example.a73233.carefree.note.view.NoteFragment;
 import com.example.a73233.carefree.me.view.MeFragment;
 import com.example.a73233.carefree.diary.view.DiaryFragment;
@@ -45,6 +43,7 @@ import com.example.a73233.carefree.databinding.ActivityMainBinding;
 import com.example.a73233.carefree.util.ConstantPool;
 import com.example.a73233.carefree.util.FileUtil;
 import com.example.a73233.carefree.util.FingerDiscentListener;
+import com.example.a73233.carefree.util.LogUtil;
 
 import org.litepal.LitePal;
 
@@ -217,44 +216,10 @@ public class MainActivity extends BaseActivity implements FingerprintImpl {
         transaction.commit();
         logD("创建碎片成功");
     }
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(grantResults[0] != PackageManager.PERMISSION_GRANTED){
-            Toast.makeText(MainActivity.this,"获取权限被拒绝",Toast.LENGTH_LONG).show();
-            Log.d("获取权限测试","获取权限被拒绝");
-        }
-        /*switch (requestCode){
-            case 1 :
-                if(grantResults[0] != PackageManager.PERMISSION_GRANTED){
-                    Toast.makeText(MainActivity.this,"获取权限被拒绝",Toast.LENGTH_LONG).show();
-                    Log.d("获取权限测试","获取权限被拒绝");
-                }
-                break;
-            case 2:
-                if(grantResults[0] != PackageManager.PERMISSION_GRANTED){
-                    Toast.makeText(MainActivity.this,"获取权限被拒绝",Toast.LENGTH_LONG).show();
-                    Log.d("获取权限测试","获取权限被拒绝");
-                }
-                break;
-        }*/
-    }
     private void initView(){
         ReviseStatusBar(TRANSPARENT_BLACK);
         //初始化底部导航栏
         binding.homeLogo.setImageResource(R.mipmap.home_click);
-        //申请权限
-        if(ContextCompat.checkSelfPermission(MainActivity.this,Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(MainActivity.this,
-                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
-        }
-        if(ContextCompat.checkSelfPermission(MainActivity.this,Manifest.permission.CAMERA)
-                != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(MainActivity.this,
-                    new String[]{Manifest.permission.CAMERA},2);
-        }
-
         //初始化首页碎片
         homeFragment = new HomeFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();

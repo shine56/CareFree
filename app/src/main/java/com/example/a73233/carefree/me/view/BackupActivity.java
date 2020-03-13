@@ -1,10 +1,15 @@
 package com.example.a73233.carefree.me.view;
 
+import android.Manifest;
 import android.app.ActivityOptions;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
 import android.text.InputType;
@@ -19,10 +24,16 @@ import com.example.a73233.carefree.baseView.BaseActivity;
 import com.example.a73233.carefree.databinding.ActivityBackupBinding;
 import com.example.a73233.carefree.me.viewModel.BackupVM;
 import com.example.a73233.carefree.util.ConstantPool;
+import com.example.a73233.carefree.util.LogUtil;
+import com.example.a73233.carefree.util.PhotoManager;
+
+import static com.example.a73233.carefree.util.PhotoManager.CHOOSE_PHOTO;
 
 public class BackupActivity extends BaseActivity {
     private ActivityBackupBinding binding;
     private BackupVM vm;
+    private static final int put = 1;
+    private static final int get = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,10 +64,14 @@ public class BackupActivity extends BaseActivity {
                 restoreData(ConstantPool.CLOUND);
                 break;
             case R.id.backup_local_put:
-                showBackupDialog(ConstantPool.SDCARD);
+                if(getWritePermission(put)){
+                    showBackupDialog(ConstantPool.SDCARD);
+                }
                 break;
             case R.id.backup_local_get:
-                restoreData(ConstantPool.SDCARD);
+                if(getWritePermission(get)){
+                    restoreData(ConstantPool.SDCARD);
+                }
                 break;
             case R.id.backup_toolbar_left:
                 onBackPressed();
@@ -201,6 +216,40 @@ public class BackupActivity extends BaseActivity {
         return dialog;
     }
 
+    private Boolean getWritePermission(int type){
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED){
+            LogUtil.LogD("开始动态申请write权限");
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},type);
+            return false;
+        }else {
+            return true;
+        }
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode){
+            case put:
+                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    showBackupDialog(ConstantPool.SDCARD);
+                }else {
+                    LogUtil.LogD("获取"+permissions[0]+"权限失败");
+                    showToast("没有权限无法正常备份哟");
+                }
+                break;
+            case get:
+                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    restoreData(ConstantPool.SDCARD);
+                }else {
+                    LogUtil.LogD("获取"+permissions[0]+"权限失败");
+                    showToast("没有权限无法正常恢复备份哟");
+                }
+                break;
+        }
+
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();

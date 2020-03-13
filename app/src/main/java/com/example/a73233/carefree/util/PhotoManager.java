@@ -55,12 +55,11 @@ public class PhotoManager {
        }else {
            imageUri = Uri.fromFile(outPutImage);
        }
-       //启动相机
+     //  启动相机
        Intent intent = new Intent();
        intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
        intent.putExtra(MediaStore.EXTRA_OUTPUT,imageUri);
        activity.startActivityForResult(intent, TAKE_PHOTO);
-       Log.d("启动相机测试","启动相机完成");
        return outPutImage.getPath();
     }
 
