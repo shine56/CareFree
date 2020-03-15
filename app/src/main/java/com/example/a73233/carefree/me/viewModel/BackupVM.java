@@ -126,6 +126,9 @@ public class BackupVM {
                     }
                 });
     }
+    public void setAuto(int f){
+        saveIntData("auto_f", f);
+    }
     public void setName(String name){
         saveData("name", name);
     }
@@ -144,6 +147,7 @@ public class BackupVM {
     public String getUrl(){
         return getData("url");
     }
+    public int getAuto(){return getIntData("auto_f");}
 
     private void saveData(String flag, String content){
         SharedPreferences.Editor editor = activity.getSharedPreferences("backup_data",MODE_PRIVATE).edit();
@@ -153,5 +157,15 @@ public class BackupVM {
     private String getData(String flag){
         SharedPreferences pref = activity.getSharedPreferences("backup_data",MODE_PRIVATE);
         return pref.getString(flag,null);
+    }
+
+    private void saveIntData(String flag, int content){
+        SharedPreferences.Editor editor = activity.getSharedPreferences("backup_data",MODE_PRIVATE).edit();
+        editor.putInt(flag, content);
+        editor.apply();
+    }
+    private int getIntData(String flag){
+        SharedPreferences pref = activity.getSharedPreferences("backup_data",MODE_PRIVATE);
+        return pref.getInt(flag,-1);
     }
 }

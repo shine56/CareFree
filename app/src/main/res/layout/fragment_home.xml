@@ -87,7 +87,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="32dp"
                     android:layout_marginEnd="16dp"
-                    android:background="@drawable/diary_list_view_bg"
+                    android:background="@drawable/diary_list_view_bg_up"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
@@ -220,7 +220,7 @@
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_marginEnd="8dp"
-                        android:background="@drawable/note_list_bg_1"
+                        android:background="@drawable/note_list_bg_1_up"
                         app:layout_constraintBottom_toBottomOf="@+id/imageView5"
                         app:layout_constraintEnd_toStartOf="@+id/home_rank1_e"
                         app:layout_constraintTop_toTopOf="@+id/imageView5"></TextView>
@@ -230,7 +230,7 @@
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_marginTop="8dp"
-                        android:background="@drawable/note_list_bg_2"
+                        android:background="@drawable/note_list_bg_2_up"
                         app:layout_constraintEnd_toEndOf="@+id/textView17"
                         app:layout_constraintStart_toStartOf="@+id/textView17"
                         app:layout_constraintTop_toBottomOf="@+id/textView17"></TextView>
@@ -240,7 +240,7 @@
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_marginTop="8dp"
-                        android:background="@drawable/note_list_bg_3"
+                        android:background="@drawable/note_list_bg_3_up"
                         app:layout_constraintEnd_toEndOf="@id/textView20"
                         app:layout_constraintStart_toStartOf="@id/textView20"
                         app:layout_constraintTop_toBottomOf="@id/textView20"></TextView>

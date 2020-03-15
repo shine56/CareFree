@@ -18,6 +18,8 @@ public class ConstantPool {
     public static final int SDCARD = 0;
     public static final int CLOUND = 1;
 
+    public static final int CLIP_TAKE_PHOTO = 1000;
+    public static final int CLIP_CHOOSE_PHOTO = 1001;
     public static final int REQUEST_MEDIA_PROJECTION = 1002;
 
     public static final String CARD_SHOW_EMOTION = "当前情绪值";

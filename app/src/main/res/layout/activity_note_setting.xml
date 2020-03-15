@@ -55,7 +55,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="32dp"
                 android:layout_marginEnd="16dp"
-                android:background="@drawable/note_list_bg_0"
+                android:background="@drawable/note_list_bg_0_up"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -63,11 +63,11 @@
                 app:layout_constraintTop_toBottomOf="@+id/note_setting_toolbar">
 
             <android.support.constraint.ConstraintLayout
+                    android:background="@drawable/press_bg"
                     android:onClick="@{activity.onClick}"
                     android:id="@+id/note_setting_task_top"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="4dp">
+                    android:layout_height="50dp">
 
                 <TextView
                         android:id="@+id/textView22"
@@ -108,6 +108,7 @@
             </android.support.constraint.ConstraintLayout>
 
             <android.support.constraint.ConstraintLayout
+                    android:background="@drawable/press_bg"
                     android:onClick="@{activity.onClick}"
                     android:id="@+id/note_setting_clock_type"
                     android:layout_width="match_parent"

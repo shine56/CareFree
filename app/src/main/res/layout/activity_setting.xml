@@ -65,17 +65,17 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="24dp"
                     android:layout_marginEnd="16dp"
-                    android:background="@drawable/note_list_bg_0"
+                    android:background="@drawable/note_list_bg_0_up"
                     android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <android.support.constraint.ConstraintLayout
+                            android:background="@drawable/press_bg"
                         android:id="@+id/setting_head"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:layout_marginTop="4dp"
                         android:onClick="@{settingActivity.onClick}">
 
                         <TextView
@@ -114,6 +114,7 @@
                     </android.support.constraint.ConstraintLayout>
 
                     <android.support.constraint.ConstraintLayout
+                            android:background="@drawable/press_bg"
                         android:id="@+id/setting_name"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
@@ -162,11 +163,11 @@
                     </android.support.constraint.ConstraintLayout>
 
                     <android.support.constraint.ConstraintLayout
+                            android:background="@drawable/press_bg"
                         android:id="@+id/setting_words"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginTop="16dp"
-                        android:layout_marginBottom="4dp"
                         android:onClick="@{settingActivity.onClick}">
 
                         <TextView
@@ -216,7 +217,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="32dp"
                     android:layout_marginEnd="16dp"
-                    android:background="@drawable/note_list_bg_0"
+                    android:background="@drawable/note_list_bg_0_up"
                     android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
@@ -224,10 +225,10 @@
                     app:layout_constraintTop_toBottomOf="@+id/setting_user_bg">
 
                     <android.support.constraint.ConstraintLayout
+                            android:background="@drawable/press_bg"
                         android:id="@+id/setting_home"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:layout_marginTop="4dp"
                         android:onClick="@{settingActivity.onClick}">
 
                         <TextView
@@ -255,6 +256,7 @@
                         </ImageView>
                     </android.support.constraint.ConstraintLayout>
                     <android.support.constraint.ConstraintLayout
+                            android:background="@drawable/press_bg"
                         android:id="@+id/setting_diary"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
@@ -285,11 +287,11 @@
                         </ImageView>
                     </android.support.constraint.ConstraintLayout>
                     <android.support.constraint.ConstraintLayout
+                            android:background="@drawable/press_bg"
                         android:id="@+id/setting_note"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginTop="16dp"
-                        android:layout_marginBottom="4dp"
                         android:onClick="@{settingActivity.onClick}">
 
                         <TextView
@@ -324,7 +326,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="32dp"
                     android:layout_marginEnd="16dp"
-                    android:background="@drawable/note_list_bg_0"
+                    android:background="@drawable/note_list_bg_0_up"
                     android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"
@@ -332,10 +334,10 @@
                     app:layout_constraintTop_toBottomOf="@+id/setting_main">
 
                     <android.support.constraint.ConstraintLayout
+                            android:background="@drawable/press_bg"
                         android:id="@+id/setting_lock"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:layout_marginTop="4dp"
                         android:onClick="@{settingActivity.onClick}">
 
                         <TextView
@@ -361,11 +363,11 @@
                     </android.support.constraint.ConstraintLayout>
 
                     <android.support.constraint.ConstraintLayout
+                            android:background="@drawable/press_bg"
                         android:id="@+id/setting_backup"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginTop="16dp"
-                        android:layout_marginBottom="4dp"
                         android:onClick="@{settingActivity.onClick}">
 
                         <TextView
@@ -399,7 +401,7 @@
                     android:layout_marginTop="32dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="64dp"
-                    android:background="@drawable/note_list_bg_0"
+                    android:background="@drawable/note_list_bg_0_up"
                     android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -408,10 +410,10 @@
                     app:layout_constraintTop_toBottomOf="@+id/setting_safe_bg">
 
                     <android.support.constraint.ConstraintLayout
+                            android:background="@drawable/press_bg"
                             android:id="@+id/setting_about"
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
-                            android:layout_marginTop="4dp"
                             android:onClick="@{settingActivity.onClick}">
 
                         <TextView
@@ -437,11 +439,11 @@
                         </ImageView>
                     </android.support.constraint.ConstraintLayout>
                     <android.support.constraint.ConstraintLayout
+                            android:background="@drawable/press_bg"
                         android:id="@+id/setting_feed_back"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginTop="16dp"
-                        android:layout_marginBottom="4dp"
                         android:onClick="@{settingActivity.onClick}">
 
                         <TextView

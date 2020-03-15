@@ -15,7 +15,9 @@ import com.example.a73233.carefree.util.DataBackup;
 import com.example.a73233.carefree.util.EmotionDataUtil;
 import com.example.a73233.carefree.util.LogUtil;
 import com.example.a73233.carefree.util.NoteUtil;
+import com.example.a73233.carefree.util.PhotoManager;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -89,7 +91,16 @@ public class MeVM {
         model.saveUserdb(bean);
     }
 
-
+    /**
+     * 裁剪头像
+     * @param inputPath
+     */
+    public void clipPhoto(String inputPath, int requestCode){
+        File sdDirectory = activity.getExternalFilesDir(null);
+        String imageName = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + "_header.jpg";
+        String outputPath = new File(sdDirectory,imageName).getPath();
+        PhotoManager.clipImage(activity, inputPath, outputPath, requestCode);
+    }
     /**
      * 设置MeFragment的卡片
      * @param max

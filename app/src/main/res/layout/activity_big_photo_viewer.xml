@@ -7,10 +7,9 @@
     android:background="@color/black"
     tools:context=".util.BigPhotoViewer">
 
-    <ImageView
+    <com.example.a73233.carefree.util.ZoomImageView
         android:transitionName="shareDiaryPhotoView"
         android:id="@+id/big_photo"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
 </android.support.constraint.ConstraintLayout>

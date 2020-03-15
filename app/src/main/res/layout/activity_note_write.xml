@@ -94,7 +94,7 @@
                             android:layout_width="35dp"
                             android:layout_height="35dp"
                             android:layout_gravity="center_horizontal"
-                            android:background="@drawable/note_list_bg_0"
+                            android:background="@drawable/note_list_bg_0_up"
                             android:onClick="@{noteWriteActivity.onClick}"
                             android:text="@{bean.rank == 0 ? @string/right : @string/nothing}" />
                     </FrameLayout>
@@ -109,7 +109,7 @@
                             android:layout_width="35dp"
                             android:layout_height="35dp"
                             android:layout_gravity="center_horizontal"
-                            android:background="@drawable/note_list_bg_1"
+                            android:background="@drawable/note_list_bg_1_up"
                             android:onClick="@{noteWriteActivity.onClick}"
                             android:text="@{bean.rank == 1 ? @string/right : @string/nothing}" />
                     </FrameLayout>
@@ -124,7 +124,7 @@
                             android:layout_width="35dp"
                             android:layout_height="35dp"
                             android:layout_gravity="center_horizontal"
-                            android:background="@drawable/note_list_bg_2"
+                            android:background="@drawable/note_list_bg_2_up"
                             android:onClick="@{noteWriteActivity.onClick}"
                             android:text="@{bean.rank == 2 ? @string/right : @string/nothing}" />
                     </FrameLayout>
@@ -139,7 +139,7 @@
                             android:layout_width="35dp"
                             android:layout_height="35dp"
                             android:layout_gravity="center_horizontal"
-                            android:background="@drawable/note_list_bg_3"
+                            android:background="@drawable/note_list_bg_3_up"
                             android:onClick="@{noteWriteActivity.onClick}"
                             android:text="@{bean.rank == 3 ? @string/right : @string/nothing}" />
                     </FrameLayout>

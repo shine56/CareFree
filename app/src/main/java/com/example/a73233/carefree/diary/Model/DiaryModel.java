@@ -1,5 +1,8 @@
 package com.example.a73233.carefree.diary.Model;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
+
 import com.example.a73233.carefree.bean.DiaryBean;
 import com.example.a73233.carefree.bean.Diary_db;
 import com.example.a73233.carefree.diary.viewModel.DiaryVMImpl;
@@ -12,6 +15,8 @@ import org.litepal.LitePal;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class DiaryModel {
     /**
@@ -109,4 +114,37 @@ public class DiaryModel {
         }
         return diaryBeanList;
     }
+
+    /**
+     * 获取自动备份频率
+     * @param activity
+     * @return
+     */
+    public int getAutoData(Activity activity){
+        SharedPreferences pref = activity.getSharedPreferences("backup_data",MODE_PRIVATE);
+        return pref.getInt("auto_f",-1);
+    }
+
+
+    /**
+     * 设置数据增加条数
+     * @param activity
+     */
+    public void setAddDataSum(Activity activity, int sum){
+        SharedPreferences.Editor editor = activity.getSharedPreferences("backup_data",MODE_PRIVATE).edit();
+        editor.putInt("add_data_num",sum);
+        editor.apply();
+    }
+
+
+    /**
+     * 获取目前新增数据条数
+     * @param activity
+     * @return
+     */
+    public int getAddDataSum(Activity activity){
+        SharedPreferences pref = activity.getSharedPreferences("backup_data",MODE_PRIVATE);
+        return pref.getInt("add_data_num",0);
+    }
+
 }

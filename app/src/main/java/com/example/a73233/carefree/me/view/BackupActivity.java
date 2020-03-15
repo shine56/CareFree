@@ -3,6 +3,7 @@ package com.example.a73233.carefree.me.view;
 import android.Manifest;
 import android.app.ActivityOptions;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
@@ -26,6 +27,7 @@ import com.example.a73233.carefree.me.viewModel.BackupVM;
 import com.example.a73233.carefree.util.ConstantPool;
 import com.example.a73233.carefree.util.LogUtil;
 import com.example.a73233.carefree.util.PhotoManager;
+import com.example.a73233.carefree.util.TimeUtil;
 
 import static com.example.a73233.carefree.util.PhotoManager.CHOOSE_PHOTO;
 
@@ -45,6 +47,7 @@ public class BackupActivity extends BaseActivity {
         binding.backupNameText.setText(vm.getName() == null ? "未设置" : vm.getName());
         binding.backupPasText.setText(vm.getPas() == null ? "未设置" : vm.getPas());
         binding.backupUrlText.setText(vm.getUrl() == null ? "未设置" : vm.getUrl());
+        binding.backupLocalAutoText.setText(TimeUtil.GetAutoFText(vm.getAuto()));
     }
     public void onClick(View view){
         switch (view.getId()){
@@ -80,6 +83,10 @@ public class BackupActivity extends BaseActivity {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse("https://sspai.com/post/55874?hippy=1"));
                 startActivity(intent);
+                break;
+
+            case R.id.backup_local_auto:
+                setAutoF();
                 break;
         }
     }
@@ -170,6 +177,44 @@ public class BackupActivity extends BaseActivity {
             }
         });
         dialog.show();
+    }
+    private void setAutoF(){
+        String[] items = {
+                "关",
+                "每新增2条日记",
+                "每新增3条日记",
+                "每新增5条日记",
+                "每新增7条日记",
+                "每新增10条日记",
+        };
+        AlertDialog alertDialog = new AlertDialog.Builder(this)
+                .setItems(items, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        switch (i){
+                            case 0 :
+                                vm.setAuto(-1);
+                                break;
+                            case 1 :
+                                vm.setAuto(2);
+                                break;
+                            case 2:
+                                vm.setAuto(3);
+                                break;
+                            case 3:
+                                vm.setAuto(5);
+                                break;
+                            case 4:
+                                vm.setAuto(7);
+                                break;
+                            case 5:
+                                vm.setAuto(10);
+                                break;
+                        }
+                        binding.backupLocalAutoText.setText(TimeUtil.GetAutoFText(vm.getAuto()));
+                    }
+                }).create();
+        alertDialog.show();
     }
     private void restoreData(int type){
         ActivityManager.finishAllActivity();

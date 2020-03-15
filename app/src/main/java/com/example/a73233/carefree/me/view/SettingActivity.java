@@ -29,8 +29,9 @@ import com.example.a73233.carefree.R;
 import com.example.a73233.carefree.baseView.ActivityManager;
 import com.example.a73233.carefree.baseView.BaseActivity;
 import com.example.a73233.carefree.databinding.ActivitySettingBinding;
-import com.example.a73233.carefree.diary.view.WriteDiaryActivity;
 import com.example.a73233.carefree.me.viewModel.MeVM;
+import com.example.a73233.carefree.util.ConstantPool;
+import com.example.a73233.carefree.util.FileUtil;
 import com.example.a73233.carefree.util.LogUtil;
 import com.example.a73233.carefree.util.PhotoManager;
 
@@ -39,7 +40,7 @@ import static com.example.a73233.carefree.util.PhotoManager.CHOOSE_PHOTO;
 public class SettingActivity extends BaseActivity {
     private ActivitySettingBinding binding;
     private MeVM vm;
-    private String takePhotoUrl;
+    private String takePhotoPath;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -164,7 +165,7 @@ public class SettingActivity extends BaseActivity {
                         switch (i){
                             case 0 :
                                 if(getCameraPermission()){
-                                    takePhotoUrl = PhotoManager.TakePhoto(SettingActivity.this);
+                                    takePhotoPath = PhotoManager.TakePhoto(SettingActivity.this);
                                 }
                                 break;
                             case 1 :
@@ -206,15 +207,32 @@ public class SettingActivity extends BaseActivity {
         switch (requestCode){
             case CHOOSE_PHOTO:
                 if(resultCode == RESULT_OK){
-                    String url = PhotoManager.GetPathFromUri(this,data.getData());
-                    vm.setImgUrl(PhotoManager.copyPhoto(this,url));
+                    String path = PhotoManager.GetPathFromUri(this,data.getData());
+                    vm.clipPhoto(path, ConstantPool.CLIP_CHOOSE_PHOTO);
+                }else {
+                    LogUtil.LogD("选择照片失败");
                 }
                 break;
             case PhotoManager.TAKE_PHOTO:
                 if(resultCode == RESULT_OK){
-                    vm.setImgUrl(takePhotoUrl);
+                    vm.clipPhoto(takePhotoPath, ConstantPool.CLIP_TAKE_PHOTO);
                 }else {
                     LogUtil.LogD("拍照失败");
+                }
+                break;
+            case ConstantPool.CLIP_TAKE_PHOTO:
+                if(resultCode == RESULT_OK){
+                    FileUtil.deleteFile(takePhotoPath);
+                    vm.setImgUrl(data.getStringExtra("outputPath"));
+                }else {
+                    LogUtil.LogD("拍照裁剪失败");
+                }
+                break;
+            case ConstantPool.CLIP_CHOOSE_PHOTO:
+                if(resultCode == RESULT_OK){
+                    vm.setImgUrl(data.getStringExtra("outputPath"));
+                }else {
+                    LogUtil.LogD("选择照片裁剪失败");
                 }
                 break;
         }
@@ -260,7 +278,7 @@ public class SettingActivity extends BaseActivity {
             case 2:
                 if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                     LogUtil.LogD("获取"+permissions[0]+"权限成功");
-                    takePhotoUrl = PhotoManager.TakePhoto(SettingActivity.this);
+                    takePhotoPath = PhotoManager.TakePhoto(SettingActivity.this);
                 }else {
                     LogUtil.LogD("获取"+permissions[0]+"权限失败");
                     showToast("没有权限无法正常使用相机哟");

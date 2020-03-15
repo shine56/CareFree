@@ -120,7 +120,7 @@
                 android:textColor="@color/mainBg2"
                 android:layout_width="100dp"
                 android:layout_height="148dp"
-                android:background="@drawable/diary_list_view_bg"></Button>
+                android:background="@drawable/diary_list_view_bg_up"></Button>
         </LinearLayout>
     </LinearLayout>
 

@@ -231,7 +231,7 @@ public class HomeViewModel{
     }
     public Boolean isShowNote(){
         SharedPreferences pref = activity.getSharedPreferences("setting",MODE_PRIVATE);
-        if (pref.getString("homeShowNote",ConstantPool.HOME_SHOW_NOTE).equals(ConstantPool.HOME_SHOW_NOTE)){
+        if (pref.getString("homeShowNote",ConstantPool.NOT_HOME_SHOW_NOTE).equals(ConstantPool.HOME_SHOW_NOTE)){
             return true;
         }else {
             return false;

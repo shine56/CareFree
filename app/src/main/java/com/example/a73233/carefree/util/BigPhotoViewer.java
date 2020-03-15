@@ -2,6 +2,7 @@ package com.example.a73233.carefree.util;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -10,7 +11,7 @@ import com.example.a73233.carefree.R;
 import com.example.a73233.carefree.baseView.BaseActivity;
 
 public class BigPhotoViewer extends BaseActivity {
-    private ImageView bigPhoto;
+    private ZoomImageView bigPhoto;
     private String imagePath;
 
     @Override
@@ -23,11 +24,6 @@ public class BigPhotoViewer extends BaseActivity {
         imagePath = getIntent().getStringExtra("imagePath");
         Glide.with(this).load(imagePath).error(R.mipmap.find_photo_fail).into(bigPhoto);
 
-        bigPhoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        bigPhoto.setOnClickListener(v -> onBackPressed());
     }
 }

@@ -33,6 +33,7 @@
         app:layout_constraintTop_toBottomOf="@+id/dialog_confirm_title"></TextView>
 
     <TextView
+            android:background="@drawable/press_bg"
         android:id="@+id/dialog_confirm_cancel"
         android:layout_width="0dp"
         android:layout_height="40dp"
@@ -60,6 +61,7 @@
         app:layout_constraintTop_toTopOf="@+id/dialog_confirm_cancel"></View>
 
     <TextView
+            android:background="@drawable/press_bg"
         android:id="@+id/dialog_confirm_confirm"
         android:layout_width="0dp"
         android:layout_height="40dp"

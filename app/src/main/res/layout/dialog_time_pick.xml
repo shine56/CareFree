@@ -16,6 +16,7 @@
         app:layout_constraintTop_toTopOf="parent"></TimePicker>
 
     <TextView
+            android:background="@drawable/press_bg"
         android:id="@+id/dialog_time_pick_confirm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -29,6 +30,7 @@
         app:layout_constraintEnd_toEndOf="parent"></TextView>
 
     <TextView
+            android:background="@drawable/press_bg"
         android:id="@+id/dialog_time_pick_cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

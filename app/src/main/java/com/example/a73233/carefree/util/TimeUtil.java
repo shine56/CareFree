@@ -63,4 +63,28 @@ public class TimeUtil {
         }
         return lastMonth;
     }
+
+    /**
+     * 返回自动更新频率(String)
+     * @param autoF
+     * @return
+     */
+    public static String GetAutoFText(int autoF){
+        switch (autoF){
+            case 2:
+                return "每新增2条日记";
+            case 3:
+                return "每新增3条日记";
+            case 5:
+                return "每新增5条日记";
+            case 7:
+                return "每新增7条日记";
+            case 10:
+                return "每新增10条日记";
+            case -1:
+                return "关";
+            default:
+                return "关";
+        }
+    }
 }

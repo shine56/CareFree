@@ -39,7 +39,12 @@ import java.util.Date;
 public class PhotoManager {
     public static final int TAKE_PHOTO = 1;
     public static final int CHOOSE_PHOTO = 2;
-    //拍照
+
+    /**
+     * 拍照
+     * @param activity
+     * @return
+     */
     public static String TakePhoto(Activity activity){
         String imageName;
         File outPutImage;
@@ -110,16 +115,9 @@ public class PhotoManager {
     /**
      * Gets the content:// URI from the given corresponding path to a file
      * 绝对路径转uri
-     *
      * @param context
      * @param imageFile
      * @return content Uri
-     */
-    /**
-     * 根据绝对路径落去Uri
-     * @param context
-     * @param imageFile
-     * @return
      */
     public static Uri getImageContentUri(Context context, java.io.File imageFile) {
         String filePath = imageFile.getAbsolutePath();
@@ -191,7 +189,13 @@ public class PhotoManager {
         int height = resources.getDimensionPixelSize(resourceId);
         return height;
     }
-    //EditText添加图片
+
+    /**
+     * edit插入图片
+     * @param activity
+     * @param editText
+     * @param imagePath
+     */
     public static void editViewInsertPhoto (Activity activity, EditText editText, String imagePath){
         Bitmap originalBitmap = BitmapFactory.decodeFile(imagePath);
         int originalWidth = originalBitmap.getWidth();
@@ -227,5 +231,16 @@ public class PhotoManager {
         }else{
             edit_text.insert(index, spannableString);
         }
+    }
+
+
+    public static void clipImage(Activity activity, String inputPath, String outputPath, int requestCode){
+        ClipImageActivity.Companion.startCropImage(activity,
+               requestCode,
+                inputPath,
+                outputPath,
+                (int)(260 * activity.getResources().getDisplayMetrics().density),
+                (int)(260 * activity.getResources().getDisplayMetrics().density),
+                2.0f, 0.5f);
     }
 }

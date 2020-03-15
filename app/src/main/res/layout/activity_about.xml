@@ -99,6 +99,7 @@
             app:layout_constraintTop_toBottomOf="@+id/about_app_about_text">
 
             <android.support.constraint.ConstraintLayout
+                    android:background="@drawable/press_bg"
                 android:onClick="@{aboutActivity.onClick}"
                 android:id="@+id/about_open_source_address"
                 android:layout_width="match_parent"
@@ -128,6 +129,7 @@
             </android.support.constraint.ConstraintLayout>
 
             <android.support.constraint.ConstraintLayout
+                    android:background="@drawable/press_bg"
                 android:id="@+id/about_contact_author"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -159,6 +161,7 @@
             </android.support.constraint.ConstraintLayout>
 
             <android.support.constraint.ConstraintLayout
+                    android:background="@drawable/press_bg"
                 android:id="@+id/about_agreement"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"

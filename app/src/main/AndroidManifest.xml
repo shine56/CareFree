@@ -16,7 +16,8 @@
             android:roundIcon="@mipmap/icon_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".me.view.NoteSettingActivity"></activity>
+        <activity android:name=".util.ClipImageActivity"></activity>
+        <activity android:name=".me.view.NoteSettingActivity" />
         <activity android:name=".me.view.DiarySettingActivity" />
         <activity android:name=".me.view.LockActivity" />
         <activity android:name=".me.view.HomeSettingActivity" />

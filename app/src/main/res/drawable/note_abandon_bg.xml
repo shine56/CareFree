@@ -1,16 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item>
-        <shape>
-            <solid android:color="#6fE91E63"></solid>
-            <corners android:radius="5dp"/>
-        </shape>
-    </item>
-    <item android:bottom="2dp">
-        <shape>
-            <solid android:color="#E91E63"></solid>
-            <corners android:radius="5dp"/>
-        </shape>
-    </item>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/note_abandon_bg_up" android:state_pressed="false"></item>
+    <item android:drawable="@drawable/note_abandon_bg_down" android:state_pressed="true"></item>
 
-</layer-list>
+</selector>

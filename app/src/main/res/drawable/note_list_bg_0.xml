@@ -1,22 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item>
-        <shape>
-            <corners
-                android:radius="6dp">
-            </corners>
-            <solid android:color="#20505050"/>
-        </shape>
-    </item>
-    <item android:bottom="2dp"
-        android:top="0.1mm"
-        android:right="0.2mm">
-        <shape>
-            <corners
-                android:radius="6dp">
-            </corners>
-            <solid android:color="@color/white"/>
-        </shape>
-    </item>
-
-</layer-list>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/note_list_bg_0_up" android:state_pressed="false"></item>
+    <item android:drawable="@drawable/note_list_bg_0_down" android:state_pressed="true"></item>
+</selector>

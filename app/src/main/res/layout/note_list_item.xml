@@ -17,7 +17,7 @@
             android:id="@+id/note_body"
             android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:background="@drawable/note_list_bg_2">
+            android:background="@drawable/note_list_bg_2_up">
 
             <TextView
                 android:id="@+id/note_text"
