@@ -64,7 +64,7 @@ public class BackupActivity extends BaseActivity {
                 showBackupDialog(ConstantPool.CLOUND);
                 break;
             case R.id.backup_get:
-                restoreData(ConstantPool.CLOUND);
+                showRestoreDialog(ConstantPool.CLOUND);
                 break;
             case R.id.backup_local_put:
                 if(getWritePermission(put)){
@@ -73,7 +73,7 @@ public class BackupActivity extends BaseActivity {
                 break;
             case R.id.backup_local_get:
                 if(getWritePermission(get)){
-                    restoreData(ConstantPool.SDCARD);
+                    showRestoreDialog(ConstantPool.SDCARD);
                 }
                 break;
             case R.id.backup_toolbar_left:
@@ -220,6 +220,37 @@ public class BackupActivity extends BaseActivity {
         ActivityManager.finishAllActivity();
         vm.restoreData(showLoadDialog(),type);
     }
+    private void showRestoreDialog(int type){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_text_confim,null,false);
+        builder.setView(view);
+        Dialog dialog = builder.create();
+        TextView text = view.findViewById(R.id.dialog_confirm_content);
+        TextView confirm = view.findViewById(R.id.dialog_confirm_confirm);
+        TextView title = view.findViewById(R.id.dialog_confirm_title);
+        TextView cancel = view.findViewById(R.id.dialog_confirm_cancel);
+        title.setText("恢复");
+
+        if(type == ConstantPool.SDCARD){
+            text.setText("        将从恢复你上次备份在本地的数据");
+        }else {
+            text.setText("        将恢复你上次备份在云盘的数据");
+        }
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                restoreData(type);
+                dialog.dismiss();
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
     private void showBackupDialog(int type){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_text_confim,null,false);
@@ -286,7 +317,7 @@ public class BackupActivity extends BaseActivity {
                 break;
             case get:
                 if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    restoreData(ConstantPool.SDCARD);
+                    showRestoreDialog(ConstantPool.SDCARD);
                 }else {
                     LogUtil.LogD("获取"+permissions[0]+"权限失败");
                     showToast("没有权限无法正常恢复备份哟");

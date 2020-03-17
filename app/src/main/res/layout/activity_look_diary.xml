@@ -51,60 +51,98 @@
                             app:layout_constraintTop_toTopOf="parent"
                             tools:layout_editor_absoluteX="0dp" />
 
+<!--                        <TextView-->
+<!--                            android:id="@+id/look_day"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginStart="24dp"-->
+<!--                            android:layout_marginTop="98dp"-->
+<!--                            android:layout_marginBottom="16dp"-->
+<!--                            android:text="@{bean.day}"-->
+<!--                            android:textColor="@color/white"-->
+<!--                            android:textSize="38dp"-->
+<!--                            android:textStyle="bold"-->
+<!--                            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                            app:layout_constraintStart_toStartOf="parent"-->
+<!--                            app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--                        <TextView-->
+<!--                            android:id="@+id/look_week"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginStart="16dp"-->
+<!--                            android:layout_marginTop="8dp"-->
+<!--                            android:text="@{bean.week}"-->
+<!--                            android:textColor="@color/white"-->
+<!--                            android:textSize="13sp"-->
+<!--                            app:layout_constraintStart_toEndOf="@+id/look_day"-->
+<!--                            app:layout_constraintTop_toTopOf="@+id/look_day" />-->
+
+<!--                        <TextView-->
+<!--                            android:id="@+id/look_year_month"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginStart="16dp"-->
+<!--                            android:layout_marginBottom="4dp"-->
+<!--                            android:text="@{bean.yearAndMonth}"-->
+<!--                            android:textColor="@color/white"-->
+<!--                            android:textSize="15sp"-->
+<!--                            app:layout_constraintBottom_toBottomOf="@+id/look_day"-->
+<!--                            app:layout_constraintStart_toEndOf="@+id/look_day" />-->
                         <TextView
-                            android:id="@+id/look_day"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="24dp"
-                            android:layout_marginTop="98dp"
-                            android:layout_marginBottom="16dp"
-                            android:text="@{bean.day}"
-                            android:textColor="@color/white"
-                            android:textSize="38dp"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                                android:id="@+id/look_day"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="24dp"
+                                android:layout_marginTop="98dp"
+                                android:layout_marginBottom="16dp"
+                                android:text="15"
+                                android:textColor="@color/white"
+                                android:textSize="38dp"
+                                android:textStyle="bold"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
-                            android:id="@+id/look_week"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="8dp"
-                            android:text="@{bean.week}"
-                            android:textColor="@color/white"
-                            android:textSize="13sp"
-                            app:layout_constraintStart_toEndOf="@+id/look_day"
-                            app:layout_constraintTop_toTopOf="@+id/look_day" />
+                                android:id="@+id/look_week"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginTop="5dp"
+                                android:text="星期日"
+                                android:textColor="@color/white"
+                                android:textSize="13sp"
+                                app:layout_constraintStart_toEndOf="@+id/look_day"
+                                app:layout_constraintTop_toTopOf="@+id/look_day" />
 
                         <TextView
-                            android:id="@+id/look_year_month"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginBottom="4dp"
-                            android:text="@{bean.yearAndMonth}"
-                            android:textColor="@color/white"
-                            android:textSize="15sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/look_day"
-                            app:layout_constraintStart_toEndOf="@+id/look_day" />
+                                android:id="@+id/look_year_month"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginTop="2dp"
+                                android:text="2020年3月"
+                                android:textColor="@color/white"
+                                android:textSize="15sp"
+                                app:layout_constraintStart_toEndOf="@+id/look_day"
+                                app:layout_constraintTop_toBottomOf="@+id/look_week" />
 
                         <TextView
-                            android:id="@+id/look_emotion_value"
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:layout_marginStart="60dp"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginBottom="8dp"
-                            android:gravity="center"
-                            android:text="@{@string/emotion_zh+bean.diaryEmotionValue}"
-                            android:textColor="@color/white"
-                            android:textSize="16sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/look_year_month"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/look_year_month"
-                            app:layout_constraintTop_toTopOf="@+id/look_week" />
+                                android:id="@+id/look_emotion_value"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:layout_marginStart="60dp"
+                                android:layout_marginEnd="16dp"
+                                android:layout_marginBottom="6dp"
+                                android:gravity="center"
+                                android:text="@{@string/emotion_zh+bean.diaryEmotionValue}"
+                                android:textColor="@color/white"
+                                android:textSize="16dp"
+                                app:layout_constraintBottom_toBottomOf="@+id/look_year_month"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/look_year_month"
+                                app:layout_constraintTop_toTopOf="@+id/look_week" />
                     </android.support.constraint.ConstraintLayout>
 
                     <android.support.v7.widget.Toolbar
@@ -114,7 +152,8 @@
                         android:layout_marginTop="26dp"
                         android:theme="@style/MyTheme"
                         app:layout_collapseMode="pin"
-                        app:popupTheme="@style/MyTheme"></android.support.v7.widget.Toolbar>
+                        app:popupTheme="@style/MyTheme">
+                    </android.support.v7.widget.Toolbar>
                 </android.support.design.widget.CollapsingToolbarLayout>
             </android.support.design.widget.AppBarLayout>
 

@@ -240,7 +240,6 @@ public class PhotoManager {
                 inputPath,
                 outputPath,
                 (int)(260 * activity.getResources().getDisplayMetrics().density),
-                (int)(260 * activity.getResources().getDisplayMetrics().density),
-                2.0f, 0.5f);
+                (int)(260 * activity.getResources().getDisplayMetrics().density), 2.0f, 0.5f);
     }
 }

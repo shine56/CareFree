@@ -147,18 +147,18 @@
                 </LinearLayout>
 
                 <TextView
-                    android:onClick="@{noteWriteActivity.onClick}"
-                    android:id="@+id/note_text_bg"
-                    android:layout_width="match_parent"
-                    android:layout_height="450dp"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="32dp"
-                    android:background="@drawable/note_bg_2"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                        android:id="@+id/note_text_bg"
+                        android:layout_width="match_parent"
+                        android:layout_height="450dp"
+                        android:layout_marginStart="32dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="32dp"
+                        android:background="@drawable/note_bg_2"
+                        android:onClick="@{noteWriteActivity.onClick}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/note_text_title"
@@ -168,27 +168,37 @@
                     android:text="二级任务贴"
                     android:textColor="@{bean.rank == 3 ? @color/white : @color/black}"
                     android:textSize="18dp"
-                    app:layout_constraintBottom_toTopOf="@+id/note_edit_text"
-                    app:layout_constraintEnd_toEndOf="@+id/note_edit_text"
-                    app:layout_constraintStart_toStartOf="@+id/note_edit_text"
+                    app:layout_constraintBottom_toTopOf="@+id/note_edit_text_parent"
+                    app:layout_constraintEnd_toEndOf="@+id/note_edit_text_parent"
+                    app:layout_constraintStart_toStartOf="@+id/note_edit_text_parent"
                     app:layout_constraintTop_toTopOf="@+id/note_text_bg" />
-                <EditText
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
-                    android:background="@null"
-                    android:id="@+id/note_edit_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="48dp"
-                    android:layout_marginTop="48dp"
-                    android:layout_marginEnd="48dp"
-                    android:hint="写点什么吧。"
-                    android:maxLines="16"
-                    android:text="@={bean.text}"
-                    android:textColor="@{bean.rank == 3 ? @color/white : @color/black}"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/note_text_bg" />
+
+                <FrameLayout
+                        android:id="@+id/note_edit_text_parent"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginStart="48dp"
+                        android:layout_marginTop="48dp"
+                        android:layout_marginEnd="48dp"
+                        android:layout_marginBottom="16dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/note_text_bg"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/note_text_bg" >
+                    <EditText
+                            android:focusable="true"
+                            android:focusableInTouchMode="true"
+                            android:background="@null"
+                            android:id="@+id/note_edit_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="写点什么吧。"
+                            android:text="@={bean.text}"
+                            android:textSize="18dp"
+                            android:textColor="@{bean.rank == 3 ? @color/white : @color/black}" />
+                </FrameLayout>
+
+
 
                 <LinearLayout
                     android:id="@+id/note_write_clock_bg"

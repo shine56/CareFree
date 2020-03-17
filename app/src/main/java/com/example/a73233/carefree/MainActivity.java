@@ -6,29 +6,22 @@
 
 
 package com.example.a73233.carefree;
-import android.Manifest;
 import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
 import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
 import android.support.v4.os.CancellationSignal;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.a73233.carefree.baseView.BaseActivity;
 import com.example.a73233.carefree.baseView.FingerprintImpl;
@@ -43,7 +36,6 @@ import com.example.a73233.carefree.databinding.ActivityMainBinding;
 import com.example.a73233.carefree.util.ConstantPool;
 import com.example.a73233.carefree.util.FileUtil;
 import com.example.a73233.carefree.util.FingerDiscentListener;
-import com.example.a73233.carefree.util.LogUtil;
 
 import org.litepal.LitePal;
 

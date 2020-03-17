@@ -18,44 +18,41 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/diary_list_view_bg_up">
+        <TextView
+                android:id="@+id/add_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@{bean.day}"
+                android:textColor="@color/black"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/add_day"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:text="@{bean.day}"
-            android:textColor="@color/black"
-            android:textSize="30dp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+                android:id="@+id/add_week"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="20dp"
+                android:text="@{bean.week}"
+                android:textColor="@color/black"
+                android:textSize="10sp"
+                app:layout_constraintStart_toEndOf="@+id/add_day"
+                app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/add_week"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
-            android:text="@{bean.week}"
-            android:textColor="@color/black"
-            android:textSize="10sp"
-            app:layout_constraintStart_toEndOf="@+id/add_day"
-            app:layout_constraintTop_toTopOf="@+id/add_day" />
-
-        <TextView
-            android:id="@+id/add_year_month"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginBottom="4dp"
-            android:text="@{bean.yearAndMonth}"
-            android:textColor="@color/black"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@+id/add_day"
-            app:layout_constraintStart_toEndOf="@+id/add_day" />
-
+                android:id="@+id/add_year_month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@{bean.yearAndMonth}"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                app:layout_constraintStart_toEndOf="@+id/add_day"
+                app:layout_constraintTop_toBottomOf="@+id/add_week" />
 
         <TextView
             android:id="@+id/add_emotion_value"
@@ -70,16 +67,14 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <View
-            android:id="@+id/add_view"
-            android:layout_width="0dp"
-            android:layout_height="2dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="64dp"
-            android:background="@color/black"
-            app:layout_constraintEnd_toEndOf="@+id/add_year_month"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/add_day"
-            app:layout_constraintTop_toBottomOf="@+id/add_day" />
+                android:id="@+id/add_view"
+                android:layout_width="0dp"
+                android:layout_height="2dp"
+                android:layout_marginTop="2dp"
+                android:background="@color/black"
+                app:layout_constraintEnd_toStartOf="@+id/add_year_month"
+                app:layout_constraintStart_toStartOf="@+id/add_day"
+                app:layout_constraintTop_toBottomOf="@+id/add_day" />
 
         <ImageView
 

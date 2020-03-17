@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -192,7 +193,6 @@ public class WriteDiaryActivity extends BaseActivity{
                 writeVM.reMovePhoto(position);
             }
         });
-        //初始化editText
         //监听输入框
         binding.writeWriteDiary.addTextChangedListener(new TextWatcher() {
             @Override
@@ -207,6 +207,9 @@ public class WriteDiaryActivity extends BaseActivity{
                 writeVM.refreshSingle();
             }
         });
+
+        //监听软键盘弹起
+        addLayoutListener(binding.activityWriteDiary);
     }
     private void initDialogView(){
         dialog = new Dialog(this,R.style.ActionSheetDialogStyle);
@@ -252,6 +255,21 @@ public class WriteDiaryActivity extends BaseActivity{
         }
     }
 
+    public void addLayoutListener(View mainView){
+        mainView.getViewTreeObserver().addOnGlobalLayoutListener(()->{
+            Rect rect = new Rect();
+            mainView.getWindowVisibleDisplayFrame(rect);
+            int mainViewInVisibleHeight =
+                    mainView.getRootView().getHeight() - rect.bottom;
+            if(mainViewInVisibleHeight >250){
+                LogUtil.LogD("键盘弹起");
+                binding.occupiedView.setVisibility(View.VISIBLE);
+            }else {
+                LogUtil.LogD("键盘隐藏");
+                binding.occupiedView.setVisibility(View.GONE);
+            }
+        });
+    }
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
