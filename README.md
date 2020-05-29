@@ -19,7 +19,7 @@
 ![](https://s2.ax1x.com/2020/02/21/3K8muD.jpg)|![](https://s2.ax1x.com/2020/02/21/3K8UbQ.jpg)|![](https://s2.ax1x.com/2020/02/21/3K8Ggf.jpg)|![](https://s1.ax1x.com/2020/03/13/8K5riq.jpg)
 
 ## License
-[LGPL](https://github.com/shine56/CareFree/blob/master/LICENSE)
+[GPL](https://github.com/shine56/CareFree/blob/master/LICENSE)
 
 ## Download
 
